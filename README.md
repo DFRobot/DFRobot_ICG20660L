@@ -5,7 +5,7 @@ Features:<br>
 * Accelerometer scale range: ±2g、±4g、±8g、±16g, g = 9.80665 m/s².<br>
 * Gyro scale range: ±125dps、±250dps、±500dps, 1dps = Π/180° rad/s, Π = 3.1415926<br>
 * Support 512 bytes FIFO.<br>
-* Support wake on motion for accelerometer.发生条件：如果前一次和后一次测得的加速度的阈值差大于或等于设定的阈值，将产生中断<br>
+* Support wake on motion for accelerometer. 发生条件：如果前一次和后一次测得的加速度的阈值差大于或等于设定的阈值，将产生中断<br>
 * 加速度的X，Y,Z，温度，陀螺仪的x，Y，Z轴都可以单独使用和禁用，温度除外，必须和其中一轴数据一起采集。禁止某轴或温度可以降低功耗<br>
 * 支持进入低功耗睡眠模式，该模式下，陀螺仪，加速度，温度等传感器都将停止采样<br>
 * 加速度支持低功耗模式，在该模式下陀螺仪将禁止工作。<br>
@@ -79,7 +79,7 @@ DFRobot_ICG20660L_IIC(uint8_t addr = IIC_ADDR_SDO_H, TwoWire *pWire = &Wire);
 DFRobot_ICG20660L_SPI(int csPin, SPIClass *spi);
 
 /**
- * @brief 初始化传感器，初始化后，所有传感器都被关闭，需通过enableSensor打开相应的配置. 
+ * @brief Init sensor, 初始化后，所有传感器都被关闭，需通过enableSensor打开相应的配置. 
  * @param mode: Enum variable,from eDataReadMode_t,配置读取传感器数据是从FIFO还是从寄存器。
  * @n     eRegMode:  配置为从寄存器读取传感器数据
  * @n     eFIFOMode: 从512字节FIFO读取数据,注意：从FIFO读取，加速度，陀螺仪、温度必须全部使能，且将其内部采样率必须配置成一致
