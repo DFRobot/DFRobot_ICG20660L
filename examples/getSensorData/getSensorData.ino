@@ -1,6 +1,6 @@
 /*!
  * @file getSensorData.ino
- * @brief 获取传感器的陀螺仪、加速度和板载温度。
+ * @brief Get the sensor's gyroscope, accelerometer, and onboard temperature.
  * @n connected table in SPI
  * -----------------------------------------------------------------------------------------------------
  *  sensor pin  |            MCU                    | ESP32 | ESP8266 |    M0   | micro:bit | Mega2560 |
@@ -61,9 +61,9 @@ void setup() {
   
   Serial.print("Initialization sensor...");
 /**
- * @brief 初始化传感器，初始化后，所有传感器都被关闭，需通过enableSensor打开相应的配置. 
- * @param mode: Enum variable,from eDataReadMode_t,配置读取传感器数据是从FIFO还是从寄存器。
- * @n     eRegMode:  配置为从寄存器读取传感器数据
+ * @brief Initialize the sensor. After initialization, all sensors are turned off, and the corresponding configuration needs to be turned on through enableSensor.. 
+ * @param mode: Enum variable,from eDataReadMode_t, Does configuration read sensor data from FIFO or register?
+ * @n     eRegMode:  Configuration reads sensor data from registers
  * @n     eFIFOMode: 从512字节FIFO读取数据,注意：从FIFO读取，加速度，陀螺仪、温度必须全部使能，且将其内部采样率必须配置成一致
  * @return status:
  * @n      0 :   Initialization sucess.
