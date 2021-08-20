@@ -21,7 +21,7 @@ Features:<br>
 ## Table of Contents
 
 * [Summary](#summary)
-* [Connected](#connected)
+* [Connection](#connection)
 * [Installation](#installation)
 * [Methods](#methods)
 * [Compatibility](#compatibility)
@@ -63,7 +63,7 @@ To use this library, first download the library file, paste it into the \Arduino
 
 ```C++
 /**
- * @brief The constructor of the ICG20660L sensor using IIC communication.
+ * @brief The constructor of the ICG20660L sensor, using IIC communication.
  * @param addr:  7-bit IIC address, controlled by SDO pin.
  * @n     IIC_ADDR_SDO_H or 0x69:  SDO pull high.(default)
  * @n     IIC_ADDR_SDO_L or 0x68:  SDO pull down.
@@ -72,7 +72,7 @@ To use this library, first download the library file, paste it into the \Arduino
 DFRobot_ICG20660L_IIC(uint8_t addr = IIC_ADDR_SDO_H, TwoWire *pWire = &Wire);
 
 /**
- * @brief The constructor of the ICG20660L sensor using SPI communication.
+ * @brief The constructor of the ICG20660L sensor, using SPI communication.
  * @param csPin:  SPI chip select pin, connected to IO pin of MCU.
  * @param spi: SPIClass class pointer.
  */
@@ -97,7 +97,7 @@ int begin(eDataReadMode_t  mode = eRegMode);
 uint8_t readID();
 
 /**
- * @brief Enable sensor, Include Accel of xyz axis, Gyro of xyz, temperature. 
+ * @brief Enable sensor, including Accel of xyz axis, Gyro of xyz, temperature. 
  * @param bit: 8-bit byte data. Each bit represents enabling a function bit, as shown in the following table:
  * @n -------------------------------------------------------------------------------------------------------------------
  * @n |       bit7      |     bit6     |      bit5   |    bit4     |     bit3    |     bit2   |    bit1    |    bit0    |
@@ -128,7 +128,7 @@ uint8_t readID();
 void enableSensor(uint8_t bit);
 
 /**
- * @brief Disable sensor, Include Accel of xyz axis, Gyro of xyz, temperature. 
+ * @brief Disable sensor, including Accel of xyz axis, Gyro of xyz, temperature. 
  * @param bit: 8-bit byte data. Each bit represents enabling a function bit, as shown in the following table:
  * @n -------------------------------------------------------------------------------------------------------------------
  * @n |       bit7      |     bit6     |      bit5   |    bit4     |     bit3    |     bit2   |    bit1    |    bit0    |
@@ -159,7 +159,7 @@ void enableSensor(uint8_t bit);
 void disableSensor(uint8_t bit);
 
 /**
- * @brief Config of gyro's full scale 、dlpf bandwidth and internal sample rate. 
+ * @brief Config of gyro's full scale, dlpf bandwidth and internal sample rate. 
  * @param scale  The full scale of gyro, unit: dps(Degrees per second).
  * @n     eFSR_G_125DPS:  The full scale range is ±125 dps.
  * @n     eFSR_G_250DPS:  The full scale range is ±250 dps.
@@ -177,7 +177,7 @@ void configGyro(eGyroFSR_t scale, eGyroBandwidth_t  bd);
 void configGyro(uint8_t scale, uint8_t  bd);
 
 /**
- * @brief Config of accel's full scale 、dlpf bandwidth and internal sample rate. 
+ * @brief Config of accel's full scale, dlpf bandwidth and internal sample rate. 
  * @param scale  The full scale of accel, unit: g(1g = 9.80665 m/s²).
  * @n     eFSR_A_2G:  The full scale range is ±2g.
  * @n     eFSR_A_4G:  The full scale range is ±4g.
