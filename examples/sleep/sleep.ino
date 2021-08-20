@@ -68,10 +68,10 @@ void setup() {
 /**
  * @brief Initialize the sensor. After initialization, all sensors are turned off, and the corresponding configuration needs to be turned on through enableSensor.
  * @param mode: Enum variable,from eDataReadMode_t,Does configuration read sensor data from FIFO or register?
- * @n     eRegMode:  Configuration reads sensor data from registers
+ * @n     eRegMode:  Configuration reads sensor data from registers.
  * @n     eFIFOMode: Read data from 512-byte FIFO. Note: Read from FIFO, accelerometer, gyroscope, and temperature must all be enabled, and the internal sampling rate must be configured to be consistent. 
  * @return status:
- * @n      0 :   Initialization sucess.
+ * @n      0 :   Initialization success.
  * @n      -1:   Interface Initialization failed(IIC or SPI).
  * @n      -2:   Failed to read the device ID, the ID is not 0x91
  */
@@ -175,7 +175,7 @@ void setup() {
  * @n ----------------------------------------------------------------------------|
  * @n |                           |  eODR_125Hz   |    true      |        7       |
  * @n |                           |-----------------------------------------------|
- * @n |bd of supporting low power consumption mode         |  eODR_250Hz   |    true      |        3       |
+ * @n |bd of supporting low power consumption mode|  eODR_250Hz   |    true      |        3       |
  * @n |                           |-----------------------------------------------|
  * @n |                           |  eODR_500Hz   |    true      |        1       |
  * @n |---------------------------------------------------------------------------|
