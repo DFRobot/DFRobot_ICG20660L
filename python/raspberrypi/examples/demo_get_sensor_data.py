@@ -58,13 +58,13 @@ icg = DFRobot_ICG20660L_SPI(cs = 22)
 
 if __name__ == "__main__":
   '''
-    @brief Initialize the sensor. After initialization, all sensors are turned off, and the corresponding configuration needs to be turned on through enableSensor.. 
+    @brief Initialize the sensor. After initialization, all sensors are turned off, and the corresponding configuration needs to be turned on through enableSensor.
     @param mode: Does configuration read sensor data from FIFO or register?
     @n     eREG_MODE :   Read sensor data from data register.
     @n     eFIFO_MODE:   Read sensor data from 512 bytes FIFO. Note:Read from FIFO, accelerometer, gyroscope, and temperature must all be enabled,
     @n and the internal sampling rate must be configured to be consistent. 
     @return status:
-    @n      0 : Initialization sucess.
+    @n      0 : Initialization success.
     @n      -1: Interface Initialization failed(IIC or SPI).
     @n      -2: Failed to read the device ID, the ID is not 0x91
   '''
