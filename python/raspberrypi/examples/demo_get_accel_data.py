@@ -2,7 +2,7 @@
 
 '''
   # @file demo_get_accel_data.py
-  # @brief Get the accelerometer data of the sensor, only applicable to register mode (this demo does not support FIFO reading mode).
+  # @brief Get the accelerometer data of the sensor, only applicable to register mode (This demo does not support FIFO reading mode).
   # @n Hardware conneted table in SPI
   # @n --------------------------------------------------------------
   # @n  Sensor      |             MCU                | raspberry pi |
@@ -64,7 +64,7 @@ if __name__ == "__main__":
     @n     eFIFO_MODE:   Read sensor data from 512 bytes FIFO. Note:Read from FIFO, accelerometer, gyroscope, and temperature must all be enabled, 
     @n and the internal sampling rate must be configured to be consistent.
     @return status:
-    @n      0 : Initialization sucess.
+    @n      0 : Initialization success.
     @n      -1: Interface Initialization failed(IIC or SPI).
     @n      -2: Failed to read the device ID, the ID is not 0x91
   '''
