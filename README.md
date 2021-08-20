@@ -1,11 +1,11 @@
 # DFRobot_ICG20660L.h
-6-axis MEMS sensor library for Arduino. ICG20660L combines a 3-axis gyroscope, 3-axis accelerometer.<br>
-It support two communication interface: IIC(100~400KHz) and SPI(7MHz)<br>
+This is a 6-axis MEMS sensor library for Arduino. ICG20660L combines a 3-axis gyroscope and 3-axis accelerometer.<br>
+It supports two communication interface: IIC(100~400KHz) and SPI(7MHz)<br>
 Features:<br>
-* Accelerometer scale range: ±2g、±4g、±8g、±16g, g = 9.80665 m/s².<br>
-* Gyro scale range: ±125dps、±250dps、±500dps, 1dps = Π/180° rad/s, Π = 3.1415926<br>
+* Accelerometer scale range: ±2g， ±4g, ±8g, ±16g, g = 9.80665 m/s².<br>
+* Gyro scale range: ±125dps, ±250dps, ±500dps, 1dps = Π/180° rad/s, Π = 3.1415926<br>
 * Support 512 bytes FIFO.<br>
-* Support wake on motion for accelerometer. 1.Condition: If the threshold difference of measured accelerometer between the previous and the next is greater than or equal to the set threshold, an interrupt will be generated.<br>
+* Support wake on motion for accelerometer. 1. Condition: If the threshold difference of measured accelerometer between the previous and the next is greater than or equal to the set threshold, an interrupt will be generated.<br>
 * X, Y, Z axes of accelerometer and gyroscope can be enabled and disabled individually. Temperature’ s X, Y,Z axes can be disabled individually but must be enabled with one of the axis data. Disabling one axis or temperature can reduce power consumption.<br>
 * Support to enter low-power sleep mode. In this mode, sensors like gyroscope, accelerometer, temperature will stop sampling.<br>
 * Accelerometer supports low power consumption mode, in which the gyroscope will be forbidden to work.<br>
