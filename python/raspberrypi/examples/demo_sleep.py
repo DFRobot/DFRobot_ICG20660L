@@ -223,7 +223,7 @@ void loop() {
   while icg.begin(icg.eREG_MODE) != 0:
     print("Initialization 6-axis sensor failed.")
     time.sleep(1)
-  print("Initialization 6-axis sensor sucess.")
+  print("Initialization 6-axis sensor success.")
   print("ICG20660L Device ID: %#x"%icg.read_id())
   '''
     @brief Enable sensor, Include Accel of xyz axis, Gyro of xyz, temperature and fifo low power enable bit. 
@@ -315,7 +315,7 @@ void loop() {
  * @n ----------------------------------------------------------------------------|
  * @n |                           |  eODR_125Hz   |    true      |        7       |
  * @n |                           |-----------------------------------------------|
- * @n |bd of supporting low power consumption mode         |  eODR_250Hz   |    true      |        3       |
+ * @n |bd of supporting low power consumption mode|  eODR_250Hz   |    true      |        3       |
  * @n |                           |-----------------------------------------------|
  * @n |                           |  eODR_500Hz   |    true      |        1       |
  * @n |---------------------------------------------------------------------------|
