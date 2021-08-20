@@ -1,6 +1,6 @@
 /*!
  * @file getAccelData.ino
- * @brief Get the accelerometer data of the sensor, only applicable to register mode (this demo does not support FIFO reading mode).
+ * @brief Get the accelerometer data of the sensor, only applicable to register mode (This demo does not support FIFO reading mode).
  *
  * @n connected table in SPI
  * -----------------------------------------------------------------------------------------------------
@@ -66,10 +66,10 @@ void setup() {
 /**
  * @brief Initialize the sensor. After initialization, all sensors are turned off, and the corresponding configuration needs to be turned on through enableSensor.
  * @param mode: Enum variable,from eDataReadMode_t, Does configuration read sensor data from FIFO or register?
- * @n     eRegMode:  Configuration reads sensor data from registers
- * @n     eFIFOMode: Read data from 512-byte FIFO. Note: Read from FIFO, accelerometer, gyroscope, and temperature must all be enabled, and the internal sampling rate must be configured to be consistent.(this demo does not support)
+ * @n     eRegMode:  Configuration reads sensor data from registers.
+ * @n     eFIFOMode: Read data from 512-byte FIFO. Note: Read from FIFO, accelerometer, gyroscope, and temperature must all be enabled, and the internal sampling rate must be configured to be consistent.(This demo does not support)
  * @return status:
- * @n      0 :   Initialization sucess.
+ * @n      0 :   Initialization success.
  * @n      -1:   Interface Initialization failed(IIC or SPI).
  * @n      -2:   Failed to read the device ID, the ID is not 0x91
  */
@@ -123,10 +123,10 @@ void setup() {
  * @n     eFSR_A_16G:  The full scale range is ±16g.
  * @param bd  Set 3-db bandwidth.
  * @n     eAccel_DLPF_5_1KHZ or 0:    When the signal is less than or equal to 5Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
- * @n     eAccel_DLPF_10_1KHZ or 1:    When the signal is less than or equal to 10Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
- * @n     eAccel_DLPF_21_1KHZ or 2:    When the signal is less than or equal to 21Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
- * @n     eAccel_DLPF_44_1KHZ or 3:    When the signal is less than or equal to 44Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
- * @n     eAccel_DLPF_99_1KHZ or 4:    When the signal is less than or equal to 99Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
+ * @n     eAccel_DLPF_10_1KHZ or 1:   When the signal is less than or equal to 10Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
+ * @n     eAccel_DLPF_21_1KHZ or 2:   When the signal is less than or equal to 21Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
+ * @n     eAccel_DLPF_44_1KHZ or 3:   When the signal is less than or equal to 44Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
+ * @n     eAccel_DLPF_99_1KHZ or 4:   When the signal is less than or equal to 99Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
  * @n     eAccel_DLPF_218_1KHZ or 5:  When the signal is less than or equal to 218Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Support low power consumption mode
  * @n     eAccel_DLPF_420_1KHZ or 6:  When the signal is less than or equal to 420Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Support low power consumption mode
  * @n     eAccel_DLPF_1046_4KHZ or 7: When the signal is less than or equal to 1046Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 4KHz. Support low power consumption mode
@@ -156,7 +156,7 @@ void setup() {
  * @n ----------------------------------------------------------------------------|
  * @n |                           |  eODR_125Hz   |    true      |        7       |
  * @n |                           |-----------------------------------------------|
- * @n |  bd of supporting low power consumption mode      |  eODR_250Hz   |    true      |        3       |
+ * @n |bd of supporting low power consumption mode|  eODR_250Hz   |    true      |        3       |
  * @n |                           |-----------------------------------------------|
  * @n |                           |  eODR_500Hz   |    true      |        1       |
  * @n |---------------------------------------------------------------------------|
