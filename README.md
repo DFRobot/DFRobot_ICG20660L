@@ -10,7 +10,7 @@ Features:<br>
 * Support low-power sleep mode. In this mode, sensors like gyroscope, accelerometer, temperature will stop sampling.<br>
 * Accelerometer supports low power consumption mode, in which the gyroscope will be forbidden to work.<br>
 * IIC address can be changed by changing the level of SDO. If in level high, the address is 0x69 and if low, then 0x68.<br>
-* Support to read data from registers or FIFO, but reading from FIFO must enable all functions including accelerometer, gyroscope and temperature, and the internal sampling of gyroscope and accelerometer needs setting to be the same.<br>
+* Support to read data from registers or FIFO, but for reading from FIFO, you must enable all functions including accelerometer, gyroscope and temperature, and the internal sampling settings of gyroscope and accelerometer should be the same.<br>
 
 ![Front and Back svg effect drawing](https://github.com/Arya11111/DFRobot_MCP23017/blob/master/resources/images/SEN0245svg1.png)
 
@@ -29,12 +29,12 @@ Features:<br>
 * [Credits](#credits)
 
 ## Summary
-This is a 6-axis MEMS sensor ICG-20660L library. It can only support IIC and SPI communication.<br>
-It can detect accelerometer, gyroscope, and onboard temperature.<br>
+This is a 6-axis MEMS sensor ICG-20660L library. It supports IIC and SPI communication.<br>
+It has a 3-axis accelerometer, 3-axis gyroscope, and onboard temperature.<br>
 
-## Connected
-Hardware conneted table<br>
-### hardware conneted table in SPI
+## Connection
+Hardware connection table<br>
+### Hardware connection table in SPI
  Sensor      |                      MCU                          |
 ------------ | :------------------------------------------------:|
 FSY          | not connected, floating                           |
@@ -45,7 +45,7 @@ SDI          | connected to mosi of mcu'spi                      |
 SCK          | connected to sck of mcu'spi                       |
 GND          | GND                                               |
 3V3/VCC      | 3V3/VCC                                           |
-### hardware conneted table in IIC
+### Hardware connection table in IIC
  Sensor      |                      MCU                          |
 ------------ | :------------------------------------------------:|
 FSY          | not connected, floating                           |
