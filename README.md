@@ -6,7 +6,8 @@ Features:<br>
 * Gyro scale range: ±125dps, ±250dps, ±500dps, 1dps = Π/180° rad/s, Π = 3.1415926<br>
 * Support 512 bytes FIFO.<br>
 * Support wake on motion for accelerometer. 1. Condition: If the threshold difference of measured accelerometer between the previous and the next is greater than or equal to the set threshold, an interrupt will be generated.<br>
-* X, Y, Z axes of accelerometer and gyroscope can be enabled and disabled individually. Temperature can be disabled individually, but it must be used with one of the axis data. Disabling one axis or temperature can reduce power consumption.<br>
+* X, Y, Z axes of accelerometer and gyroscope can be enabled and disabled individually. Temperature can be disabled individually, but it must be used with one of the axis data. 
+* Disabling one axis or temperature can reduce power consumption.<br>
 * Support low-power sleep mode. In this mode, sensors like gyroscope, accelerometer, temperature will stop sampling.<br>
 * Accelerometer supports low power consumption mode, in which the gyroscope will be forbidden to work.<br>
 * IIC address can be changed by changing the level of SDO. If in level high, the address is 0x69 and if low, then 0x68.<br>
@@ -79,10 +80,12 @@ DFRobot_ICG20660L_IIC(uint8_t addr = IIC_ADDR_SDO_H, TwoWire *pWire = &Wire);
 DFRobot_ICG20660L_SPI(int csPin, SPIClass *spi);
 
 /**
- * @brief Init sensor, after initialization, all sensors are turned off, and the corresponding configuration needs to be turned on through enableSensor.
- * @param mode: Enum variable,from eDataReadMode_t, Does configuration read sensor data from FIFO or register?
- * @n     eRegMode:  Configuration reads sensor data from registers.
- * @n     eFIFOMode: Read data from 512-byte FIFO. Note: Read from FIFO, accelerometer, gyroscope, and temperature must all be enabled, and the internal sampling rate must be configured to be consistent. 
+ * @brief Init sensor, after initialization, all sensors are turned off, and the corresponding configuration
+ * @n needs to be turned on through enableSensor.
+ * @param mode: Enum variable,from eDataReadMode_t, configure to read sensor data from FIFO or register?
+ * @n     eRegMode:  Read sensor data from registers.
+ * @n     eFIFOMode: Read data from 512-byte FIFO. Note: Read from FIFO, accelerometer, gyroscope, 
+ * @n and temperature must all be enabled, and the internal sampling rate must be configured to be consistent. 
  * @return status:
  * @n      0 :   Initialization sucess.
  * @n      -1:   Interface Initialization failed(IIC or SPI).
