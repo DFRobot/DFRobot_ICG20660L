@@ -83,7 +83,7 @@ DFRobot_ICG20660L_SPI(int csPin, SPIClass *spi);
  * @brief Init sensor, after initialization, all sensors are turned off, and the corresponding configuration
  * @n needs to be turned on through enableSensor.
  * @param mode: Enum variable,from eDataReadMode_t, configure to read sensor data from FIFO or register?
- * @n     eRegMode:  Read sensor data from registers.
+ * @n     eRegMode: Read sensor data from registers.
  * @n     eFIFOMode: Read data from 512-byte FIFO. Note: Read from FIFO, accelerometer, gyroscope, 
  * @n and temperature must all be enabled, and the internal sampling rate must be configured to be consistent. 
  * @return status:
@@ -126,7 +126,8 @@ uint8_t readID();
  * @n   eAccelAxisX: The bit5 of the bit, enable Accel's X axis.
  * @n   eGyroAxisXYZ or eGyroAxisX|eGyroAxisY|eGyroAxisZ: The bit0/bit1/bit2 of the bit, enable gyro's xyz axis and temperature.
  * @n   eAccelAxisXYZ or eAccelAxisX|eAccelAxisY|eAccelAxisZ: The bit3/bit4/bit5 of the bit, enable Accel's xyz axis.
- * @n   eAxisAll or eGyroAxisX|eGyroAxisY|eGyroAxisZ|eAccelAxisX|eAccelAxisY|eAccelAxisZ: The bit0/bit1/bit2/bit3/bit4/bit5 of the bit, enable temperature, Accel's and gyro's xyz axis. 
+ * @n   eAxisAll or eGyroAxisX|eGyroAxisY|eGyroAxisZ|eAccelAxisX|eAccelAxisY|eAccelAxisZ: The bit0/bit1/bit2/bit3/bit4/bit5 of the bit,
+ * @n enable temperature, Accel's and gyro's xyz axis. 
  */
 void enableSensor(uint8_t bit);
 
@@ -148,7 +149,8 @@ void enableSensor(uint8_t bit);
  * @n   bit5:  Z-axis of acceleration.
  * @n   bit6:  reserve.
  * @n   bit7:  reserve.
- * @n Note: Only when the X, Y, and Z axes of the gyroscope are all closed, the temperature sensor will be turned off. Any axis’s turning on will make the temperature sensor not be turned off.
+ * @n Note: Only when the X, Y, and Z axes of the gyroscope are all closed, the temperature sensor will be turned off. 
+ * @n Any axis’s turning on will make the temperature sensor not be turned off.
  * @n   eGyroAxisZ: The bit0 of the bit, disable gyro's z axis.
  * @n   eGyroAxisY: The bit1 of the bit, disable gyro's y axis.
  * @n   eGyroAxisX: The bit2 of the bit, disable gyro's X axis.
@@ -157,7 +159,8 @@ void enableSensor(uint8_t bit);
  * @n   eAccelAxisX: The bit5 of the bit, disable Accel's X axis.
  * @n   eGyroAxisXYZ or eGyroAxisX|eGyroAxisY|eGyroAxisZ: The bit0/bit1/bit2 of the bit, disable gyro's xyz axis and temperature.
  * @n   eAccelAxisXYZ or eAccelAxisX|eAccelAxisY|eAccelAxisZ: The bit3/bit4/bit5 of the bit, disable Accel's xyz axis.
- * @n   eAxisAll or eGyroAxisX|eGyroAxisY|eGyroAxisZ|eAccelAxisX|eAccelAxisY|eAccelAxisZ: The bit0/bit1/bit2/bit3/bit4/bit5 of the bit, disable temperature, Accel's and gyro's xyz axis. 
+ * @n   eAxisAll or eGyroAxisX|eGyroAxisY|eGyroAxisZ|eAccelAxisX|eAccelAxisY|eAccelAxisZ: The bit0/bit1/bit2/bit3/bit4/bit5 of the bit, 
+ * @n disable temperature, Accel's and gyro's xyz axis. 
  */
 void disableSensor(uint8_t bit);
 
@@ -249,9 +252,12 @@ void wakeup();
 /**
  * @brief Set the level polarity of the INT pin when the accelerometer sensor is triggered to wake up the motion interrupt.
  * @param polarity: the level signal of the sensor INT pin when the wake-up motion is triggered
- * @n     HIGH:The initial signal of the pin is LOW. When an accelerometer wake-up motion occurs, the level signal of the INT pin will change to HIGH. Then the readINTStatus function needs to be called to clear the signal and restore the initial signal.
- * @n     LOW: The initial signal of the pin is HIGH. When an accelerometer wake-up motion occurs, the level signal of the INT pin will change to LOW. Then the readINTStatus function needs to be called to clear the signal and restore the initial signal.
- * @n Note: After triggering the accelerometer wake-up motion, if the read_int_status function is not called to clear the sign, the INT pin will always maintain the level polarity when the motion is triggered.
+ * @n     HIGH:The initial signal of the pin is LOW. When an accelerometer wake-up motion occurs, the level signal of the INT pin will change to HIGH. 
+ * @n Then the readINTStatus function needs to be called to clear the signal and restore the initial signal.
+ * @n     LOW: The initial signal of the pin is HIGH. When an accelerometer wake-up motion occurs, the level signal of the INT pin will change to LOW. 
+ * @n Then the readINTStatus function needs to be called to clear the signal and restore the initial signal.
+ * @n Note: After triggering the accelerometer wake-up motion, if the read_int_status function is not called to clear the sign, 
+ * @n the INT pin will always maintain the level polarity when the motion is triggered.
  */
 void setINTPinMotionTriggerPolarity(int polarity);
   
