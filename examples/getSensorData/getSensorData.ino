@@ -71,7 +71,7 @@ void setup() {
  * @n      -2:   Failed to read the device ID, the ID is not 0x91
  */
   while(icg.begin(/*mode=*/icg.eRegMode) != 0){
-      Serial.println("failed. Please check whether the hardware connection is wrong.");
+      Serial.println("failed. Please check the hardware connection.");
       delay(1000);
       Serial.print("Initialization sensor...");
   }
