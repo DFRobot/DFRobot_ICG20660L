@@ -2,7 +2,7 @@
  * @file getAccelData.ino
  * @brief Get the accelerometer data of the sensor, only applicable to register mode (This demo does not support FIFO reading mode).
  *
- * @n connected table in SPI
+ * @n connection table in SPI
  * -----------------------------------------------------------------------------------------------------
  *  sensor pin  |            MCU                    | ESP32 | ESP8266 |    M0   | micro:bit | Mega2560 |
  *    FSY       | not connected, floating           |   X   |    X    |    X    |     X     |     X    |
@@ -15,7 +15,7 @@
  *    3V3/VCC   | 3V3/VCC                           |  3V3  |   3V3   |   3V3   |    3V3    |    5V    |
  * -----------------------------------------------------------------------------------------------------
  *
- * @n connected table in IIC
+ * @n connection table in IIC
  * ---------------------------------------------------------------------------------------------------
  * sensor pin |            MCU                    | ESP32 | ESP8266 |    M0   | micro:bit | Mega2560 |
  *    FSY     | not connected, floating           |   X   |    X    |    X    |     X     |     X    |
@@ -37,12 +37,12 @@
 #include "DFRobot_ICG20660L.h"
 
 #ifdef ARDUINO_BBC_MICROBIT
-#define CS_PIN      8                      //The CS pin of sensor which is connected to the 8 digital io pin of micro:bit,and also can connected to other pin.
+#define CS_PIN      8                      //The CS pin of sensor which is connected to the 8 digital io pin of micro:bit, and also can be connected to other pin.
 #else
-#define CS_PIN      5                      //The CS pin of sensor which is connected to the 5 digital io pin of MCU,and also can connected to other pin.
+#define CS_PIN      5                      //The CS pin of sensor which is connected to the 5 digital io pin of MCU, and also can be connected to other pin.
 #endif
 /**
- * @brief The constructor of the ICG20660L sensor using IIC communication.
+ * @brief The constructor of the ICG20660L sensor, using IIC communication.
  * @param addr:  7-bit IIC address, controlled by SDO pin.
  * @n     IIC_ADDR_SDO_H or 0x69:  SDO pull high.(default)
  * @n     IIC_ADDR_SDO_L or 0x68:  SDO pull down.
@@ -50,8 +50,8 @@
  */
 DFRobot_ICG20660L_IIC icg(/*addr=*/IIC_ADDR_SDO_H, &Wire);
 /**
- * @brief The constructor of the ICG20660L sensor using SPI communication.
- * @param csPin:  SPI chip select pin, connected to IO pin of MCU.
+ * @brief The constructor of the ICG20660L sensor, using SPI communication.
+ * @param csPin: SPI chip select pin, connect to IO pin of MCU.
  * @param spi: SPIClass class pointer.
  */
 //DFRobot_ICG20660L_SPI icg(/*csPin=*/CS_PIN, &SPI);
