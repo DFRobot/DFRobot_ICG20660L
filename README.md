@@ -6,7 +6,7 @@ Features:<br>
 * Gyro scale range: ±125dps, ±250dps, ±500dps, 1dps = Π/180° rad/s, Π = 3.1415926<br>
 * Support 512 bytes FIFO.<br>
 * Support wake on motion for accelerometer. 1. Condition: If the threshold difference of measured accelerometer between the previous and the next is greater than or equal to the set threshold, an interrupt will be generated.<br>
-* X, Y, Z axes of accelerometer and gyroscope can be enabled and disabled individually. Temperature can be disabled individually, but it must be use with one of the axis data. Disabling one axis or temperature can reduce power consumption.<br>
+* X, Y, Z axes of accelerometer and gyroscope can be enabled and disabled individually. Temperature can be disabled individually, but it must be used with one of the axis data. Disabling one axis or temperature can reduce power consumption.<br>
 * Support low-power sleep mode. In this mode, sensors like gyroscope, accelerometer, temperature will stop sampling.<br>
 * Accelerometer supports low power consumption mode, in which the gyroscope will be forbidden to work.<br>
 * IIC address can be changed by changing the level of SDO. If in level high, the address is 0x69 and if low, then 0x68.<br>
