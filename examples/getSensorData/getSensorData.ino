@@ -38,7 +38,7 @@
 #ifdef ARDUINO_BBC_MICROBIT
 #define CS_PIN      8                      //The CS pin of sensor which is connected to the 8 digital io pin of micro:bit can also be connected to other pin.
 #else
-#define CS_PIN      5                      //The CS pin of sensor which is connected to the 5 digital io pin of MCU, can also be connected to other pin.
+#define CS_PIN      5                      //The CS pin of sensor which is connected to the 5 digital io pin of MCU can also be connected to other pin.
 #endif
 /**
  * @brief The constructor of the ICG20660L sensor, using IIC communication.
