@@ -34,7 +34,7 @@ It has a 3-axis accelerometer, 3-axis gyroscope, and onboard temperature.<br>
 
 ## Connection
 Hardware connetion table<br>
-### hardware connetion table in SPI
+### Hardware connetion table in SPI
  Sensor      |                   raspberry pi                    |
 ------------ | :------------------------------------------------:|
 FSY          | not connected, floating                           |
@@ -45,7 +45,7 @@ SDI          | connected to mosi of mcu'spi                      |
 SCK          | connected to sck of mcu'spi                       |
 GND          | GND                                               |
 3V3/VCC      | 3V3/VCC                                           |
-### hardware connetion table in IIC
+### Hardware connetion table in IIC
  Sensor      |                   raspberry pi                    |
 ------------ | :------------------------------------------------:|
 FSY          | not connected, floating                           |
