@@ -39,7 +39,7 @@
 #ifdef ARDUINO_BBC_MICROBIT
 #define CS_PIN      8                      //The CS pin of sensor which is connected to the 8 digital io pin of micro:bit can also be connected to other pin.
 #else
-#define CS_PIN      5                      //The CS pin of sensor which is connected to the 5 digital io pin of MCU, can also be connected to other pin.
+#define CS_PIN      5                      //The CS pin of sensor which is connected to the 5 digital io pin of MCU can also be connected to other pin.
 #endif
 /**
  * @brief The constructor of the ICG20660L sensor, using IIC communication.
@@ -51,7 +51,7 @@
 DFRobot_ICG20660L_IIC icg(/*addr=*/IIC_ADDR_SDO_H, &Wire);
 /**
  * @brief The constructor of the ICG20660L sensor, using SPI communication.
- * @param csPin:  SPI chip select pin, connected to IO pin of MCU.
+ * @param csPin: SPI chip select pin, connected to IO pin of MCU.
  * @param spi: SPIClass class pointer.
  */
 //DFRobot_ICG20660L_SPI icg(/*csPin=*/CS_PIN, &SPI);
@@ -65,11 +65,11 @@ void setup() {
  * @brief Initialize the sensor. After initialization, all sensors are turned off, and the corresponding configuration needs to be turned on through enableSensor.
  * @param mode: Enum variable,from eDataReadMode_t, configure to read sensor data from FIFO or register?
  * @n     eRegMode: Read sensor data from registers.
- * @n     eFIFOMode: Read data from 512-byte FIFO. Note: Read from FIFO, accelerometer, gyroscope, and temperature must all be enabled,
+ * @n     eFIFOMode: Read data from 512-byte FIFO. Note: Read from FIFO, accelerometer, gyroscope and temperature must all be enabled,
  * @n and the internal sampling rate must be configured to be consistent. 
  * @return status:
  * @n      0 :   Initialization success.
- * @n      -1:   Interface Initialization failed(IIC or SPI).
+ * @n      -1:   Interface initialization failed(IIC or SPI).
  * @n      -2:   Failed to read the device ID, the ID is not 0x91
  */
   while(icg.begin(/*mode=*/icg.eRegMode) != 0){
@@ -122,12 +122,12 @@ void setup() {
  * @n     eFSR_G_250DPS:  The full scale range is ±250 dps.
  * @n     eFSR_G_500DPS:  The full scale range is ±500 dps.
  * @param bd  Set 3-db bandwidth.
- * @n     eGyro_DLPF_8173_32KHZ:  When the signal is equal to or greater than 8173Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 32KHz.
- * @n     eGyro_DLPF_3281_32KHZ:  When the signal is equal to or greater than 3281Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 32KHz.
- * @n     eGyro_DLPF_250_8KHZ:    When the signal is equal to or greater than 250Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 8KHz.
- * @n     eGyro_DLPF_176_1KHZ:    When the signal is equal to or greater than 176Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
- * @n     eGyro_DLPF_92_1KHZ:     When the signal is equal to or greater than 92Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
- * @n     eGyro_DLPF_3281_8KHZ:   When the signal is equal to or greater than 3281Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 8KHz.
+ * @n     eGyro_DLPF_8173_32KHZ: When the signal is equal to or greater than 8173Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 32KHz.
+ * @n     eGyro_DLPF_3281_32KHZ: When the signal is equal to or greater than 3281Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 32KHz.
+ * @n     eGyro_DLPF_250_8KHZ: When the signal is equal to or greater than 250Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 8KHz.
+ * @n     eGyro_DLPF_176_1KHZ: When the signal is equal to or greater than 176Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
+ * @n     eGyro_DLPF_92_1KHZ: When the signal is equal to or greater than 92Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
+ * @n     eGyro_DLPF_3281_8KHZ: When the signal is equal to or greater than 3281Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 8KHz.
  * @n Note: When the gyroscope and accelerometer are both enabled, if the sensor data is read through the FIFO,
  * @n the internal sampling rate of the gyroscope and accelerometer must be the same.
  */
@@ -140,15 +140,15 @@ void setup() {
  * @n     eFSR_A_8G:  The full scale range is ±8g.
  * @n     eFSR_A_16G:  The full scale range is ±16g.
  * @param bd  Set 3-db bandwidth.
- * @n     eAccel_DLPF_5_1KHZ or 0:    When the signal is less than or equal to 5Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
- * @n     eAccel_DLPF_10_1KHZ or 1:   When the signal is less than or equal to 10Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
- * @n     eAccel_DLPF_21_1KHZ or 2:   When the signal is less than or equal to 21Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
- * @n     eAccel_DLPF_44_1KHZ or 3:   When the signal is less than or equal to 44Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
- * @n     eAccel_DLPF_99_1KHZ or 4:   When the signal is less than or equal to 99Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
- * @n     eAccel_DLPF_218_1KHZ or 5:  When the signal is less than or equal to 218Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Support low power consumption mode
- * @n     eAccel_DLPF_420_1KHZ or 6:  When the signal is less than or equal to 420Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Support low power consumption mode
+ * @n     eAccel_DLPF_5_1KHZ or 0: When the signal is less than or equal to 5Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
+ * @n     eAccel_DLPF_10_1KHZ or 1: When the signal is less than or equal to 10Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
+ * @n     eAccel_DLPF_21_1KHZ or 2: When the signal is less than or equal to 21Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
+ * @n     eAccel_DLPF_44_1KHZ or 3: When the signal is less than or equal to 44Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
+ * @n     eAccel_DLPF_99_1KHZ or 4: When the signal is less than or equal to 99Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
+ * @n     eAccel_DLPF_218_1KHZ or 5: When the signal is less than or equal to 218Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Support low power consumption mode
+ * @n     eAccel_DLPF_420_1KHZ or 6: When the signal is less than or equal to 420Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Support low power consumption mode
  * @n     eAccel_DLPF_1046_4KHZ or 7: When the signal is less than or equal to 1046Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 4KHz. Support low power consumption mode
- * @n     eAccel_DLPF_55_1KHZ or 8:   When the signal is less than or equal to 55Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Only support low power consumption mode
+ * @n     eAccel_DLPF_55_1KHZ or 8: When the signal is less than or equal to 55Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Only support low power consumption mode
  * @n     eAccel_DLPF_110_1KHZ or 9: When the signal is less than or equal to 110Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Only support low power consumption mode
  * @n Note: When the gyroscope and accelerometer are both enabled, if the sensor data is read through the FIFO, 
  * @n the internal sampling rate of the gyroscope and accelerometer must be the same.
@@ -166,7 +166,7 @@ void setup() {
  * @param div  Sample rate divider, the range is 0~255.
  * @n   Sampling rate = internal sampling rate/(div+1)
  * @n Note: If the accelerometer configuration is in low power consumption mode, that is, the formal parameter lowPowerFlag of the configAccel function is true, 
- * @n the sampling rate must match the output rate of the formal parameter odr of configAccel , as shown in the following table:
+ * @n the sampling rate must match the output rate of the formal parameter odr of configAccel, as shown in the following table:
  * @n ----------------------------------------------------------------------------
  * @n |                           configAccel                    |  setSampleDiv  |
  * @n ----------------------------------------------------------------------------|
@@ -187,7 +187,7 @@ void setup() {
 void loop() {
   uint8_t rawData[RAW_DATA_LENGTH];
 /**
- * @brief Get 14 bytes raw data, including accel, gyro, and temperature.
+ * @brief Get 14 bytes raw data, including accel, gyro and temperature.
  * @param data:  Buffer for storing 14 bytes of raw data.
  * @n     The first byte of data :  Acceleration X-axis high byte data.
  * @n     The second byte of data:  Acceleration X-axis low byte data.
