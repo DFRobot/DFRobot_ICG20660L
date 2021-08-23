@@ -140,7 +140,7 @@ if __name__ == "__main__":
     @param div  Sample rate divider, the range is 0~255.
     @n     Sampling rate = internal sampling rate/(div+1)
     @n Note: If the accelerometer is configured in low power consumption mode, that is, the formal parameter lowPowerFlag of the configAccel function is true,
-    @n the sampling rate must match the output rate of the formal parameter odr of configAccel , as shown in the following table:
+    @n the sampling rate must match the output rate of the formal parameter odr of configAccel, as shown in the following table:
  * @n ----------------------------------------------------------------------------
  * @n |                           configAccel                    |  setSampleDiv  |
  * @n ----------------------------------------------------------------------------|
