@@ -1,8 +1,8 @@
 /*!
  * @file getSensorRawData.ino
- * @brief Get 14-bytes raw data, which are X, y, z data of accelerometer and X, y, z data of temperature and gyroscope respectively.
+ * @brief Get 14-bytes raw data, which are X, y, z data of accelerometer and gyroscope, and temperature respectively.
  *
- * @n connected table in SPI
+ * @n connection table in SPI
  * -----------------------------------------------------------------------------------------------------
  *  sensor pin  |            MCU                    | ESP32 | ESP8266 |    M0   | micro:bit | Mega2560 |
  *    FSY       | not connected, floating           |   X   |    X    |    X    |     X     |     X    |
@@ -15,7 +15,7 @@
  *    3V3/VCC   | 3V3/VCC                           |  3V3  |   3V3   |   3V3   |    3V3    |    5V    |
  * -----------------------------------------------------------------------------------------------------
  *
- * @n connected table in IIC
+ * @n connection table in IIC
  * ---------------------------------------------------------------------------------------------------
  * sensor pin |            MCU                    | ESP32 | ESP8266 |    M0   | micro:bit | Mega2560 |
  *    FSY     | not connected, floating           |   X   |    X    |    X    |     X     |     X    |
@@ -37,20 +37,20 @@
 #include "DFRobot_ICG20660L.h"
 
 #ifdef ARDUINO_BBC_MICROBIT
-#define CS_PIN      8                      //The CS pin of sensor which is connected to the 8 digital io pin of micro:bit,and also can connected to other pin.
+#define CS_PIN      8                      //The CS pin of sensor which is connected to the 8 digital io pin of micro:bit can also be connected to other pin.
 #else
-#define CS_PIN      5                      //The CS pin of sensor which is connected to the 5 digital io pin of MCU,and also can connected to other pin.
+#define CS_PIN      5                      //The CS pin of sensor which is connected to the 5 digital io pin of MCU, can also be connected to other pin.
 #endif
 /**
- * @brief The constructor of the ICG20660L sensor using IIC communication.
+ * @brief The constructor of the ICG20660L sensor, using IIC communication.
  * @param addr:  7-bit IIC address, controlled by SDO pin.
  * @n     IIC_ADDR_SDO_H or 0x69:  SDO pull high.(default)
  * @n     IIC_ADDR_SDO_L or 0x68:  SDO pull down.
- * @param pWire:   TwoWire class pointer.
+ * @param pWire: TwoWire class pointer.
  */
 DFRobot_ICG20660L_IIC icg(/*addr=*/IIC_ADDR_SDO_H, &Wire);
 /**
- * @brief The constructor of the ICG20660L sensor using SPI communication.
+ * @brief The constructor of the ICG20660L sensor, using SPI communication.
  * @param csPin:  SPI chip select pin, connected to IO pin of MCU.
  * @param spi: SPIClass class pointer.
  */
@@ -63,16 +63,17 @@ void setup() {
   Serial.print("Initialization sensor...");
 /**
  * @brief Initialize the sensor. After initialization, all sensors are turned off, and the corresponding configuration needs to be turned on through enableSensor.
- * @param mode: Enum variable,from eDataReadMode_t,Does configuration read sensor data from FIFO or register?
- * @n     eRegMode:  Configuration reads sensor data from registers.
- * @n     eFIFOMode:  Read data from 512-byte FIFO. Note: Read from FIFO, accelerometer, gyroscope, and temperature must all be enabled, and the internal sampling rate must be configured to be consistent. (
+ * @param mode: Enum variable,from eDataReadMode_t, configure to read sensor data from FIFO or register?
+ * @n     eRegMode: Read sensor data from registers.
+ * @n     eFIFOMode: Read data from 512-byte FIFO. Note: Read from FIFO, accelerometer, gyroscope, and temperature must all be enabled,
+ * @n and the internal sampling rate must be configured to be consistent. 
  * @return status:
- * @n      0 :   Initialization sucCess.
+ * @n      0 :   Initialization success.
  * @n      -1:   Interface Initialization failed(IIC or SPI).
  * @n      -2:   Failed to read the device ID, the ID is not 0x91
  */
   while(icg.begin(/*mode=*/icg.eRegMode) != 0){
-      Serial.println("failed. Please check whether the hardware connection is wrong.");
+      Serial.println("failed. Please check the hardware connection.");
       delay(1000);
       Serial.print("Initialization sensor...");
   }
@@ -82,7 +83,7 @@ void setup() {
   Serial.println(icg.readID(), HEX);
   
 /**
- * @brief Enable sensor, Include Accel of xyz axis, Gyro of xyz, temperature. 
+ * @brief Enable sensor, including Accel of xyz axis, Gyro of xyz, temperature. 
  * @param bit: 8-bit byte data. Each bit represents enabling a function bit, as shown in the following table:
  * @n -------------------------------------------------------------------------------------------------------------------
  * @n |       bit7      |     bit6     |      bit5   |    bit4     |     bit3    |     bit2   |    bit1    |    bit0    |
@@ -108,13 +109,14 @@ void setup() {
  * @n   eAccelAxisX: The bit5 of the bit, enable Accel's X axis.
  * @n   eGyroAxisXYZ or eGyroAxisX|eGyroAxisY|eGyroAxisZ: The bit0/bit1/bit2 of the bit, enable gyro's xyz axis and temperature.
  * @n   eAccelAxisXYZ or eAccelAxisX|eAccelAxisY|eAccelAxisZ: The bit3/bit4/bit5 of the bit, enable Accel's xyz axis.
- * @n   eAxisAll or eGyroAxisX|eGyroAxisY|eGyroAxisZ|eAccelAxisX|eAccelAxisY|eAccelAxisZ: The bit0/bit1/bit2/bit3/bit4/bit5 of the bit, enable temperature, Accel's and gyro's xyz axis. 
+ * @n   eAxisAll or eGyroAxisX|eGyroAxisY|eGyroAxisZ|eAccelAxisX|eAccelAxisY|eAccelAxisZ: The bit0/bit1/bit2/bit3/bit4/bit5 of the bit, 
+ * @n enable temperature, Accel's and gyro's xyz axis. 
  */
   icg.enableSensor(icg.eAxisAll);
   //icg.enableSensor(icg.eGyroAxisXYZ|icg.eAccelAxisXYZ);
   //icg.enableSensor(icg.eGyroAxisX|icg.eGyroAxisY|icg.eGyroAxisZ|icg.eAccelAxisX|icg.eAccelAxisY|icg.eAccelAxisZ);
 /**
- * @brief Config of gyro's full scale 、dlpf bandwidth and internal sample rate. 
+ * @brief Config of gyro's full scale, dlpf bandwidth and internal sample rate. 
  * @param scale  The full scale of gyro, unit: dps(Degrees per second).
  * @n     eFSR_G_125DPS:  The full scale range is ±125 dps.
  * @n     eFSR_G_250DPS:  The full scale range is ±250 dps.
@@ -126,11 +128,12 @@ void setup() {
  * @n     eGyro_DLPF_176_1KHZ:    When the signal is equal to or greater than 176Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
  * @n     eGyro_DLPF_92_1KHZ:     When the signal is equal to or greater than 92Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
  * @n     eGyro_DLPF_3281_8KHZ:   When the signal is equal to or greater than 3281Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 8KHz.
- * @n Note: When the gyroscope and accelerometer are both enabled, if the sensor data is read through the FIFO, the internal sampling rate of the gyroscope and accelerometer must be the same.
+ * @n Note: When the gyroscope and accelerometer are both enabled, if the sensor data is read through the FIFO,
+ * @n the internal sampling rate of the gyroscope and accelerometer must be the same.
  */
   icg.configGyro(/*scale=*/icg.eFSR_G_250DPS, /*bd=*/icg.eGyro_DLPF_176_1KHZ);
 /**
- * @brief Config of accel's full scale 、dlpf bandwidth and internal sample rate. 
+ * @brief Config of accel's full scale, dlpf bandwidth and internal sample rate. 
  * @param scale  The full scale of accel, unit: g(1g = 9.80665 m/s²).
  * @n     eFSR_A_2G:  The full scale range is ±2g.
  * @n     eFSR_A_4G:  The full scale range is ±4g.
@@ -147,8 +150,9 @@ void setup() {
  * @n     eAccel_DLPF_1046_4KHZ or 7: When the signal is less than or equal to 1046Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 4KHz. Support low power consumption mode
  * @n     eAccel_DLPF_55_1KHZ or 8:   When the signal is less than or equal to 55Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Only support low power consumption mode
  * @n     eAccel_DLPF_110_1KHZ or 9: When the signal is less than or equal to 110Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Only support low power consumption mode
- * @n Note: When the gyroscope and accelerometer are both enabled, if the sensor data is read through the FIFO, the internal sampling rate of the gyroscope and accelerometer must be the same.
- * @param odr:  Sets the frequency of waking up the chip to take a sample of accel data – the low power accel Output Data Rate.
+ * @n Note: When the gyroscope and accelerometer are both enabled, if the sensor data is read through the FIFO, 
+ * @n the internal sampling rate of the gyroscope and accelerometer must be the same.
+ * @param odr:  Set the frequency of waking up the chip to take a sample of accel data – the low power accel Output Data Rate.
  * @n     eODR_125Hz or 9:    The low power accel Output Data Rate: 125Hz
  * @n     eODR_250Hz or 10:   The low power accel Output Data Rate: 250Hz
  * @n     eODR_500Hz or 11:   The low power accel Output Data Rate: 500Hz
@@ -161,7 +165,8 @@ void setup() {
  * @brief Set sample rate divider. 
  * @param div  Sample rate divider, the range is 0~255.
  * @n   Sampling rate = internal sampling rate/(div+1)
- * @n Note: If the accelerometer configuration is in low power consumption mode, that is, the formal parameter lowPowerFlag of the configAccel function is true, the sampling rate must match the output rate of the formal parameter odr of configAccel , as shown in the following table:
+ * @n Note: If the accelerometer configuration is in low power consumption mode, that is, the formal parameter lowPowerFlag of the configAccel function is true, 
+ * @n the sampling rate must match the output rate of the formal parameter odr of configAccel , as shown in the following table:
  * @n ----------------------------------------------------------------------------
  * @n |                           configAccel                    |  setSampleDiv  |
  * @n ----------------------------------------------------------------------------|
@@ -182,7 +187,7 @@ void setup() {
 void loop() {
   uint8_t rawData[RAW_DATA_LENGTH];
 /**
- * @brief Get 14 bytes raw data, include accel, gyro, and temperature.
+ * @brief Get 14 bytes raw data, including accel, gyro, and temperature.
  * @param data:  Buffer for storing 14 bytes of raw data.
  * @n     The first byte of data :  Acceleration X-axis high byte data.
  * @n     The second byte of data:  Acceleration X-axis low byte data.
