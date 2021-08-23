@@ -1,6 +1,6 @@
 # DFRobot_ICG20660L.h
 This is a 6-axis MEMS sensor library for Arduino. ICG20660L combines a 3-axis gyroscope and 3-axis accelerometer.<br>
-It supports two communication interface: IIC(100~400KHz) and SPI(7MHz)<br>
+It supports two communication interfaces: IIC(100~400KHz) and SPI(7MHz)<br>
 Features:<br>
 * Accelerometer scale range: ±2g， ±4g, ±8g, ±16g, g = 9.80665 m/s².<br>
 * Gyro scale range: ±125dps, ±250dps, ±500dps, 1dps = Π/180° rad/s, Π = 3.1415926<br>
@@ -87,7 +87,7 @@ DFRobot_ICG20660L_SPI(int csPin, SPIClass *spi);
  * @n     eFIFOMode: Read data from 512-byte FIFO. Note: Read from FIFO, accelerometer, gyroscope, 
  * @n and temperature must all be enabled, and the internal sampling rate must be configured to be consistent. 
  * @return status:
- * @n      0 :   Initialization sucess.
+ * @n      0 :   Initialization success.
  * @n      -1:   Interface Initialization failed(IIC or SPI).
  * @n      -2:   Failed to read the device ID, the ID is not 0x91
  */
@@ -177,7 +177,8 @@ void disableSensor(uint8_t bit);
  * @n     eGyro_DLPF_176_1KHZ:   When the signal is equal to or greater than 176Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
  * @n     eGyro_DLPF_92_1KHZ:    When the signal is equal to or greater than 92Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
  * @n     eGyro_DLPF_3281_8KHZ:  When the signal is equal to or greater than 3281Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 8KHz.
- * @n Note: When the gyroscope and accelerometer are both enabled, if the sensor data is read through the FIFO, the internal sampling rate of the gyroscope and accelerometer must be the same.
+ * @n Note: When the gyroscope and accelerometer are both enabled, if the sensor data is read through the FIFO,
+ * @n the internal sampling rate of the gyroscope and accelerometer must be the same.
  */
 void configGyro(eGyroFSR_t scale, eGyroBandwidth_t  bd);
 void configGyro(uint8_t scale, uint8_t  bd);
@@ -195,13 +196,14 @@ void configGyro(uint8_t scale, uint8_t  bd);
  * @n     eAccel_DLPF_21_1KHZ or 2:   When the signal is less than or equal to 21Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
  * @n     eAccel_DLPF_44_1KHZ or 3:   When the signal is less than or equal to 44Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
  * @n     eAccel_DLPF_99_1KHZ or 4:   When the signal is less than or equal to 99Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
- * @n     eAccel_DLPF_218_1KHZ or 5:  When the signal is less than or equal to 218Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Support low power consumption mode
+ * @n     eAccel_DLPF_218_1KHZ or 5:  When the signal is less than or equal to 218Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.  Support low power consumption mode
  * @n     eAccel_DLPF_420_1KHZ or 6:  When the signal is less than or equal to 420Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Support low power consumption mode
  * @n     eAccel_DLPF_1046_4KHZ or 7: When the signal is less than or equal to 1046Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 4KHz. Support low power consumption mode
  * @n     eAccel_DLPF_55_1KHZ or 8:   When the signal is less than or equal to 55Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Only support low power consumption mode
- * @n     eAccel_DLPF_110_1KHZ or 9:  When the signal is less than or equal to 110Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Only support low power consumption mode
- * @n Note: When the gyroscope and accelerometer are both enabled, if the sensor data is read through the FIFO, the internal sampling rate of the gyroscope and accelerometer must be the same.
- * @param odr:  Sets the frequency of waking up the chip to take a sample of accel data – the low power accel Output Data Rate.
+ * @n     eAccel_DLPF_110_1KHZ or 9:  When the signal is less than or equal to 110Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.  Only support low power consumption mode
+ * @n Note: When the gyroscope and accelerometer are both enabled, if the sensor data is read through the FIFO, 
+ * @n the internal sampling rate of the gyroscope and accelerometer must be the same.
+ * @param odr:  Set the frequency of waking up the chip to take a sample of accel data – the low power accel Output Data Rate.
  * @n     eODR_125Hz or 9:    The low power accel Output Data Rate: 125Hz
  * @n     eODR_250Hz or 10:   The low power accel Output Data Rate: 250Hz
  * @n     eODR_500Hz or 11:   The low power accel Output Data Rate: 500Hz
@@ -216,7 +218,8 @@ void configAccel(uint8_t scale, uint8_t bd, uint8_t odr = 0, bool lowPowerFlag =
  * @brief Set sample rate divider. 
  * @param div  Sample rate divider, the range is 0~255.
  * @n     Sampling rate = internal sampling rate/(div+1)
- * @n Note:  If the accelerometer configuration is in low power consumption mode, that is, the formal parameter lowPowerFlag of the configAccel function is true, the sampling rate must match the output rate of the formal parameter odr of configAccel , as shown in the following table:
+ * @n Note:  If the accelerometer configuration is in low power consumption mode, that is, the formal parameter lowPowerFlag of the configAccel function is true, 
+ * @n the sampling rate must match the output rate of the formal parameter odr of configAccel, as shown in the following table:
  * @n ----------------------------------------------------------------------------
  * @n |                           configAccel                    |  setSampleDiv  |
  * @n ----------------------------------------------------------------------------|
@@ -234,18 +237,18 @@ void configAccel(uint8_t scale, uint8_t bd, uint8_t odr = 0, bool lowPowerFlag =
  void setSampleDiv(uint8_t div);
 
 /**
- * @brief Reset, the register will restore the initial value, you need to call begin to configuration.
+ * @brief Reset, the register will restore the initial value, and you need to call begin to configuration.
  */
 void reset();
 
 /**
- * @brief Enter sleep mode, it will reduce power consumption, and The gyroscope and acceleration will stop working.
+ * @brief Entering sleep mode, it will reduce power consumption, and The gyroscope and acceleration will stop working.
  * @n You need to call wakeup function to wake up sensor.
  */
 void sleep();
 
 /**
- * @brief Waking up sensor from sleep, and you will restore the configuration before sleep.
+ * @brief Wake up sensor from sleep, and you will restore the configuration before sleep.
  */
 void wakeup();
   
@@ -296,9 +299,9 @@ uint8_t readINTStatus();
 
 /**
  * @brief Get Sensor's accel, gyro and temperature data.
- * @param accel: sIcg20660SensorData_t structure pointer which point to accel or NULL.
- * @param gyro: sIcg20660SensorData_t structure pointer which point to gyro or NULL.
- * @param t:  A float pointer which point to temperature or NULL.
+ * @param accel: sIcg20660SensorData_t structure pointer which points to accel or NULL.
+ * @param gyro: sIcg20660SensorData_t structure pointer which points to gyro or NULL.
+ * @param t:  A float pointer which points to temperature or NULL.
  */
 void getSensorData(sIcg20660SensorData_t *accel, sIcg20660SensorData_t *gyro, float *t);
 
@@ -346,7 +349,7 @@ float getGyroDataZ();
 
 /**
  * @brief Get 14 bytes raw data, include accel, gyro, and temperature.
- * @param data:  存放14字节原始数据的buffer。
+ * @param data:  buffer for storing 14 bytes of raw data.
  * @n     The first byte of data :  Acceleration X-axis high byte data.
  * @n     The second byte of data:  Acceleration X-axis low byte data.
  * @n     The third byte of data :  Acceleration Y-axis high byte data.
