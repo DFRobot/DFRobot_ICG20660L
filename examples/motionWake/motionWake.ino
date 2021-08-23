@@ -3,7 +3,7 @@
  * @brief Set the accelerometer interrupt wake-up threshold. In the low-power mode, if the accelerometer of any x, y, z axis reaches the threshold,
  * the interrupt output pin INT of the sensor will generate an interrupt signal. Only accelerometer can work normally in low power consumption mode.
  *
- * @n connected table in SPI
+ * @n connection table in SPI
  * ---------------------------------------------------------------------------------------------------------------------
  *  Sensor pin  |                      MCU                          | ESP32 | ESP8266 |    M0   | micro:bit | Mega2560 |
  *    FSY       | not connected, floating                           |   X   |    X    |    X    |     X     |     X    |
@@ -16,7 +16,7 @@
  *    3V3/VCC   | 3V3/VCC                                           |  3V3  |   3V3   |   3V3   |    3V3    |    5V    |
  * ---------------------------------------------------------------------------------------------------------------------
  *
- * @n connected table in IIC
+ * @n connection table in IIC
  * -------------------------------------------------------------------------------------------------------------------
  * sensor pin |                         MCU                       | ESP32 | ESP8266 |    M0   | micro:bit | Mega2560 |
  *    FSY     | not connected, floating                           |   X   |    X    |    X    |     X     |     X    |
@@ -39,23 +39,23 @@
 
 
 #if defined(ARDUINO_BBC_MICROBIT)
-#define CS_PIN      8                      //The CS pin of sensor which is connected to the 8 digital io pin of micro:bit,and also can connected to other pin.
-#define INT_PIN     9                      //The INT pin of sensor which is connected to the 8 digital io pin of micro:bit,and also can connected to other pin.
+#define CS_PIN      8                      //The CS pin of sensor which is connected to the 8 digital io pin of micro:bit can also be connected to other pin.
+#define INT_PIN     9                      //The INT pin of sensor which is connected to the 8 digital io pin of micro:bit can also be connected to other pin.
 #else
-#define CS_PIN      5                      //The CS pin of sensor which is connected to the 5 digital io pin of MCU,and also can connected to other pin.
-#define INT_PIN     2                      //The INT pin of sensor which is connected to the 2 digital io pin of MCU,and also can connected to other pin.
+#define CS_PIN      5                      //The CS pin of sensor which is connected to the 5 digital io pin of MCU can also be connected to other pin.
+#define INT_PIN     2                      //The INT pin of sensor which is connected to the 2 digital io pin of MCU can also be connected to other pin.
 #endif
 /**
- * @brief The constructor of the ICG20660L sensor using IIC communication.
- * @param addr:  7-bit IIC address, controlled by SDO pin.
+ * @brief The constructor of the ICG20660L sensor, using IIC communication.
+ * @param addr: 7-bit IIC address, controlled by SDO pin.
  * @n     IIC_ADDR_SDO_H or 0x69:  SDO pull high.(default)
  * @n     IIC_ADDR_SDO_L or 0x68:  SDO pull down.
  * @param pWire:   TwoWire class pointer.
  */
 DFRobot_ICG20660L_IIC icg(/*addr=*/IIC_ADDR_SDO_H, &Wire);
 /**
- * @brief The constructor of the ICG20660L sensor using SPI communication.
- * @param csPin:  SPI chip select pin, connected to IO pin of MCU.
+ * @brief The constructor of the ICG20660L sensor, using SPI communication.
+ * @param csPin: SPI chip select pin, connected to IO pin of MCU.
  * @param spi: SPIClass class pointer.
  */
 //DFRobot_ICG20660L_SPI icg(/*csPin=*/CS_PIN, &SPI);
@@ -72,16 +72,17 @@ void setup() {
   Serial.print("Initialization sensor...");
 /**
  * @brief Initialize the sensor. After initialization, all sensors are turned off, and the corresponding configuration needs to be turned on through enableSensor. 
- * @param mode: Enum variable,from eDataReadMode_t, Does configuration read sensor data from FIFO or register?
- * @n     eRegMode:  Configuration reads sensor data from registers.
- * @n     eFIFOMode:  Read data from 512-byte FIFO. Note: Read from FIFO, accelerometer, gyroscope, and temperature must all be enabled, and the internal sampling rate must be configured to be consistent. (This demo doesn’t support)
+ * @param mode: Enum variable,from eDataReadMode_t, configure to read sensor data from FIFO or register?
+ * @n     eRegMode: Read sensor data from registers.
+ * @n     eFIFOMode: Read data from 512-byte FIFO. Note: Read from FIFO, accelerometer, gyroscope, and temperature must all be enabled, 
+* @n and the internal sampling rate must be configured to be consistent. (This demo doesn’t support)
  * @return status:
- * @n      0 :   Initialization sucCess.
+ * @n      0 :   Initialization success.
  * @n      -1:   Interface Initialization failed(IIC or SPI).
  * @n      -2:   Failed to read the device ID, the ID is not 0x91
  */
   while(icg.begin(/*mode=*/icg.eRegMode) != 0){
-      Serial.println("failed. Please check whether the hardware connection is wrong.");
+      Serial.println("failed. Please check the hardware connection.");
       delay(1000);
       Serial.print("Initialization sensor...");
   }
@@ -91,7 +92,7 @@ void setup() {
   Serial.println(icg.readID(), HEX);
   
 /**
- * @brief Enable sensor, Include Accel of xyz axis, Gyro of xyz, temperature. 
+ * @brief Enable sensor, including Accel of xyz axis, Gyro of xyz, temperature. 
  * @param bit: 8-bit byte data. Each bit represents enabling a function bit, as shown in the following table:
  * @n -------------------------------------------------------------------------------------------------------------------
  * @n |       bit7      |     bit6     |      bit5   |    bit4     |     bit3    |     bit2   |    bit1    |    bit0    |
@@ -139,8 +140,9 @@ void setup() {
  * @n     eAccel_DLPF_1046_4KHZ or 7: When the signal is less than or equal to 1046Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 4KHz. Support low power consumption mode
  * @n     eAccel_DLPF_55_1KHZ or 8:   When the signal is less than or equal to 55Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Only support low power consumption mode.
  * @n     eAccel_DLPF_110_1KHZ or 9:  When the signal is less than or equal to 110Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Only support low power consumption mode
- * @n Note: When the gyroscope and accelerometer are both enabled, if the sensor data is read through the FIFO, the internal sampling rate of the gyroscope and accelerometer must be the same.
- * @param odr:  Sets the frequency of waking up the chip to take a sample of accel data – the low power accel Output Data Rate.
+ * @n Note: When the gyroscope and accelerometer are both enabled, if the sensor data is read through the FIFO, 
+ * @n the internal sampling rate of the gyroscope and accelerometer must be the same.
+ * @param odr: Set the frequency of waking up the chip to take a sample of accel data – the low power accel Output Data Rate.
  * @n     eODR_125Hz or 9:    The low power accel Output Data Rate: 125Hz
  * @n     eODR_250Hz or 10:   The low power accel Output Data Rate: 250Hz
  * @n     eODR_500Hz or 11:   The low power accel Output Data Rate: 500Hz
@@ -153,7 +155,8 @@ void setup() {
  * @brief Set sample rate divider. 
  * @param div  Sample rate divider, the range is 0~255.
  * @n     Sampling rate = internal sampling rate/(div+1)
- * @n Note: If the accelerometer configuration is in low power consumption mode, that is, the formal parameter lowPowerFlag of the configAccel function is true, the sampling rate must match the output rate of the formal parameter odr of configAccel , as shown in the following table:
+ * @n Note: If the accelerometer configuration is in low power consumption mode, that is, the formal parameter lowPowerFlag of the configAccel function is true, 
+ * @n the sampling rate must match the output rate of the formal parameter odr of configAccel , as shown in the following table:
  * @n ----------------------------------------------------------------------------
  * @n |                           configAccel                    |  setSampleDiv  |
  * @n ----------------------------------------------------------------------------|
@@ -172,9 +175,12 @@ void setup() {
 /**
  * @brief Set the level polarity of the INT pin when the accelerometer sensor is triggered to wake up the motion interrupt.
  * @param polarity: the level signal of the sensor INT pin when the wake-up motion is triggered
- * @n     HIGH:  The initial signal of the INT pin is LOW. When an accelerometer wake-up motion occurs, the level signal of the INT pin will change to HIGH. Then the readINTStatus function needs to be called to clear the signal and restore the initial signal.
- * @n     LOW:   The initial signal of the INT pin is HIGH. When an accelerometer wake-up motion occurs, the level signal of the INT pin will change to LOW. Then the readINTStatus function needs to be called to clear the signal and restore the initial signal.
- * @n Note: After triggering the accelerometer wake-up motion, if the readINTStatus function is not called to clear the sign, the INT pin will always maintain the level polarity when the motion is triggered.
+ * @n     HIGH:  The initial signal of the INT pin is LOW. When an accelerometer wake-up motion occurs, the level signal of the INT pin will change to HIGH. 
+ * @n Then the readINTStatus function needs to be called to clear the signal and restore the initial signal.
+ * @n     LOW:   The initial signal of the INT pin is HIGH. When an accelerometer wake-up motion occurs, the level signal of the INT pin will change to LOW. 
+ * @n Then the readINTStatus function needs to be called to clear the signal and restore the initial signal.
+ * @n Note: After triggering the accelerometer wake-up motion, if the readINTStatus function is not called to clear the sign, 
+ * @n the INT pin will always maintain the level polarity when the motion is triggered.
  */
   icg.setINTPinMotionTriggerPolarity(/*polarity =*/LOW);
 /**
@@ -189,9 +195,9 @@ void setup() {
 /**
  * @brief Enable the external interrupt pin of MCU. 
  * @param pin:   The external pin of MCU.
- * @n     Mega2560:  The external pin is 2、3、21、20、19、18.
+ * @n     Mega2560:  The external pin is 2, 3, 21, 20, 19, 18.
  * @n     microbit:  The external pin is 0~20(P0-P20)
- * @n     ESP32, ESP8266, M0:    The external pin is all digital Pin and analog pin.
+ * @n     ESP32, ESP8266, M0:    The external pin is all digital pin and analog pin.
  * @param fun: Pointer to guide interrupt service function.
  * @param mode:  Interrupt trigger mode.
  * @n     LOW:     Low level trigger.
@@ -219,8 +225,8 @@ void loop() {
          * @n  DATA_RDY_INT  : This bit automatically sets to 1 when a Data Ready interrupt is generated. The bit clears to 0 after the register has been read.
          * @n  rsv           : reserve
          * @n  FIFO_OFLOW_INT: This bit automatically sets to 1 when a FIFO buffer overflow has been generated. The bit clears to 0 after the register has been read.
-         * @n  WOM_XYZ_INT   : These bits automatically set to a non-zero number when the X-axis,Y-axis or Z-axis of accelerometer which trigger WOM(wake on motion) 
-         * @n                  interrupt.Cleared on Read.
+         * @n  WOM_XYZ_INT   : These bits automatically set to a non-zero number when the X-axis, Y-axis or Z-axis of accelerometer which trigger WOM(wake on motion) 
+         * @n                  interrupt. Cleared on Read.
        */
       status = icg.readINTStatus();
       if(status & ICG20660L_WOM_XYZ_INT){
