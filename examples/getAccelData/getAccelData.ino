@@ -43,7 +43,7 @@
 #endif
 /**
  * @brief The constructor of the ICG20660L sensor, using IIC communication.
- * @param addr:  7-bit IIC address, controlled by SDO pin.
+ * @param addr: 7-bit IIC address, controlled by SDO pin.
  * @n     IIC_ADDR_SDO_H or 0x69:  SDO pull high.(default)
  * @n     IIC_ADDR_SDO_L or 0x68:  SDO pull down.
  * @param pWire:   TwoWire class pointer.
@@ -51,7 +51,7 @@
 DFRobot_ICG20660L_IIC icg(/*addr=*/IIC_ADDR_SDO_H, &Wire);
 /**
  * @brief The constructor of the ICG20660L sensor, using SPI communication.
- * @param csPin: SPI chip select pin, connect to IO pin of MCU.
+ * @param csPin: SPI chip select pin, connectted to IO pin of MCU.
  * @param spi: SPIClass class pointer.
  */
 //DFRobot_ICG20660L_SPI icg(/*csPin=*/CS_PIN, &SPI);
@@ -64,17 +64,19 @@ void setup() {
   
   Serial.print("Initialization sensor...");
 /**
- * @brief Initialize the sensor. After initialization, all sensors are turned off, and the corresponding configuration needs to be turned on through enableSensor.
- * @param mode: Enum variable,from eDataReadMode_t, Does configuration read sensor data from FIFO or register?
- * @n     eRegMode:  Configuration reads sensor data from registers.
- * @n     eFIFOMode: Read data from 512-byte FIFO. Note: Read from FIFO, accelerometer, gyroscope, and temperature must all be enabled, and the internal sampling rate must be configured to be consistent.(This demo does not support)
+ * @brief Initialize the sensor. After initialization, all sensors are turned off, and the corresponding configuration 
+ * @needs to be turned on through enableSensor.
+ * @param mode: Enum variable,from eDataReadMode_t, configure to read sensor data from FIFO or register?
+ * @n     eRegMode: Read sensor data from registers.
+ * @n     eFIFOMode: Read data from 512-byte FIFO. Note: Read from FIFO, accelerometer, gyroscope, and temperature must all be enabled, and the internal sampling rate must be 
+ * @configured to be consistent.(This demo does not support)
  * @return status:
  * @n      0 :   Initialization success.
  * @n      -1:   Interface Initialization failed(IIC or SPI).
- * @n      -2:   Failed to read the device ID, the ID is not 0x91
+ * @n      -2:   Failed to read the device ID, the ID is not 0x91.
  */
   while(icg.begin(/*mode=*/icg.eRegMode) != 0){
-      Serial.println("failed. Please check whether the hardware connection is wrong.");
+      Serial.println("failed. Please check the hardware connection.");
       delay(1000);
       Serial.print("Initialization sensor...");
   }
@@ -84,7 +86,7 @@ void setup() {
   Serial.println(icg.readID(), HEX);
   
 /**
- * @brief Enable sensor, Include Accel of xyz axis, Gyro of xyz, temperature. 
+ * @brief Enable sensor, including Accel of xyz axis, Gyro of xyz, temperature. 
  * @param bit: 8-bit byte data. Each bit represents enabling a function bit, as shown in the following table:
  * @n -------------------------------------------------------------------------------------------------------------------
  * @n |       bit7      |     bit6     |      bit5   |    bit4     |     bit3    |     bit2   |    bit1    |    bit0    |
@@ -110,33 +112,34 @@ void setup() {
  * @n   eAccelAxisX: The bit5 of the bit, enable Accel's X axis.
  * @n   eGyroAxisXYZ or eGyroAxisX|eGyroAxisY|eGyroAxisZ: The bit0/bit1/bit2 of the bit, enable gyro's xyz axis and temperature.
  * @n   eAccelAxisXYZ or eAccelAxisX|eAccelAxisY|eAccelAxisZ: The bit3/bit4/bit5 of the bit, enable Accel's xyz axis.
- * @n   eAxisAll or eGyroAxisX|eGyroAxisY|eGyroAxisZ|eAccelAxisX|eAccelAxisY|eAccelAxisZ: The bit0/bit1/bit2/bit3/bit4/bit5 of the bit, enable temperature, Accel's and gyro's xyz axis. 
+ * @n   eAxisAll or eGyroAxisX|eGyroAxisY|eGyroAxisZ|eAccelAxisX|eAccelAxisY|eAccelAxisZ: The bit0/bit1/bit2/bit3/bit4/bit5 of the bit, 
+ * @ enable temperature, Accel's and gyro's xyz axis. 
  */
   icg.enableSensor(icg.eAccelAxisXYZ);
   //icg.enableSensor(icg.eAccelAxisX|icg.eAccelAxisY|icg.eAccelAxisZ);
 /**
- * @brief Config of accel's full scale 、dlpf bandwidth and internal sample rate. 
+ * @brief Config of accel's full scale, dlpf bandwidth and internal sample rate. 
  * @param scale  The full scale of accel, unit: g(1g = 9.80665 m/s²).
  * @n     eFSR_A_2G:  The full scale range is ±2g.
  * @n     eFSR_A_4G:  The full scale range is ±4g.
  * @n     eFSR_A_8G:  The full scale range is ±8g.
  * @n     eFSR_A_16G:  The full scale range is ±16g.
  * @param bd  Set 3-db bandwidth.
- * @n     eAccel_DLPF_5_1KHZ or 0:    When the signal is less than or equal to 5Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
- * @n     eAccel_DLPF_10_1KHZ or 1:   When the signal is less than or equal to 10Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
- * @n     eAccel_DLPF_21_1KHZ or 2:   When the signal is less than or equal to 21Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
- * @n     eAccel_DLPF_44_1KHZ or 3:   When the signal is less than or equal to 44Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
- * @n     eAccel_DLPF_99_1KHZ or 4:   When the signal is less than or equal to 99Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
- * @n     eAccel_DLPF_218_1KHZ or 5:  When the signal is less than or equal to 218Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Support low power consumption mode
- * @n     eAccel_DLPF_420_1KHZ or 6:  When the signal is less than or equal to 420Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Support low power consumption mode
+ * @n     eAccel_DLPF_5_1KHZ or 0: When the signal is less than or equal to 5Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
+ * @n     eAccel_DLPF_10_1KHZ or 1: When the signal is less than or equal to 10Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
+ * @n     eAccel_DLPF_21_1KHZ or 2: When the signal is less than or equal to 21Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
+ * @n     eAccel_DLPF_44_1KHZ or 3: When the signal is less than or equal to 44Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
+ * @n     eAccel_DLPF_99_1KHZ or 4: When the signal is less than or equal to 99Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
+ * @n     eAccel_DLPF_218_1KHZ or 5: When the signal is less than or equal to 218Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Support low power consumption mode
+ * @n     eAccel_DLPF_420_1KHZ or 6: When the signal is less than or equal to 420Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Support low power consumption mode
  * @n     eAccel_DLPF_1046_4KHZ or 7: When the signal is less than or equal to 1046Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 4KHz. Support low power consumption mode
- * @n     eAccel_DLPF_55_1KHZ or 8:   When the signal is less than or equal to 55Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Only support low power consumption mode
- * @n     eAccel_DLPF_110_1KHZ or 9:  When the signal is less than or equal to 110Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Only support low power consumption mode
+ * @n     eAccel_DLPF_55_1KHZ or 8: When the signal is less than or equal to 55Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Only support low power consumption mode
+ * @n     eAccel_DLPF_110_1KHZ or 9: When the signal is less than or equal to 110Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Only support low power consumption mode
  * @n Note: When the gyroscope and accelerometer are both enabled, if the sensor data is read through the FIFO, the internal sampling rate of the gyroscope and accelerometer must be the same.
- * @param odr:  Sets the frequency of waking up the chip to take a sample of accel data – the low power accel Output Data Rate.
- * @n     eODR_125Hz or 9:    The low power accel Output Data Rate: 125Hz
- * @n     eODR_250Hz or 10:   The low power accel Output Data Rate: 250Hz
- * @n     eODR_500Hz or 11:   The low power accel Output Data Rate: 500Hz
+ * @param odr: Set the frequency of waking up the chip to take a sample of accel data – the low power accel Output Data Rate.
+ * @n     eODR_125Hz or 9: The low power accel Output Data Rate: 125Hz
+ * @n     eODR_250Hz or 10: The low power accel Output Data Rate: 250Hz
+ * @n     eODR_500Hz or 11: The low power accel Output Data Rate: 500Hz
  * @param lowPowerFlag:  Whether to configure the Acceleration to low power mode.
  * @n     true:          Enter low power mode.
  * @n     false:         Not configure the Acceleration to low power mode.(default)
@@ -146,7 +149,8 @@ void setup() {
  * @brief Set sample rate divider. 
  * @param div  Sample rate divider, the range is 0~255.
  * @n     Sampling rate = internal sampling rate/(div+1)
- * @n Note: If the accelerometer is configured in low power consumption mode, that is, the formal parameter lowPowerFlag of the configAccel function is true, the sampling rate must match the output rate of the formal parameter odr of configAccel , as shown in the following table:
+ * @n Note: If the accelerometer is configured in low power consumption mode, that is, the formal parameter lowPowerFlag of the configAccel function is true, 
+ * @ the sampling rate must match the output rate of the formal parameter odr of configAccel , as shown in the following table:
  * @n ----------------------------------------------------------------------------
  * @n |                           configAccel                    |  setSampleDiv  |
  * @n ----------------------------------------------------------------------------|
