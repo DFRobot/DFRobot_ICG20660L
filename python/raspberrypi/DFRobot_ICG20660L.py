@@ -2,7 +2,7 @@
 
 '''
   @file DFRobot_ICG20660L.py
-  @brief The ICG-20660 is a 6-axis motiontracking device that combines a 3-axis gyroscope, 3-axis accelerometer.
+  @brief The ICG-20660 is a 6-axis motiontracking device that combines a 3-axis gyroscope and 3-axis accelerometer.
   @n It supports two communication interfaces:
   @n (1) IIC-->freq: 100~400Khz
   @n (2) SPI-->freq: 100kHz~7MHz, only support mode0 or mode3
@@ -463,11 +463,11 @@ class DFRobot_ICG20660L:
       @brief Initialize the sensor. After initialization, all sensors are turned off, and the corresponding configuration needs to be turned on through enable_sensor.
       @param mode: Configure to read sensor data from FIFO or register?
       @n     eREG_MODE :   Read sensor data from data register.
-      @n     eFIFO_MODE:   Read sensor data from 512 bytes FIFO. Note:Read from FIFO, accelerometer, gyroscope and temperature must all be enabled,
+      @n     eFIFO_MODE:   Read sensor data from 512 bytes FIFO. Note: Read from FIFO, accelerometer, gyroscope and temperature must all be enabled,
       @n and the internal sampling rate must be configured to be consistent. 
       @return status:
       @n      0 : Initialization success.
-      @n      -1: Interface Initialization failed(IIC or SPI).
+      @n      -1: Interface initialization failed(IIC or SPI).
       @n      -2:  Failed to read the device ID, the ID is not 0x91
     '''
     self._data_mode = mode
@@ -521,7 +521,7 @@ class DFRobot_ICG20660L:
       
   def sleep(self):
     '''
-      @brief Enter sleep mode, it will reduce power consumption, and the gyroscope and acceleration will stop working. 
+      @brief Entering sleep mode, it will reduce power consumption, and the gyroscope and acceleration will stop working. 
       @n You need to call wakeup function to wake up sensor.
     '''
     rslt = self._read_bytes(REG_ICG20660L_PWR_MGMT_1, 1)
@@ -795,7 +795,7 @@ class DFRobot_ICG20660L:
 
   def get_raw_data(self, length = 0):
     '''
-      @brief Get 14 bytes raw data, including accel, gyro, and temperature.
+      @brief Get 14 bytes raw data, including accel, gyro and temperature.
       @param length: The length of returning list.
       @return data:  list type, buffer for storing 14 bytes of raw data
       @n     The first byte of data :  Acceleration X-axis high byte data.
@@ -984,7 +984,7 @@ class DFRobot_ICG20660L:
       @n  DATA_RDY_INT  : This bit automatically sets to 1 when a Data Ready interrupt is generated. The bit clears to 0 after the register has been read.
       @n  rsv           : reserve
       @n  FIFO_OFLOW_INT: This bit automatically sets to 1 when a FIFO buffer overflow has been generated. The bit clears to 0 after the register has been read.
-      @n  WOM_XYZ_INT   : These bits automatically set to a non-zero number when the X-axis,Y-axis or Z-axis of accelerometer which trigger WOM(wake on motion) 
+      @n  WOM_XYZ_INT   : These bits automatically set to a non-zero number when the X-axis, Y-axis or Z-axis of accelerometer which trigger WOM(wake on motion) 
       @n                  interrupt. Cleared on Read.
     '''
     rslt = self._read_bytes(REG_ICG20660L_INT_STATUS, 1)
