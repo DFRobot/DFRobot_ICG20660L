@@ -39,14 +39,14 @@
 #ifdef ARDUINO_BBC_MICROBIT
 #define CS_PIN      8                      //The CS pin of sensor which is connected to the 8 digital io pin of micro:bit can also be connected to other pin.
 #else
-#define CS_PIN      5                      //The CS pin of sensor which is connected to the 5 digital io pin of MCU, can also be connected to other pin.
+#define CS_PIN      5                      //The CS pin of sensor which is connected to the 5 digital io pin of MCU can also be connected to other pin.
 #endif
 /**
  * @brief The constructor of the ICG20660L sensor, using IIC communication.
  * @param addr: 7-bit IIC address, controlled by SDO pin.
- * @n     IIC_ADDR_SDO_H or 0x69:  SDO pull high.(default)
- * @n     IIC_ADDR_SDO_L or 0x68:  SDO pull down.
- * @param pWire:   TwoWire class pointer.
+ * @n     IIC_ADDR_SDO_H or 0x69: SDO pull high.(default)
+ * @n     IIC_ADDR_SDO_L or 0x68: SDO pull down.
+ * @param pWire: TwoWire class pointer.
  */
 DFRobot_ICG20660L_IIC icg(/*addr=*/IIC_ADDR_SDO_H, &Wire);
 /**
@@ -68,7 +68,7 @@ void setup() {
  * @needs to be turned on through enableSensor.
  * @param mode: Enum variable,from eDataReadMode_t, configure to read sensor data from FIFO or register?
  * @n     eRegMode: Read sensor data from registers.
- * @n     eFIFOMode: Read data from 512-byte FIFO. Note: Read from FIFO, accelerometer, gyroscope, and temperature must all be enabled,
+ * @n     eFIFOMode: Read data from 512-byte FIFO. Note: Read from FIFO, accelerometer, gyroscope and temperature must all be enabled,
  * @n and the internal sampling rate must be configured to be consistent.(This demo does not support)
  * @return status:
  * @n      0 :   Initialization success.
@@ -113,7 +113,7 @@ void setup() {
  * @n   eGyroAxisXYZ or eGyroAxisX|eGyroAxisY|eGyroAxisZ: The bit0/bit1/bit2 of the bit, enable gyro's xyz axis and temperature.
  * @n   eAccelAxisXYZ or eAccelAxisX|eAccelAxisY|eAccelAxisZ: The bit3/bit4/bit5 of the bit, enable Accel's xyz axis.
  * @n   eAxisAll or eGyroAxisX|eGyroAxisY|eGyroAxisZ|eAccelAxisX|eAccelAxisY|eAccelAxisZ: The bit0/bit1/bit2/bit3/bit4/bit5 of the bit, 
- * @ enable temperature, Accel's and gyro's xyz axis. 
+ * @n enable temperature, Accel's and gyro's xyz axis. 
  */
   icg.enableSensor(icg.eAccelAxisXYZ);
   //icg.enableSensor(icg.eAccelAxisX|icg.eAccelAxisY|icg.eAccelAxisZ);
