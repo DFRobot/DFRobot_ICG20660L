@@ -1,15 +1,15 @@
 /*!
  * @file DFRobot_ICG20660L.h
- * @brief The ICG-20660 is a 6-axis MotionTracking device that combines a 3-axis gyroscope, 3-axis accelerometer.
- * @n It support two communication interface:
+ * @brief The ICG-20660 is a 6-axis motiontracking device that combines a 3-axis gyroscope and 3-axis accelerometer.
+ * @n It supports two communication interfaces:
  * @n (1) IIC-->freq: 100~400Khz
  * @n (2) SPI-->freq: 100kHz~7MHz, only support mode0 or mode3
  * @n Two communication methods are switched by cs pin, 0:SPI, 1:IIC
  * @n 3-axis accelerometer feature:
- * @n (1) Support max ranging: ±2g、±4g、±8g、±16g, g = 9.80665 m/s²
+ * @n (1) Support max ranging: ±2g, ±4g, ±8g, ±16g, g = 9.80665 m/s²
  * @n (2) 1g = 9.80665 m/s²
  * @n 3-axis gyroscope feature:
- * @n (1) Support max ranging: ±125dps、±250dps、±500dps
+ * @n (1) Support max ranging: ±125dps, ±250dps, ±500dps
  * @n (2) 1dps = Π/180° rad/s, Π = 3.1415926
  * @n Motion threshold wake-up detection：
  * @n The motion threshold is the acceleration thresholds difference between the previous and next. If it is greater than or equal to the set threshold, an interrupt will be generated.
@@ -34,7 +34,7 @@
 #include <Wire.h>
 #include <SPI.h>
 
-//Define DBG, change 0 to 1 open the DBG, 1 to 0 to close.  
+//Define DBG, change 0 to 1 to open the DBG, 1 to 0 to close.  
 #if 0
 #define DBG(...) {Serial.print("["); Serial.print(__FUNCTION__); Serial.print("(): "); Serial.print(__LINE__); Serial.print(" ] "); Serial.println(__VA_ARGS__);}
 #else
@@ -229,11 +229,11 @@ public:
   ~DFRobot_ICG20660L();
 /**
  * @brief Initialize the sensor. After initialization, all sensors are turned off, and the corresponding configuration needs to be turned on through enable_sensor.
- * @param mode: Enum variable,from eDataReadMode_t, Does configuration read sensor data from FIFO or register?
- * @n     eRegMode:   Configuration reads sensor data from registers
- * @n     eFIFOMode: Read data from 512-byte FIFO. Note: Read from FIFO, accelerometer, gyroscope, and temperature must all be enabled, and the internal sampling rate must be configured to be consistent.
+ * @param mode: Enum variable,from eDataReadMode_t, configure to read sensor data from FIFO or register?
+ * @n     eRegMode:  Read sensor data from registers
+ * @n     eFIFOMode: Read data from 512-byte FIFO. Note: Read from FIFO, accelerometer, gyroscope and temperature must all be enabled, and the internal sampling rate must be configured to be consistent.
  * @return status:
- * @n      0 :   Initialization sucess.
+ * @n      0 :   Initialization success.
  * @n      -1:   Interface Initialization failed(IIC or SPI).
  * @n      -2:    Failed to read the device ID, the ID is not 0x91
  */
@@ -244,7 +244,7 @@ public:
  */
   uint8_t readID();
 /**
- * @brief Enable sensor, Include Accel of xyz axis, Gyro of xyz, temperature. 
+ * @brief Enable sensor, including Accel of xyz axis, Gyro of xyz, temperature. 
  * @param bit: 8-bit byte data. Each bit represents enabling a function bit, as shown in the following table:
  * @n -------------------------------------------------------------------------------------------------------------------
  * @n |       bit7      |     bit6     |      bit5   |    bit4     |     bit3    |     bit2   |    bit1    |    bit0    |
@@ -274,7 +274,7 @@ public:
  */
   void enableSensor(uint8_t bit);
 /**
- * @brief Disable sensor, Include Accel of xyz axis, Gyro of xyz, temperature. 
+ * @brief Disable sensor, including Accel of xyz axis, Gyro of xyz, temperature. 
  * @param bit: 8-bit byte data. Each bit represents enabling a function bit, as shown in the following table:
  * @n -------------------------------------------------------------------------------------------------------------------
  * @n |       bit7      |     bit6     |      bit5   |    bit4     |     bit3    |     bit2   |    bit1    |    bit0    |
@@ -291,7 +291,8 @@ public:
  * @n   bit5:  Z-axis of acceleration.
  * @n   bit6:  reserve.
  * @n   bit7:  reserve.
- * @n Note: Only when the X, Y, and Z axes of the gyroscope are all closed, the temperature sensor will be turned off. Any axis’s turning on will make the temperature sensor not be turned off.
+ * @n Note: Only when the X, Y, and Z axes of the gyroscope are all closed, the temperature sensor will be turned off. 
+ * @n Any axis’s turning on will make the temperature sensor not be turned off.
  * @n   eGyroAxisZ: The bit0 of the bit, disable gyro's z axis.
  * @n   eGyroAxisY: The bit1 of the bit, disable gyro's y axis.
  * @n   eGyroAxisX: The bit2 of the bit, disable gyro's X axis.
@@ -304,7 +305,7 @@ public:
  */
   void disableSensor(uint8_t bit);
 /**
- * @brief Config of gyro's full scale 、dlpf bandwidth and internal sample rate. 
+ * @brief Config of gyro's full scale, dlpf bandwidth and internal sample rate. 
  * @param scale  The full scale of gyro, unit: dps(Degrees per second).
  * @n     eFSR_G_125DPS:  The full scale range is ±125 dps.
  * @n     eFSR_G_250DPS:  The full scale range is ±250 dps.
@@ -316,12 +317,13 @@ public:
  * @n     eGyro_DLPF_176_1KHZ:   When the signal is equal to or greater than 176Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz
  * @n     eGyro_DLPF_92_1KHZ:    When the signal is equal to or greater than 92Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
  * @n     eGyro_DLPF_3281_8KHZ:  When the signal is equal to or greater than 3281Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 8KHz.
- * @n Note: When the gyroscope and accelerometer are both enabled, if the sensor data is read through the FIFO, the internal sampling rate of the gyroscope and accelerometer must be the same.
+ * @n Note: When the gyroscope and accelerometer are both enabled, if the sensor data is read through the FIFO, 
+ * @n the internal sampling rate of the gyroscope and accelerometer must be the same.
  */
   void configGyro(eGyroFSR_t scale, eGyroBandwidth_t  bd);
   void configGyro(uint8_t scale, uint8_t  bd);
 /**
- * @brief Config of accel's full scale 、dlpf bandwidth and internal sample rate. 
+ * @brief Config of accel's full scale, dlpf bandwidth and internal sample rate. 
  * @param scale  The full scale of accel, unit: g(1g = 9.80665 m/s²).
  * @n     eFSR_A_2G:  The full scale range is ±2g.
  * @n     eFSR_A_4G:  The full scale range is ±4g.
@@ -338,8 +340,9 @@ public:
  * @n     eAccel_DLPF_1046_4KHZ or 7: When the signal is less than or equal to 1046Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 4KHz. Support low power consumption
  * @n     eAccel_DLPF_55_1KHZ or 8:   When the signal is less than or equal to 55Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Only support low power consumption
  * @n     eAccel_DLPF_110_1KHZ or 9:  When the signal is less than or equal to 110Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Only support low power consumption
- * @n Note: When the gyroscope and accelerometer are both enabled, if the sensor data is read through the FIFO, the internal sampling rate of the gyroscope and accelerometer must be the same.
- * @param odr:  Sets the frequency of waking up the chip to take a sample of accel data – the low power accel Output Data Rate.
+ * @n Note: When the gyroscope and accelerometer are both enabled, if the sensor data is read through the FIFO, 
+ * @n the internal sampling rate of the gyroscope and accelerometer must be the same.
+ * @param odr:  Set the frequency of waking up the chip to take a sample of accel data – the low power accel Output Data Rate.
  * @n     eODR_125Hz or 9:    The low power accel Output Data Rate: 125Hz
  * @n     eODR_250Hz or 10:   The low power accel Output Data Rate: 250Hz
  * @n     eODR_500Hz or 11:   The low power accel Output Data Rate: 500Hz
@@ -353,7 +356,8 @@ public:
  * @brief Set sample rate divider. 
  * @param div  Sample rate divider, the range is 0~255.
  * @n    Sampling rate = internal sampling rate/(div+1)
- * @n Note: If the accelerometer configuration is in low power consumption mode, that is, the formal parameter lowPowerFlag of the configAccel function is true, the sampling rate must match the output rate of the formal parameter odr of configAccel , as shown in the following table:
+ * @n Note: If the accelerometer configuration is in low power consumption mode, that is, the formal parameter lowPowerFlag of the configAccel function is true,
+ * @n the sampling rate must match the output rate of the formal parameter odr of configAccel , as shown in the following table:
  * @n ----------------------------------------------------------------------------
  * @n |                           configAccel                    |  setSampleDiv  |
  * @n ----------------------------------------------------------------------------|
@@ -370,25 +374,28 @@ public:
  */
   void setSampleDiv(uint8_t div);
 /**
- * @brief Reset, the register will restore the initial value, you need to call begin to configuration.
+ * @brief Reset, the register will restore the initial value, and you need to call begin to configuration.
  */
   void reset();
 /**
- * @brief Enter sleep mode, it will reduce power consumption, and The gyroscope and acceleration will stop working.
+ * @brief Entering sleep mode, it will reduce power consumption, and The gyroscope and acceleration will stop working.
  * @n You need to call wakeup function to wake up sensor.
  */
   void sleep();
 /**
- * @brief Waking up sensor from sleep, and you will restore the configuration before sleep.
+ * @brief Wake up sensor from sleep, and you will restore the configuration before sleep.
  */
   void wakeup();
   
 /**
  * @brief Set the level polarity of the INT pin when the accelerometer sensor is triggered to wake up the motion interrupt.
  * @param polarity: the level signal of the sensor INT pin when the wake-up motion is triggered.
- * @n     HIGH:  The initial signal of the pin is LOW. When an accelerometer wake-up motion occurs, the level signal of the INT pin will change to HIGH. Then the readINTStatus function needs to be called to clear the signal and restore the initial signal.
- * @n     LOW:   The initial signal of the pin is HIGH. When an accelerometer wake-up motion occurs, the level signal of the INT pin will change to LOW. Then the readINTStatus function needs to be called to clear the signal and restore the initial signal.
- * @n Note: After triggering the accelerometer wake-up motion, if the read_int_status function is not called to clear the sign, the INT pin will always maintain the level polarity when the motion is triggered.
+ * @n     HIGH:  The initial signal of the pin is LOW. When an accelerometer wake-up motion occurs, the level signal of the INT pin will change to HIGH. 
+ * @n Then the readINTStatus function needs to be called to clear the signal and restore the initial signal.
+ * @n     LOW:   The initial signal of the pin is HIGH. When an accelerometer wake-up motion occurs, the level signal of the INT pin will change to LOW. 
+ * @n Then the readINTStatus function needs to be called to clear the signal and restore the initial signal.
+ * @n Note: After triggering the accelerometer wake-up motion, if the read_int_status function is not called to clear the sign,
+ * @n the INT pin will always maintain the level polarity when the motion is triggered.
     '''
  */
   void setINTPinMotionTriggerPolarity(int polarity);
@@ -427,9 +434,9 @@ public:
 
 /**
  * @brief Get Sensor's accel, gyro and temperature data.
- * @param accel: sIcg20660SensorData_t structure pointer which point to accel or NULL.
- * @param gyro: sIcg20660SensorData_t structure pointer which point to gyro or NULL.
- * @param t:  A float pointer which point to temperature or NULL.
+ * @param accel: sIcg20660SensorData_t structure pointer which points to accel or NULL.
+ * @param gyro: sIcg20660SensorData_t structure pointer which points to gyro or NULL.
+ * @param t:  A float pointer which points to temperature or NULL.
  */
   void getSensorData(sIcg20660SensorData_t *accel, sIcg20660SensorData_t *gyro, float *t);
 /**
@@ -469,7 +476,7 @@ public:
  */
   float getGyroDataZ();
 /**
- * @brief Get 14 bytes raw data, include accel, gyro, and temperature.
+ * @brief Get 14 bytes raw data, including accel, gyro, and temperature.
  * @param data:  Buffer for storing 14 bytes of raw data
  * @n     The first byte of data :  Acceleration X-axis high byte data.
  * @n     The second byte of data:  Acceleration X-axis low byte data.
@@ -509,12 +516,12 @@ protected:
   void enableFifo(bool temp, bool gx, bool gy, bool gz, bool accel);
 /**
  * @brief Take out of sleep mode. 
- * @param en  The IO pin of MCU which is connected to the EN pin of Non-contact liquid level sensor.
- * @param cmd  calibration command in UART Mode which is Used to distinguish between upper water level calibration and lower water level calibration.
+ * @param en  The IO pin of MCU which is connected to the EN pin of non-contact liquid level sensor.
+ * @param cmd  calibration command in UART mode which is used to distinguish between upper water level calibration and lower water level calibration.
  * @n     CALIB_UART_CMD_LWL: Lower water Level calibration command.
  * @n     CALIB_UART_CMD_UWL: Upper water Level calibration command.
  * @return Calibration state:
- * @n      true:  Calibration sucess.
+ * @n      true:  Calibration success.
  * @n      false:  Calibration failed.
  */
   void outSleepMode();//1．Exit from sleep mode and reach 3.09mA. Set gyroStandby to 1, reach 1.61mA
@@ -668,10 +675,10 @@ private:
   typedef union{
     struct{
         uint8_t rsv:2;/**<Reserved.*/
-        uint8_t FSYNC_INT_MODE_EN:1;/**<When this bit is equal to 1, the FSYNC pin will trigger an interrupt when it transitions to the level specified by FSYNC_INT_LEVEL. When this bit is equal to 0, the FSYNC pin is disabled from causing an interrupt.*/
+        uint8_t FSYNC_INT_MODE_EN:1;/**<When this bit is equal to 1, the FSYNC pin will trigger an interrupt when it transits to the level specified by FSYNC_INT_LEVEL. When this bit is equal to 0, the FSYNC pin is disabled from causing an interrupt.*/
         uint8_t FSYNC_INT_LEVEL:1;/**< 1 – The logic level for the FSYNC pin as an interrupt is active low.0 – The logic level for the FSYNC pin as an interrupt is active high.*/
         uint8_t INT_RD_CLEAR:1;/**<1 – Interrupt status is cleared if any read operation is performed.0 – Interrupt status is cleared only by reading INT_STATUS register*/
-        uint8_t LATCH_INT_EN:1;/**<1 – INT pin level held until interrupt status is cleared.0 – INT pin indicates interrupt pulse’s width is 50us.*/
+        uint8_t LATCH_INT_EN:1;/**<1 – INT pin level held until interrupt status is cleared.0 – I nterrupt pulse’s width indicated by INT pin is 50us.*/
         uint8_t INT_OPEN:1;/**<1 – INT pin is configured as open drain.0 – INT pin is configured as push-pull.*/
         uint8_t INT_LEVEL:1;/**<1 – The logic level for INT pin is active low.0 – The logic level for INT pin is active high.*/
     };
@@ -689,7 +696,7 @@ private:
   typedef union{
     struct{
         uint8_t DATA_RDY_INT_EN:1;/**<Data ready interrupt enable..*/
-        uint8_t rsv:3;/**<When this bit is equal to 1, the FSYNC pin will trigger an interrupt when it transitions to the level specified by FSYNC_INT_LEVEL. When this bit is equal to 0, the FSYNC pin is disabled from causing an interrupt.*/
+        uint8_t rsv:3;/**<When this bit is equal to 1, the FSYNC pin will trigger an interrupt when it transits to the level specified by FSYNC_INT_LEVEL. When this bit is equal to 0, the FSYNC pin is disabled from causing an interrupt.*/
         uint8_t FIFO_OFLOW_EN:1;/**< 1 – Enables a FIFO buffer overflow to generate an interrupt.0 – Function is disabled.*/
         uint8_t WOM_EN:3;/**<‘111’ – Enable WoM interrupt.‘000’ – Disable WoM interrupt – This is the default setting.*/
     };
@@ -748,7 +755,7 @@ private:
         uint8_t rsv1:1;/**<Reserved.*/
         uint8_t FIFO_RST:1;/**<1 – Reset FIFO module. Reset is asynchronous. This bit auto clears after one clock cycle of the internal 20 MHz clock.*/
         uint8_t rsv2:1;/**<Reserved.*/
-        uint8_t I2C_IF_DIS:1;/**<1 – Reset I2C Slave module and put the serial interface in SPI mode only. This bit auto clears afte one clock cycle of the internal 20 MHz clock.*/
+        uint8_t I2C_IF_DIS:1;/**<1 – Reset I2C Slave module and put the serial interface in SPI mode only. This bit auto clears after one clock cycle of the internal 20 MHz clock.*/
         uint8_t rsv3:1;/**<Reserved.*/
         uint8_t FIFO_EN:1;/**<1 – Enable FIFO operation mode.*/
         uint8_t rsv4:1;/**<Reserved.*/
@@ -771,7 +778,7 @@ private:
         uint8_t gyroStandby:1;/**<When set, the gyro drive and pll circuitry are enabled, but the sense paths are disabled. This is a low power mode that allows quick enabling of the gyros.*/
         uint8_t cycle:1;/**<This bit depends on other registers and bits*/
         uint8_t sleep:1; /**<When set to 1, the chip is set to sleep mode.*/
-        uint8_t deviceReset:1;/**<1:Reset the internal registers and restores the default settings,automatically clear after completion*/
+        uint8_t deviceReset:1;/**<1:Reset the internal registers and restore the default settings,automatically clear after completion*/
     };
     uint8_t value;
   }uPowerManagement1Reg_t;
@@ -812,7 +819,7 @@ private:
 class DFRobot_ICG20660L_IIC: public DFRobot_ICG20660L{
 public:
 /**
- * @brief The constructor of the ICG20660L sensor using IIC communication.
+ * @brief The constructor of the ICG20660L sensor, using IIC communication.
  * @param addr:  7-bit IIC address, controlled by SDO pin.
  * @n     IIC_ADDR_SDO_H or 0x69:  SDO pull high.(default)
  * @n     IIC_ADDR_SDO_L or 0x68:  SDO pull down.
@@ -834,7 +841,7 @@ private:
 class DFRobot_ICG20660L_SPI:public DFRobot_ICG20660L{
 public:
 /**
- * @brief The constructor of the ICG20660L sensor using SPI communication.
+ * @brief The constructor of the ICG20660L sensor, using SPI communication.
  * @param csPin:  SPI chip select pin, connected to IO pin of MCU.
  * @param spi: SPIClass class pointer.
  */
