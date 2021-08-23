@@ -37,9 +37,9 @@
 #include "DFRobot_ICG20660L.h"
 
 #ifdef ARDUINO_BBC_MICROBIT
-#define CS_PIN      8                      //The CS pin of sensor which is connected to the 8 digital io pin of micro:bit, and also can be connected to other pin.
+#define CS_PIN      8                      //The CS pin of sensor which is connected to the 8 digital io pin of micro:bit can also be connected to other pin.
 #else
-#define CS_PIN      5                      //The CS pin of sensor which is connected to the 5 digital io pin of MCU, and also can be connected to other pin.
+#define CS_PIN      5                      //The CS pin of sensor which is connected to the 5 digital io pin of MCU, can also be connected to other pin.
 #endif
 /**
  * @brief The constructor of the ICG20660L sensor, using IIC communication.
@@ -68,8 +68,8 @@ void setup() {
  * @needs to be turned on through enableSensor.
  * @param mode: Enum variable,from eDataReadMode_t, configure to read sensor data from FIFO or register?
  * @n     eRegMode: Read sensor data from registers.
- * @n     eFIFOMode: Read data from 512-byte FIFO. Note: Read from FIFO, accelerometer, gyroscope, and temperature must all be enabled, and the internal sampling rate must be 
- * @configured to be consistent.(This demo does not support)
+ * @n     eFIFOMode: Read data from 512-byte FIFO. Note: Read from FIFO, accelerometer, gyroscope, and temperature must all be enabled,
+ * @n and the internal sampling rate must be configured to be consistent.(This demo does not support)
  * @return status:
  * @n      0 :   Initialization success.
  * @n      -1:   Interface Initialization failed(IIC or SPI).
@@ -135,7 +135,8 @@ void setup() {
  * @n     eAccel_DLPF_1046_4KHZ or 7: When the signal is less than or equal to 1046Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 4KHz. Support low power consumption mode
  * @n     eAccel_DLPF_55_1KHZ or 8: When the signal is less than or equal to 55Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Only support low power consumption mode
  * @n     eAccel_DLPF_110_1KHZ or 9: When the signal is less than or equal to 110Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Only support low power consumption mode
- * @n Note: When the gyroscope and accelerometer are both enabled, if the sensor data is read through the FIFO, the internal sampling rate of the gyroscope and accelerometer must be the same.
+ * @n Note: When the gyroscope and accelerometer are both enabled, if the sensor data is read through the FIFO, 
+ * @n the internal sampling rate of the gyroscope and accelerometer must be the same.
  * @param odr: Set the frequency of waking up the chip to take a sample of accel data – the low power accel Output Data Rate.
  * @n     eODR_125Hz or 9: The low power accel Output Data Rate: 125Hz
  * @n     eODR_250Hz or 10: The low power accel Output Data Rate: 250Hz
