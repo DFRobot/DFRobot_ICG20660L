@@ -2,7 +2,7 @@
 
 '''
   # @file demo_get_sensor_data.py
-  # @brief Get the sensor's gyroscope, accelerometer, and onboard temperature.
+  # @brief Get the sensor's gyroscope, accelerometer and onboard temperature.
   # @n Hardware connetion table in SPI
   # @n --------------------------------------------------------------
   # @n  Sensor      |             MCU                | raspberry pi |
@@ -61,11 +61,11 @@ if __name__ == "__main__":
     @brief Initialize the sensor. After initialization, all sensors are turned off, and the corresponding configuration needs to be turned on through enableSensor.
     @param mode: Configure to read sensor data from FIFO or register?
     @n     eREG_MODE :   Read sensor data from data register.
-    @n     eFIFO_MODE:   Read sensor data from 512 bytes FIFO. Note:Read from FIFO, accelerometer, gyroscope, and temperature must all be enabled,
+    @n     eFIFO_MODE:   Read sensor data from 512 bytes FIFO. Note: Read from FIFO, accelerometer, gyroscope, and temperature must all be enabled,
     @n and the internal sampling rate must be configured to be consistent. 
     @return status:
     @n      0 : Initialization success.
-    @n      -1: Interface Initialization failed(IIC or SPI).
+    @n      -1: Interface initialization failed(IIC or SPI).
     @n      -2: Failed to read the device ID, the ID is not 0x91
   '''
   while icg.begin(icg.eREG_MODE) != 0:
@@ -158,7 +158,7 @@ if __name__ == "__main__":
     @param div  Sample rate divider, the range is 0~255.
     @n      Sampling rate = internal sampling rate/(div+1)
     @n Note: If the accelerometer configuration is in low power consumption mode, that is, the formal parameter lowPowerFlag of the configAccel function is true, 
-    @n the sampling rate must match the output rate of the formal parameter odr of configAccel , as shown in the following table:
+    @n the sampling rate must match the output rate of the formal parameter odr of configAccel, as shown in the following table:
     @n ----------------------------------------------------------------------------
     @n |                        config_accel                      | set_sample_div |
     @n ----------------------------------------------------------------------------|
