@@ -39,7 +39,7 @@
 #ifdef ARDUINO_BBC_MICROBIT
 #define CS_PIN      8                      //The CS pin of sensor which is connected to the 8 digital io pin of micro:bit can also be connected to other pin.
 #else
-#define CS_PIN      5                      //The CS pin of sensor which is connected to the 5 digital io pin of MCU, can also be connected to other pin.
+#define CS_PIN      5                      //The CS pin of sensor which is connected to the 5 digital io pin of MCU can also be connected to other pin.
 #endif
 /**
  * @brief The constructor of the ICG20660L sensor, using IIC communication.
@@ -67,11 +67,11 @@ void setup() {
  * @brief Initialize the sensor. After initialization, all sensors are turned off, and the corresponding configuration needs to be turned on through enableSensor.
  * @param mode: Enum variable,from eDataReadMode_t, configure to read sensor data from FIFO or register?
  * @n     eRegMode: Read sensor data from registers.
- * @n     eFIFOMode: Read data from 512-byte FIFO. Note: Read from FIFO, accelerometer, gyroscope, and temperature must all be enabled, 
+ * @n     eFIFOMode: Read data from 512-byte FIFO. Note: Read from FIFO, accelerometer, gyroscope and temperature must all be enabled, 
  * @n and the internal sampling rate must be configured to be consistent. (This demo doesn’t support)
  * @return status:
  * @n      0 :   Initialization success.
- * @n      -1:   Interface Initialization failed(IIC or SPI).
+ * @n      -1:   Interface initialization failed(IIC or SPI).
  * @n      -2:   Failed to read the device ID, the ID is not 0x91
  */
   while(icg.begin(/*mode=*/icg.eRegMode) != 0){
@@ -138,7 +138,7 @@ void setup() {
  * @param div  Sample rate divider, the range is 0~255.
  * @n    Sampling rate = internal sampling rate/(div+1)
  * @n Note: If the accelerometer configuration is in low power consumption mode, that is, the formal parameter lowPowerFlag of the configAccel function is true, 
- * @n the sampling rate must match the output rate of the formal parameter odr of configAccel , as shown in the following table:
+ * @n the sampling rate must match the output rate of the formal parameter odr of configAccel, as shown in the following table:
  * @n ----------------------------------------------------------------------------
  * @n |                           configAccel                    |  setSampleDiv  |
  * @n ----------------------------------------------------------------------------|
