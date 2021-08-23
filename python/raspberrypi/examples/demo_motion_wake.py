@@ -3,8 +3,8 @@
 '''
   # @file demo_motion_wake.py
   # @brief Set the accelerometer interrupt wake-up threshold. In the low-power mode, if the accelerometer of any x, y, z axis reaches the threshold,
-  # the interrupt output pin INT of the sensor will generate an interrupt signal. Only accelerometer can work normally in low power consumption mode.
-  # @n Hardware conneted table in SPI
+  # @n the interrupt output pin INT of the sensor will generate an interrupt signal. Only accelerometer can work normally in low power consumption mode.
+  # @n Hardware connetion table in SPI
   # @n ---------------------------------------------------------------------------------
   # @n  Sensor      |                     MCU                           | raspberry pi |
   # @n ---------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
   # @n GND          | GND                                               |      GND     |
   # @n 3V3/VCC      | 3V3/VCC                                           |   3V3/VCC    |
   # @n ---------------------------------------------------------------------------------
-  # @n Hardware conneted table in IIC
+  # @n Hardware connetion table in IIC
   # @n ---------------------------------------------------------------------------------
   # @n  Sensor      |                     MCU                           | raspberry pi |
   # @n ---------------------------------------------------------------------------------
@@ -46,14 +46,14 @@ import RPi.GPIO as GPIO
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 from DFRobot_ICG20660L import *
 '''
-  @brief The constructor of the ICG20660L sensor using IIC communication.
+  @brief The constructor of the ICG20660L sensor, using IIC communication.
   @param addr:  7-bit IIC address, controlled by SDO pin.
   @n     IIC_ADDR_SDO_H or 0x69:  SDO pull high.(default)
   @n     IIC_ADDR_SDO_L or 0x68:  SDO pull down.
 '''
 #icg = DFRobot_ICG20660L_IIC(addr = IIC_ADDR_SDO_H)
 '''
-  @brief The constructor of the ICG20660L sensor using SPI communication.
+  @brief The constructor of the ICG20660L sensor, using SPI communication.
   @param cs:  SPI chip select pin, connected to IO pin of raspberry pi.
 '''
 icg = DFRobot_ICG20660L_SPI(cs = 22)
@@ -68,7 +68,7 @@ def notifyFun(channel):
 if __name__ == "__main__":
   '''
     @brief Initialize the sensor. After initialization, all sensors are turned off, and the corresponding configuration needs to be turned on through enableSensor. 
-    @param mode: Does configuration read sensor data from FIFO or register?
+    @param mode: Configure to read sensor data from FIFO or register?
     @n     eREG_MODE :   Read sensor data from data register.
     @n     eFIFO_MODE:   Read sensor data from 512 bytes FIFO. Note: Read from FIFO, accelerometer, gyroscope, and temperature must all be enabled,
     @n and the internal sampling rate must be configured to be consistent.
@@ -80,10 +80,10 @@ if __name__ == "__main__":
   while icg.begin(icg.eREG_MODE) != 0:
     print("Initialization 6-axis sensor failed.")
     time.sleep(1)
-  print("Initialization 6-axis sensor sucess.")
+  print("Initialization 6-axis sensor success.")
   print("ICG20660L Device ID: %#x"%icg.read_id())
   '''
-    @brief Enable sensor, Include Accel of xyz axis, Gyro of xyz, temperature and fifo low power enable bit. 
+    @brief Enable sensor, including Accel of xyz axis, Gyro of xyz, temperature and fifo low power enable bit. 
     @param bit:  8-bit byte data. Each bit represents enabling a function bit, as shown in the following table:
     @n -------------------------------------------------------------------------------------------------------------------
     @n |        bit7      |     bit6     |      bit5   |    bit4     |     bit3    |     bit2   |    bit1    |    bit0    |
@@ -115,7 +115,7 @@ if __name__ == "__main__":
   #icg.enable_sensor(bit = icg.eACCEL_AXIS_Z|icg.eACCEL_AXIS_Y|icg.eACCEL_AXIS_Z)
 
   '''
-    @brief Config of accel's full scale 、dlpf bandwidth and internal sample rate. 
+    @brief Config of accel's full scale, dlpf bandwidth and internal sample rate. 
     @param scale  The full scale of accel, unit: g(1g = 9.80665 m/s²).
     @n     eFSR_A_2G:  The full scale range is ±2g.
     @n     eFSR_A_4G:  The full scale range is ±4g.
@@ -132,8 +132,9 @@ if __name__ == "__main__":
     @n     eACCEL_DLPF_1046_4KHZ or 7:When the signal is less than or equal to 1046Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 4KHz. Support low power consumption mode
     @n     eACCEL_DLPF_55_1KHZ or 8:  When the signal is less than or equal to 55Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Only support low power consumption mode.
     @n     eACCEL_DLPF_110_1KHZ or 9: When the signal is less than or equal to 110Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Only support low power consumption mode
-    @n Note: When the gyroscope and accelerometer are both enabled, if the sensor data is read through the FIFO, the internal sampling rate of the gyroscope and accelerometer must be the same.
-    @param odr:  Sets the frequency of waking up the chip to take a sample of accel data – the low power accel Output Data Rate.
+    @n Note: When the gyroscope and accelerometer are both enabled, if the sensor data is read through the FIFO, 
+    @n the internal sampling rate of the gyroscope and accelerometer must be the same.
+    @param odr:  Set the frequency of waking up the chip to take a sample of accel data – the low power accel Output Data Rate.
     @n     eODR_125HZ or 9:    The low power accel Output Data Rate: 125Hz
     @n     eODR_250HZ or 10:   The low power accel Output Data Rate: 250Hz
     @n     eODR_500HZ or 11:   The low power accel Output Data Rate: 500Hz
@@ -146,7 +147,8 @@ if __name__ == "__main__":
     @brief Set sample rate divider. 
     @param div  Sample rate divider, the range is 0~255.
     @n     Sampling rate = internal sampling rate/(div+1)
-    @n Note: If the accelerometer configuration is in low power consumption mode, that is, the formal parameter lowPowerFlag of the configAccel function is true, the sampling rate must match the output rate of the formal parameter odr of configAccel , as shown in the following table:
+    @n Note: If the accelerometer configuration is in low power consumption mode, that is, the formal parameter lowPowerFlag of the configAccel function is true, 
+    @n the sampling rate must match the output rate of the formal parameter odr of configAccel, as shown in the following table:
     @n ----------------------------------------------------------------------------
     @n |                        config_accel                      | set_sample_div |
     @n ----------------------------------------------------------------------------|
@@ -166,9 +168,12 @@ if __name__ == "__main__":
   '''
     @brief Set the level polarity of the INT pin when the accelerometer sensor is triggered to wake up the motion interrupt.
     @param polarity:  the level signal of the sensor INT pin when the wake-up motion is triggered
-    @n     GPIO.HIGH: The initial signal of the INT pin is LOW. When an accelerometer wake-up motion occurs, the level signal of the INT pin will change to HIGH. Then the readINTStatus function needs to be called to clear the signal and restore the initial signal.
-    @n     GPIO.LOW:  The initial signal of the INT pin is HIGH. When an accelerometer wake-up motion occurs, the level signal of the INT pin will change to LOW. Then the readINTStatus function needs to be called to clear the signal and restore the initial signal.
-    @n Note:  After triggering the accelerometer wake-up motion, if the readINTStatus function is not called to clear the sign, the INT pin will always maintain the level polarity when the motion is triggered.
+    @n     GPIO.HIGH: The initial signal of the INT pin is LOW. When an accelerometer wake-up motion occurs, the level signal of the INT pin will change to HIGH. 
+    @n Then the readINTStatus function needs to be called to clear the signal and restore the initial signal.
+    @n     GPIO.LOW:  The initial signal of the INT pin is HIGH. When an accelerometer wake-up motion occurs, the level signal of the INT pin will change to LOW. 
+    @n Then the readINTStatus function needs to be called to clear the signal and restore the initial signal.
+    @n Note:  After triggering the accelerometer wake-up motion, if the readINTStatus function is not called to clear the sign,
+    @n the INT pin will always maintain the level polarity when the motion is triggered.
   '''
   icg.set_int_pin_motion_trigger_polarity(polarity = GPIO.LOW)
   
