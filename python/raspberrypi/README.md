@@ -1,16 +1,16 @@
 # DFRobot_ICG20660L.h
-6-axis MEMS sensor library for Arduino. ICG20660L combines a 3-axis gyroscope, 3-axis accelerometer.<br>
-It support two communication interface: IIC(100~400KHz) and SPI(7MHz)<br>
+There is a 6-axis MEMS sensor library for Arduino. ICG20660L combines a 3-axis gyroscope and 3-axis accelerometer.<br>
+It supports two communication interfaces: IIC(100~400KHz) and SPI(7MHz)<br>
 Features:<br>
 * Accelerometer scale range: ±2g、±4g、±8g、±16g, g = 9.80665 m/s².<br>
 * Gyro scale range: ±125dps、±250dps、±500dps, 1dps = Π/180° rad/s, Π = 3.1415926<br>
 * Support 512 bytes FIFO.<br>
 * Support wake on motion for accelerometer. Condition: If the threshold difference of measured accelerometer between the previous and the next is greater than or equal to the set threshold, an interrupt will be generated.<br>
-* X, Y, Z axes of accelerometer and gyroscope can be enabled and disabled individually. Temperature’ s X, Y,Z axes can be disabled individually but must be enabled with one of the axis data. Disabling one axis or temperature can reduce power consumption.<br>
-* Support to enter low-power sleep mode. In this mode, sensors like gyroscope, accelerometer, temperature will stop sampling.<br>
+*  X, Y, Z axes of accelerometer and gyroscope can be enabled and disabled individually. Temperature can be disabled individually, but it must be use with one of the axis data.  Disabling one axis or temperature can reduce power consumption.<br>
+* Support low-power sleep mode. In this mode, sensors like gyroscope, accelerometer, temperature will stop sampling.<br>
 * Accelerometer supports low power consumption mode, in which the gyroscope will be forbidden to work.<br>
-* IIC can change the address through the high and low level of SDO. If level is high, the address is 0x69 and if low, then 0x68.<br>
-* 6.Support to read data from registers or FIFO, but reading from FIFO must enable all functions including accelerometer, gyroscope and temperature, and the internal sampling of gyroscope and accelerometer needs setting to be the same.<br>
+* IIC address can be changed by changing the level of SDO. If in level high, the address is 0x69 and if low, then 0x68.<br>
+* Support to read data from registers or FIFO, but for reading from FIFO, you must enable all functions including accelerometer, gyroscope and temperature, and the internal sampling settings of gyroscope and accelerometer should be the same.<br>
 
 ![Front and back svg effect drawing](https://github.com/Arya11111/DFRobot_MCP23017/blob/master/resources/images/SEN0245svg1.png)
 
@@ -21,7 +21,7 @@ Features:<br>
 ## Table of Contents
 
 * [Summary](#summary)
-* [Connected](#connected)
+* [Connection](#connection)
 * [Installation](#installation)
 * [Methods](#methods)
 * [Compatibility](#compatibility)
@@ -29,12 +29,12 @@ Features:<br>
 * [Credits](#credits)
 
 ## Summary
-This is a 6-axis MEMS sensor ICG-20660L library. It can only support IIC and SPI communication.<br>
-It can detect accelerometer, gyroscope, and onboard temperature.<br>
+This is a 6-axis MEMS sensor ICG-20660L library. It supports IIC and SPI communication.<br>
+It has a 3-axis accelerometer, 3-axis gyroscope, and onboard temperature.<br>
 
-## Connected
-Hardware conneted table<br>
-### hardware conneted table in SPI
+## Connection
+Hardware connetion table<br>
+### hardware connetion table in SPI
  Sensor      |                   raspberry pi                    |
 ------------ | :------------------------------------------------:|
 FSY          | not connected, floating                           |
@@ -45,7 +45,7 @@ SDI          | connected to mosi of mcu'spi                      |
 SCK          | connected to sck of mcu'spi                       |
 GND          | GND                                               |
 3V3/VCC      | 3V3/VCC                                           |
-### hardware conneted table in IIC
+### hardware connetion table in IIC
  Sensor      |                   raspberry pi                    |
 ------------ | :------------------------------------------------:|
 FSY          | not connected, floating                           |
@@ -68,7 +68,7 @@ To use this library, first download the library file, then open the examples fol
 
 ```C++
 '''
-  @brief The constructor of the ICG20660L sensor using IIC communication.
+  @brief The constructor of the ICG20660L sensor, using IIC communication.
   @param addr:  7-bit IIC address, controlled by SDO pin.
   @n     IIC_ADDR_SDO_H or 0x69:  SDO pull high.(default)
   @n     IIC_ADDR_SDO_L or 0x68:  SDO pull down.
@@ -76,16 +76,16 @@ To use this library, first download the library file, then open the examples fol
 def __init__(self,addr):
 
 '''
-  @brief The constructor of the ICG20660L sensor using SPI communication.
+  @brief The constructor of the ICG20660L sensor, using SPI communication.
   @param cs:  SPI chip select pin, connected to IO pin of raspberry pi.
 '''
 def __init__(self, cs):
 
 '''
   @brief Initialize the sensor. After initialization, all sensors are turned off, and the corresponding configuration needs to be turned on through enableSensor.
-  @param mode: Does configuration read sensor data from FIFO or register?
+  @param mode: Configure to read sensor data from FIFO or register?
   @n     eREG_MODE :   Read sensor data from data register.
-  @n     eFIFO_MODE:   Read sensor data from 512 bytes FIFO. Note:Read from FIFO, accelerometer, gyroscope, and temperature must all be enabled,
+  @n     eFIFO_MODE:   Read sensor data from 512 bytes FIFO. Note:Read from FIFO, accelerometer, gyroscope and temperature must all be enabled,
   @n and the internal sampling rate must be configured to be consistent.
   @return status:
   @n      0 : Initialization success.
@@ -101,12 +101,12 @@ def begin(self, mode = 0):
 def read_id(self):
 
 '''
-  @brief Reset, the register will restore the initial value, you need to call begin to configuration.
+  @brief Reset, the register will restore the initial value, and you need to call begin to configuration.
 '''
 def reset(self):
 
 '''
-  @brief Enter sleep mode, it will reduce power consumption, and The gyroscope and acceleration will stop working. 
+  @brief Entering sleep mode, it will reduce power consumption, and The gyroscope and acceleration will stop working. 
   @n You need to call wakeup function to wake up sensor.
 '''
 def sleep(self):
@@ -117,7 +117,7 @@ def sleep(self):
 def wakeup(self):
 
 '''
-  @brief Enable sensor, Include Accel of xyz axis, Gyro of xyz, temperature and fifo low power enable bit. 
+  @brief Enable sensor, including Accel of xyz axis, Gyro of xyz, temperature and fifo low power enable bit. 
   @param bit: 8-bit byte data. Each bit represents enabling a function bit, as shown in the following table:
   @n -------------------------------------------------------------------------------------------------------------------
   @n |        bit7      |     bit6     |      bit5   |    bit4     |     bit3    |     bit2   |    bit1    |    bit0    |
@@ -148,7 +148,7 @@ def wakeup(self):
 def enable_sensor(self, bit):
     
 '''
-  @brief Disable sensor, Include Accel of xyz axis, Gyro of xyz, temperature and fifo low power enable bit. 
+  @brief Disable sensor, including Accel of xyz axis, Gyro of xyz, temperature and fifo low power enable bit. 
   @param bit: 8-bit byte data. Each bit represents enabling a function bit, as shown in the following table:
   @n -------------------------------------------------------------------------------------------------------------------
   @n |        bit7      |     bit6     |      bit5   |    bit4     |     bit3    |     bit2   |    bit1    |    bit0    |
@@ -165,7 +165,8 @@ def enable_sensor(self, bit):
   @n   bit5:  Z-axis of acceleration.
   @n   bit6:  reserve.
   @n   bit7:  reserve.
-  @n Note: Only when the X, Y, and Z axes of the gyroscope are all closed, the temperature sensor will be turned off. Any axis’s turning on will make the temperature sensor not be turned off.
+  @n Note: Only when the X, Y, and Z axes of the gyroscope are all closed, the temperature sensor will be turned off.
+  @n Any axis’s turning on will make the temperature sensor not be turned off.
   @n   eGYRO_AXIS_Z: The bit0 of the bit, disable gyro's z axis and temperature.
   @n   eGYRO_AXIS_Y: The bit1 of the bit, disable gyro's y axis and temperature.
   @n   eGYRO_AXIS_X: The bit2 of the bit, disable gyro's X axis and temperature.
@@ -179,7 +180,7 @@ def enable_sensor(self, bit):
 def disable_sensor(self, bit):
 
 '''
-  @brief Config of accel's full scale 、dlpf bandwidth and internal sample rate. 
+  @brief Config of accel's full scale, dlpf bandwidth and internal sample rate. 
   @param scale  The full scale of accel, unit: g(1g = 9.80665 m/s²).
   @n     eFSR_A_2G:  The full scale range is ±2g.
   @n     eFSR_A_4G:  The full scale range is ±4g.
@@ -191,13 +192,14 @@ def disable_sensor(self, bit):
   @n     eACCEL_DLPF_21_1KHZ or 2:   When the signal is less than or equal to 21Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
   @n     eACCEL_DLPF_44_1KHZ or 3:   When the signal is less than or equal to 44Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
   @n     eACCEL_DLPF_99_1KHZ or 4:   When the signal is less than or equal to 99Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
-  @n     eACCEL_DLPF_218_1KHZ or 5:  When the signal is less than or equal to 218Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Support low power consumption mode
-  @n     eACCEL_DLPF_420_1KHZ or 6:  When the signal is less than or equal to 420Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Support low power consumption mode
-  @n     eACCEL_DLPF_1046_4KHZ or 7: When the signal is less than or equal to 1046Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 4KHz. Support low power consumption mode
-  @n     eACCEL_DLPF_55_1KHZ or 8:   When the signal is less than or equal to 55Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Only support low power consumption mode
-  @n     eACCEL_DLPF_110_1KHZ or 9:  When the signal is less than or equal to 110Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Only support low power consumption mode
-  @n Note: When the gyroscope and accelerometer are both enabled, if the sensor data is read through the FIFO, the internal sampling rate of the gyroscope and accelerometer must be the same.
-  @param odr:  Sets the frequency of waking up the chip to take a sample of accel data – the low power accel Output Data Rate.
+  @n     eACCEL_DLPF_218_1KHZ or 5:  When the signal is less than or equal to 218Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.     @n Support low power consumption mode
+  @n     eACCEL_DLPF_420_1KHZ or 6:  When the signal is less than or equal to 420Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.     @n Support low power consumption mode
+  @n     eACCEL_DLPF_1046_4KHZ or 7: When the signal is less than or equal to 1046Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 4KHz.   @n Support low power consumption mode
+  @n     eACCEL_DLPF_55_1KHZ or 8:   When the signal is less than or equal to 55Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.     @n Only support low power consumption mode
+  @n     eACCEL_DLPF_110_1KHZ or 9:  When the signal is less than or equal to 110Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.     @n Only support low power consumption mode
+  @n Note: When the gyroscope and accelerometer are both enabled, if the sensor data is read through the FIFO,
+  @n the internal sampling rate of the gyroscope and accelerometer must be the same.
+  @param odr:  Set the frequency of waking up the chip to take a sample of accel data – the low power accel Output Data Rate.
   @n     eODR_125HZ or 9:    The low power accel Output Data Rate: 125Hz
   @n     eODR_250HZ or 10:   The low power accel Output Data Rate: 250Hz
   @n     eODR_500HZ or 11:   The low power accel Output Data Rate: 500Hz
@@ -208,7 +210,7 @@ def disable_sensor(self, bit):
 def config_accel(self,scale, bd, odr = 0, low_power_flag = False):
 
 '''
-  @brief Config of gyro's full scale 、dlpf bandwidth and internal sample rate. 
+  @brief Config of gyro's full scale, dlpf bandwidth and internal sample rate. 
   @param scale  The full scale of gyro, unit: dps(Degrees per second).
   @n     eFSR_G_125DPS:  The full scale range is ±125 dps.
   @n     eFSR_G_250DPS:  The full scale range is ±250 dps.
@@ -220,7 +222,8 @@ def config_accel(self,scale, bd, odr = 0, low_power_flag = False):
   @n     eGYRO_DLPF_176_1KHZ:   When the signal is equal to or greater than 176Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
   @n     eGYRO_DLPF_92_1KHZ:    When the signal is equal to or greater than 92Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
   @n     eGYRO_DLPF_3281_8KHZ:  When the signal is equal to or greater than 3281Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 8KHz.
-  @n Note: When the gyroscope and accelerometer are both enabled, if the sensor data is read through the FIFO, the internal sampling rate of the gyroscope and accelerometer must be the same.
+  @n Note: When the gyroscope and accelerometer are both enabled, if the sensor data is read through the FIFO, 
+  @n the internal sampling rate of the gyroscope and accelerometer must be the same.
 '''
 def config_gyro(self, scale, bd):
 
@@ -228,7 +231,8 @@ def config_gyro(self, scale, bd):
   @brief Set sample rate divider. 
   @param div  Sample rate divider, the range is 0~255.
   @n    Sampling rate = internal sampling rate/(div+1)
-  @n Note: If the accelerometer configuration is in low power consumption mode, that is, the formal parameter lowPowerFlag of the configAccel function is true, the sampling rate must match the output rate of the formal parameter odr of configAccel , as shown in the following table:
+  @n Note: If the accelerometer configuration is in low power consumption mode, that is, the formal parameter lowPowerFlag of the configAccel function is true, \
+  @n the sampling rate must match the output rate of the formal parameter odr of configAccel , as shown in the following table:
     @n ----------------------------------------------------------------------------
     @n |                        config_accel                      | set_sample_div |
     @n ----------------------------------------------------------------------------|
@@ -247,9 +251,9 @@ def config_gyro(self, scale, bd):
 
   while True:
     '''
-      @brief Get 14 bytes raw data, include accel, gyro, and temperature.
-      @param length: The length of return list.
-      @return data:  list type, Buffer for storing 14 bytes of raw data.
+      @brief Get 14 bytes raw data, including accel, gyro, and temperature.
+      @param length: The length of returning list.
+      @return data:  list type, buffer for storing 14 bytes of raw data.
       @n     The first byte of data :  Acceleration X-axis high byte data.
       @n     The second byte of data:  Acceleration X-axis low byte data.
       @n     The third byte of data :  Acceleration Y-axis high byte data.
@@ -307,9 +311,9 @@ def config_gyro(self, scale, bd):
 def set_sample_div(self, div):
 
 '''
-  @brief Get 14 bytes raw data, include accel, gyro, and temperature.
-  @param length: The length of return list.
-  @return data:  list type, Buffer for storing 14 bytes of raw data
+  @brief Get 14 bytes raw data, including accel, gyro, and temperature.
+  @param length: The length of returning list.
+  @return data:  list type, buffer for storing 14 bytes of raw data
   @n     The first byte of data :  Acceleration X-axis high byte data.
   @n     The second byte of data:  Acceleration X-axis low byte data.
   @n     The third byte of data :  Acceleration Y-axis high byte data.
@@ -382,9 +386,12 @@ def get_gyro_z(self):
 '''
   @brief Set the level polarity of the INT pin when the accelerometer sensor is triggered to wake up the motion interrupt.
   @param polarity:  the level signal of the sensor INT pin when the wake-up motion is triggered
-  @n     GPIO.HIGH:  The initial signal of the pin is LOW. When an accelerometer wake-up motion occurs, the level signal of the INT pin will change to HIGH. Then the readINTStatus function needs to be called to clear the signal and restore the initial signal.
-  @n     GPIO.LOW:   The initial signal of the pin is HIGH. When an accelerometer wake-up motion occurs, the level signal of the INT pin will change to LOW. Then the readINTStatus function needs to be called to clear the signal and restore the initial signal.
-  @n Note:  After triggering the accelerometer wake-up motion, if the read_int_status function is not called to clear the sign, the INT pin will always maintain the level polarity when the motion is triggered.
+  @n     GPIO.HIGH:  The initial signal of the pin is LOW. When an accelerometer wake-up motion occurs, the level signal of the INT pin will change to HIGH. 
+  @n Then the readINTStatus function needs to be called to clear the signal and restore the initial signal.
+  @n     GPIO.LOW:   The initial signal of the pin is HIGH. When an accelerometer wake-up motion occurs, the level signal of the INT pin will change to LOW.
+  @n Then the readINTStatus function needs to be called to clear the signal and restore the initial signal.
+  @n Note:  After triggering the accelerometer wake-up motion, if the read_int_status function is not called to clear the sign, 
+  @n the INT pin will always maintain the level polarity when the motion is triggered.
 '''
 def set_int_pin_motion_trigger_polarity(self, polarity):
 
