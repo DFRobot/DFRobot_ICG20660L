@@ -72,7 +72,7 @@ void setup() {
  * @n and the internal sampling rate must be configured to be consistent.(This demo does not support)
  * @return status:
  * @n      0 :   Initialization success.
- * @n      -1:   Interface Initialization failed(IIC or SPI).
+ * @n      -1:   Interface initialization failed(IIC or SPI).
  * @n      -2:   Failed to read the device ID, the ID is not 0x91.
  */
   while(icg.begin(/*mode=*/icg.eRegMode) != 0){
@@ -151,7 +151,7 @@ void setup() {
  * @param div  Sample rate divider, the range is 0~255.
  * @n     Sampling rate = internal sampling rate/(div+1)
  * @n Note: If the accelerometer is configured in low power consumption mode, that is, the formal parameter lowPowerFlag of the configAccel function is true, 
- * @ the sampling rate must match the output rate of the formal parameter odr of configAccel , as shown in the following table:
+ * @ the sampling rate must match the output rate of the formal parameter odr of configAccel, as shown in the following table:
  * @n ----------------------------------------------------------------------------
  * @n |                           configAccel                    |  setSampleDiv  |
  * @n ----------------------------------------------------------------------------|
