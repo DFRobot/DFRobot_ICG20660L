@@ -30,7 +30,7 @@ Features:<br>
 
 ## Summary
 This is a 6-axis MEMS sensor ICG-20660L library. It supports IIC and SPI communication.<br>
-It has a 3-axis accelerometer, 3-axis gyroscope, and onboard temperature.<br>
+It has a 3-axis accelerometer, 3-axis gyroscope and onboard temperature.<br>
 
 ## Connection
 Hardware connetion table<br>
@@ -89,7 +89,7 @@ def __init__(self, cs):
   @n and the internal sampling rate must be configured to be consistent.
   @return status:
   @n      0 : Initialization success.
-  @n      -1: Interface Initialization failed(IIC or SPI).
+  @n      -1: Interface initialization failed(IIC or SPI).
   @n      -2: Failed to read the device ID, the ID is not 0x91
 '''
 def begin(self, mode = 0):
@@ -232,7 +232,7 @@ def config_gyro(self, scale, bd):
   @param div  Sample rate divider, the range is 0~255.
   @n    Sampling rate = internal sampling rate/(div+1)
   @n Note: If the accelerometer configuration is in low power consumption mode, that is, the formal parameter lowPowerFlag of the configAccel function is true, \
-  @n the sampling rate must match the output rate of the formal parameter odr of configAccel , as shown in the following table:
+  @n the sampling rate must match the output rate of the formal parameter odr of configAccel, as shown in the following table:
     @n ----------------------------------------------------------------------------
     @n |                        config_accel                      | set_sample_div |
     @n ----------------------------------------------------------------------------|
@@ -311,7 +311,7 @@ def config_gyro(self, scale, bd):
 def set_sample_div(self, div):
 
 '''
-  @brief Get 14 bytes raw data, including accel, gyro, and temperature.
+  @brief Get 14 bytes raw data, including accel, gyro and temperature.
   @param length: The length of returning list.
   @return data:  list type, buffer for storing 14 bytes of raw data
   @n     The first byte of data :  Acceleration X-axis high byte data.
@@ -397,7 +397,7 @@ def set_int_pin_motion_trigger_polarity(self, polarity):
 
 '''
   @brief @brief Get the polarity of the INT pin of sensor when the sensor INT pin triggers an interrupt.
-  @return The level signal when the INT pin triggers an interrupt.
+  @return  The level signal when the INT pin triggers an interrupt.
   @n      GPIO.HIGH:  INT pin level held  HIGH LEVEL until interrupt status is cleared.
   @n      GPIO.LOW:   INT pin level held  LOW LEVEL until interrupt status is cleared.
 '''
