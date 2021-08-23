@@ -2,23 +2,23 @@
 
 '''
   @file DFRobot_ICG20660L.py
-  @brief The ICG-20660 is a 6-axis MotionTracking device that combines a 3-axis gyroscope, 3-axis accelerometer.
-  @n It support two communication interface:
+  @brief The ICG-20660 is a 6-axis motiontracking device that combines a 3-axis gyroscope, 3-axis accelerometer.
+  @n It supports two communication interfaces:
   @n (1) IIC-->freq: 100~400Khz
   @n (2) SPI-->freq: 100kHz~7MHz, only support mode0 or mode3
   @n Two communication methods are switched by cs pin, 0:SPI, 1:IIC
   @n 3-axis accelerometer feature:
-  @n (1) Support max ranging: ±2g、±4g、±8g、±16g, g = 9.80665 m/s²
+  @n (1) Support max ranging: ±2g, ±4g, ±8g, ±16g, g = 9.80665 m/s²
   @n (2) 1g = 9.80665 m/s²
   @n 3-axis gyroscope feature:
-  @n (1) Support max ranging: ±125dps、±250dps、±500dps
+  @n (1) Support max ranging: ±125dps, ±250dps, ±500dps
   @n (2) 1dps = Π/180° rad/s, Π = 3.1415926
   @n Motion threshold wake-up detection：
   @n The motion threshold is the acceleration thresholds difference between the previous and next. If it is greater than or equal to the set threshold, an interrupt will be generated.
   @n Support to read from register and FIFO：
   @n Read from FIFO. Accelerometer, gyroscope and temperature must all be enabled, and its internal sampling rate must be configured to be consistent.
   @
-  @n Hardware conneted table in SPI
+  @n Hardware connetion table in SPI
   @n -------------------------------------------------------------------
   @n  Sensor      |                      raspberry pi                  |
   @n -------------------------------------------------------------------
@@ -31,7 +31,7 @@
   @n GND          | GND                                                |
   @n 3V3/VCC      | 3V3/VCC                                            |
   @n ------------------------------------------------------------------
-  @n Hardware conneted table in IIC
+  @n Hardware connetion table in IIC
   @n ------------------------------------------------------------------
   @n  Sensor      |                   raspberry pi                    |
   @n ------------------------------------------------------------------
@@ -93,7 +93,7 @@ OFFSET_A_DLPF_CFG = 0x07
 REG_ICG20660L_INT_PIN_CFG  = 0x37
 REG_ICG20660L_INT_ENABLE   = 0x38
 '''
-INT_ENABLE register：addr:0x38,acess:rw
+INT_ENABLE register：addr:0x38, acess:rw
 * -----------------------------------------------------------------
 * | b7 | b6 | b5 |      b4       | b3 | b2 | b1 |       b0        |
 * -----------------------------------------------------------------
@@ -110,7 +110,7 @@ OFFSET_DATA_RDY_INT_EN = 0x01
 
 REG_ICG20660L_PWR_MGMT_1   = 0x6B
 '''
-PWR_MGMT_1 register description：addr:0x6B,acess:rw
+PWR_MGMT_1 register description：addr:0x6B, acess:rw
 * -------------------------------------------------------------------------
 * |      b7      |  b6   |   b5  |      b4      |    b3    | b2 | b1 | b0 |
 * -------------------------------------------------------------------------
@@ -132,7 +132,7 @@ OFFSET_CLKSEL = 0x07
 
 REG_ICG20660L_PWR_MGMT_2   = 0x6C
 '''
-PWR_MGMT_2 register：addr:0x6C,acess:rw
+PWR_MGMT_2 register：addr:0x6C, acess:rw
 * -------------------------------------------------------------------------------
 * |     b7     |  b6 |    b5   |    b4   |    b3   |    b2   |    b1   |   b0   |
 * -------------------------------------------------------------------------------
@@ -179,7 +179,7 @@ REG_ICG20660L_ZG_OFFS_USRH       = 0x17
 REG_ICG20660L_ZG_OFFS_USRL       = 0x18
 REG_ICG20660L_CONFIG             = 0x1A
 '''
-Config register：addr:0x1A,acess:rw
+Config register：addr:0x1A, acess:rw
 * -------------------------------------------------
 * |  b7 |     b6    | b5 | b4 | b3 | b2 | b1 | b0 |
 * -------------------------------------------------
@@ -195,7 +195,7 @@ OFFSET_DLPF_CFG = 0x07
 
 REG_ICG20660L_GYRO_CONFIG        = 0x1B
 '''
-GYRO_CONFIG register：addr:0x1B,acess:rw
+GYRO_CONFIG register：addr:0x1B, acess:rw
 * -----------------------------------------------------
 * |   b7  |  b6   |   b5  | b4 | b3 |  b2 |  b1 |  b0 |
 * -----------------------------------------------------
@@ -215,7 +215,7 @@ OFFSET_FCHOICE_B = 0x03
 
 REG_ICG20660L_ACCEL_CONFIG       = 0x1C
 '''
-ACCEL_CONFIG：addr:0x1C,acess:rw
+ACCEL_CONFIG：addr:0x1C, acess:rw
 * -------------------------------------------------------
 * |   b7  |  b6   |   b5  |  b4  |  b3   | b2 | b1 | b0 |
 * -------------------------------------------------------
@@ -236,7 +236,7 @@ REG_ICG20660L_LP_MODE_CFG        = 0x1E
 REG_ICG20660L_ACCEL_WOM_THR      = 0x1F
 REG_ICG20660L_FIFO_EN            = 0x23
 '''
-FIFO_EN register：addr:0x23,acess:rw
+FIFO_EN register：addr:0x23, acess:rw
 * --------------------------------------------------------------------------------------
 * |      b7      |     b6     |     b5     |     b4     |      b3       | b2 | b1 | b0 |
 * --------------------------------------------------------------------------------------
@@ -257,7 +257,7 @@ OFFSET_ACCEL_FIFO_EN = 0x01
 REG_ICG20660L_FSYNC_INT          = 0x36
 REG_ICG20660L_INT_PIN_CFG        = 0x37
 '''
-INT_PIN_CFG register：addr:0x37,acess:rw
+INT_PIN_CFG register：addr:0x37, acess:rw
 * ------------------------------------------------------------------------------------------------------
 * |     b7    |    b6    |       b5     |      b4      |        b3       |         b2        | b1 | b0 |
 * ------------------------------------------------------------------------------------------------------
@@ -295,7 +295,7 @@ REG_ICG20660L_GYRO_ZOUT_L        = 0x48
 REG_ICG20660L_SIGNAL_PATH_RESET  = 0x68
 REG_ICG20660L_ACCEL_INTEL_CTRL   = 0x69
 '''
-ACCEL_INTEL_CTRL register：addr:0x69,acess:rw
+ACCEL_INTEL_CTRL register：addr:0x69, acess:rw
 * ----------------------------------------------------------------------------
 * |       b7       |        b6        | b5 | b4 | b3 | b2 | b1 |      b0     |
 * ----------------------------------------------------------------------------
@@ -311,7 +311,7 @@ OFFSET_WOM_TH_MODE = 0x01
 
 REG_ICG20660L_USER_CTRL          = 0x6A
 '''
-USER_CTRL register：addr:0x6A,acess:rw
+USER_CTRL register：addr:0x6A, acess:rw
 * -------------------------------------------------------------------------
 * | b7  |    b6   |  b5 |     b4     | b3  |    b2    | b1  |      b0     |
 * -------------------------------------------------------------------------
@@ -461,12 +461,12 @@ class DFRobot_ICG20660L:
   def begin(self, mode = 0):
     '''
       @brief Initialize the sensor. After initialization, all sensors are turned off, and the corresponding configuration needs to be turned on through enable_sensor.
-      @param mode:  Does configuration read sensor data from FIFO or register?
+      @param mode: Configure to read sensor data from FIFO or register?
       @n     eREG_MODE :   Read sensor data from data register.
-      @n     eFIFO_MODE:   Read sensor data from 512 bytes FIFO. Note:Read from FIFO, accelerometer, gyroscope, and temperature must all be enabled,
+      @n     eFIFO_MODE:   Read sensor data from 512 bytes FIFO. Note:Read from FIFO, accelerometer, gyroscope and temperature must all be enabled,
       @n and the internal sampling rate must be configured to be consistent. 
       @return status:
-      @n      0 : Initialization sucess.
+      @n      0 : Initialization success.
       @n      -1: Interface Initialization failed(IIC or SPI).
       @n      -2:  Failed to read the device ID, the ID is not 0x91
     '''
@@ -497,7 +497,7 @@ class DFRobot_ICG20660L:
 
   def reset(self):
     '''
-      @brief Reset, the register will restore the initial value, you need to call begin to configuration.
+      @brief Reset, the register will restore the initial value, and you need to call begin to configuration.
     '''
     wait_for_timeout_ms = 0.1
     wait_for_timout_inc = 0.005
@@ -521,7 +521,7 @@ class DFRobot_ICG20660L:
       
   def sleep(self):
     '''
-      @brief Enter sleep mode, it will reduce power consumption, and The gyroscope and acceleration will stop working. 
+      @brief Enter sleep mode, it will reduce power consumption, and the gyroscope and acceleration will stop working. 
       @n You need to call wakeup function to wake up sensor.
     '''
     rslt = self._read_bytes(REG_ICG20660L_PWR_MGMT_1, 1)
@@ -534,7 +534,7 @@ class DFRobot_ICG20660L:
 
   def wakeup(self):
     '''
-      @brief Waking up sensor from sleep, and you will restore the configuration before sleep.
+      @brief Waking up sensor from sleep, you will restore the configuration before sleep.
     '''
     rslt = self._read_bytes(REG_ICG20660L_PWR_MGMT_1, 1)
     #print("rslt=%#x"%rslt[0])
@@ -551,7 +551,7 @@ class DFRobot_ICG20660L:
 
   def enable_sensor(self, bit):
     '''
-      @brief Enable sensor, Include Accel of xyz axis, Gyro of xyz, temperature and fifo low power enable bit. 
+      @brief Enable sensor, including Accel of xyz axis, Gyro of xyz, temperature and fifo low power enable bit. 
       @param bit: 8-bit byte data. Each bit represents enabling a function bit, as shown in the following table:
       @n -------------------------------------------------------------------------------------------------------------------
       @n |        bit7      |     bit6     |      bit5   |    bit4     |     bit3    |     bit2   |    bit1    |    bit0    |
@@ -618,7 +618,7 @@ class DFRobot_ICG20660L:
 
   def disable_sensor(self, bit):
     '''
-      @brief Disable sensor, Include Accel of xyz axis, Gyro of xyz, temperature and fifo low power enable bit. 
+      @brief Disable sensor, including Accel of xyz axis, Gyro of xyz, temperature and fifo low power enable bit. 
       @param bit: 8-bit byte data. Each bit represents enabling a function bit, as shown in the following table:
       @n -------------------------------------------------------------------------------------------------------------------
       @n |        bit7      |     bit6     |      bit5   |    bit4     |     bit3    |     bit2   |    bit1    |    bit0    |
@@ -635,7 +635,8 @@ class DFRobot_ICG20660L:
       @n   bit5:  Z-axis of acceleration.
       @n   bit6:  reserve.
       @n   bit7:  reserve.
-      @n Note: Only when the X, Y, and Z axes of the gyroscope are all closed, the temperature sensor will be turned off. Any axis’s turning on will make the temperature sensor not be turned off.。
+      @n Note: Only when the X, Y, and Z axes of the gyroscope are all closed, the temperature sensor will be turned off.
+      @n Any axis’s turning on will make the temperature sensor not be turned off.
       @n   eGYRO_AXIS_Z: The bit0 of the bit, disable gyro's z axis and temperature.
       @n   eGYRO_AXIS_Y: The bit1 of the bit, disable gyro's y axis and temperature.
       @n   eGYRO_AXIS_X: The bit2 of the bit, disable gyro's X axis and temperature.
@@ -682,7 +683,7 @@ class DFRobot_ICG20660L:
 
   def config_accel(self,scale, bd, odr = 0, low_power_flag = False):
     '''
-      @brief Config of accel's full scale 、dlpf bandwidth and internal sample rate. 
+      @brief Config of accel's full scale, dlpf bandwidth and internal sample rate. 
       @param scale  The full scale of accel, unit: g(1g = 9.80665 m/s²).
       @n     eFSR_A_2G:  The full scale range is ±2g.
       @n     eFSR_A_4G:  The full scale range is ±4g.
@@ -699,8 +700,9 @@ class DFRobot_ICG20660L:
       @n     eACCEL_DLPF_1046_4KHZ or 7: When the signal is less than or equal to 1046Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 4KHz. Support low power consumption
       @n     eACCEL_DLPF_55_1KHZ or 8:    When the signal is less than or equal to 55Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Only support low power consumption
       @n     eACCEL_DLPF_110_1KHZ or 9:  When the signal is less than or equal to 110Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Only support low power consumption
-      @n  Note: When the gyroscope and accelerometer are both enabled, if the sensor data is read through the FIFO, the internal sampling rate of the gyroscope and accelerometer must be the same.
-      @param odr:  Sets the frequency of waking up the chip to take a sample of accel data – the low power accel Output Data Rate.
+      @n  Note: When the gyroscope and accelerometer are both enabled, if the sensor data is read through the FIFO,
+      @n the internal sampling rate of the gyroscope and accelerometer must be the same.
+      @param odr:  Set the frequency of waking up the chip to take a sample of accel data – the low power accel Output Data Rate.
       @n     eODR_125HZ or 9:    The low power accel Output Data Rate: 125Hz
       @n     eODR_250HZ or 10:   The low power accel Output Data Rate: 250Hz
       @n     eODR_500HZ or 11:   The low power accel Output Data Rate: 500Hz
@@ -718,7 +720,7 @@ class DFRobot_ICG20660L:
 
   def config_gyro(self, scale, bd):
     '''
-      @brief Config of gyro's full scale 、dlpf bandwidth and internal sample rate. 
+      @brief Config of gyro's full scale, dlpf bandwidth and internal sample rate. 
       @param scale  The full scale of gyro, unit: dps(Degrees per second).
       @n     eFSR_G_125DPS:  The full scale range is ±125 dps.
       @n     eFSR_G_250DPS:  The full scale range is ±250 dps.
@@ -730,7 +732,8 @@ class DFRobot_ICG20660L:
       @n     eGYRO_DLPF_176_1KHZ:   When the signal is equal to or greater than 176Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
       @n     eGYRO_DLPF_92_1KHZ:    When the signal is equal to or greater than 92Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
       @n     eGYRO_DLPF_3281_8KHZ:  When the signal is equal to or greater than 3281Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 8KHz.
-      @n When the gyroscope and accelerometer are both enabled, if the sensor data is read through the FIFO, the internal sampling rate of the gyroscope and accelerometer must be the same.
+      @n When the gyroscope and accelerometer are both enabled, if the sensor data is read through the FIFO,
+      @n the internal sampling rate of the gyroscope and accelerometer must be the same.
     '''
     self._set_full_scale_for_gyro(scale)
     self._set_bandwidth_for_gyro(bd)
@@ -741,7 +744,8 @@ class DFRobot_ICG20660L:
       @brief Set sample rate divider. 
       @param div  Sample rate divider, the range is 0~255.
       @n     Sampling rate = internal sampling rate/(div+1)
-      @n Note: If the accelerometer configuration is in low power consumption mode, that is, the formal parameter lowPowerFlag of the configAccel function is true, the sampling rate must match the output rate of the formal parameter odr of configAccel , as shown in the following table:
+      @n Note: If the accelerometer configuration is in low power consumption mode, that is, the formal parameter lowPowerFlag of the configAccel function is true, 
+      @n the sampling rate must match the output rate of the formal parameter odr of configAccel , as shown in the following table:
     @n ----------------------------------------------------------------------------
     @n |                        config_accel                      | set_sample_div |
     @n ----------------------------------------------------------------------------|
@@ -791,9 +795,9 @@ class DFRobot_ICG20660L:
 
   def get_raw_data(self, length = 0):
     '''
-      @brief Get 14 bytes raw data, include accel, gyro, and temperature.
+      @brief Get 14 bytes raw data, including accel, gyro, and temperature.
       @param length: The length of return list.
-      @return data:  list type, Buffer for storing 14 bytes of raw data
+      @return data:  list type, buffer for storing 14 bytes of raw data
       @n     The first byte of data :  Acceleration X-axis high byte data.
       @n     The second byte of data:  Acceleration X-axis low byte data.
       @n     The third byte of data :  Acceleration Y-axis high byte data.
@@ -862,7 +866,7 @@ class DFRobot_ICG20660L:
 
   def get_accel_z(self):
     '''
-      @brief Get Z axis acceleration, unit g.
+      @brief get Z axis acceleration, unit g.
       @return  Z axis acceleration.
     '''
     if self._update & 0x04 == 0:
@@ -915,9 +919,12 @@ class DFRobot_ICG20660L:
     '''
       @brief Set the level polarity of the INT pin when the accelerometer sensor is triggered to wake up the motion interrupt.
       @param polarity:  the level signal of the sensor INT pin when the wake-up motion is triggered
-      @n     GPIO.HIGH:  The initial signal of the pin is LOW. When an accelerometer wake-up motion occurs, the level signal of the INT pin will change to HIGH. Then the readINTStatus function needs to be called to clear the signal and restore the initial signal.
-      @n     GPIO.LOW:   The initial signal of the pin is HIGH. When an accelerometer wake-up motion occurs, the level signal of the INT pin will change to LOW. Then the readINTStatus function needs to be called to clear the signal and restore the initial signal.
-      @n Note:  After triggering the accelerometer wake-up motion, if the read_int_status function is not called to clear the sign, the INT pin will always maintain the level polarity when the motion is triggered.
+      @n     GPIO.HIGH:  The initial signal of the pin is LOW. When an accelerometer wake-up motion occurs, the level signal of the INT pin will change to HIGH. 
+      @n Then the readINTStatus function needs to be called to clear the signal and restore the initial signal.
+      @n     GPIO.LOW:   The initial signal of the pin is HIGH. When an accelerometer wake-up motion occurs, the level signal of the INT pin will change to LOW. 
+      @n Then the readINTStatus function needs to be called to clear the signal and restore the initial signal.
+      @n Note:  After triggering the accelerometer wake-up motion, if the read_int_status function is not called to clear the sign,
+      @n the INT pin will always maintain the level polarity when the motion is triggered.
     '''
     acl_rslt = self._read_bytes(REG_ICG20660L_ACCEL_CONFIG2, 1)
     acl_rslt = self._update_reg_bit_value(acl_rslt[0], BIT_A_DLPF_CFG, OFFSET_A_DLPF_CFG, 2)
