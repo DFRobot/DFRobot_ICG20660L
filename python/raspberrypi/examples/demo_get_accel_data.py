@@ -3,7 +3,7 @@
 '''
   # @file demo_get_accel_data.py
   # @brief Get the accelerometer data of the sensor, only applicable to register mode (This demo does not support FIFO reading mode).
-  # @n Hardware conneted table in SPI
+  # @n Hardware connetion table in SPI
   # @n --------------------------------------------------------------
   # @n  Sensor      |             MCU                | raspberry pi |
   # @n --------------------------------------------------------------
@@ -16,7 +16,7 @@
   # @n GND          | GND                            |      GND     |
   # @n 3V3/VCC      | 3V3/VCC                        |   3V3/VCC    |
   # @n --------------------------------------------------------------
-  # @n Hardware conneted table in IIC
+  # @n Hardware connetion table in IIC
   # @n --------------------------------------------------------------
   # @n  Sensor      |              MCU               | raspberry pi |
   # @n --------------------------------------------------------------
@@ -44,14 +44,14 @@ import time
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 from DFRobot_ICG20660L import *
 '''
-  @brief The constructor of the ICG20660L sensor using IIC communication.
+  @brief The constructor of the ICG20660L sensor, using IIC communication.
   @param addr:  7-bit IIC address, controlled by SDO pin.
   @n     IIC_ADDR_SDO_H or 0x69:  SDO pull high.(default)
   @n     IIC_ADDR_SDO_L or 0x68:  SDO pull down.
 '''
 #icg = DFRobot_ICG20660L_IIC(addr = IIC_ADDR_SDO_H)
 '''
-  @brief The constructor of the ICG20660L sensor using SPI communication.
+  @brief The constructor of the ICG20660L sensor, using SPI communication.
   @param cs:  SPI chip select pin, connected to IO pin of raspberry pi.
 '''
 icg = DFRobot_ICG20660L_SPI(cs = 22)
@@ -59,7 +59,7 @@ icg = DFRobot_ICG20660L_SPI(cs = 22)
 if __name__ == "__main__":
   '''
     @brief Initialize the sensor. After initialization, all sensors are turned off, and the corresponding configuration needs to be turned on through enableSensor.
-    @param mode: Does configuration read sensor data from FIFO or register?
+    @param mode: Configure to read sensor data from FIFO or register?
     @n     eREG_MODE :   Read sensor data from data register.
     @n     eFIFO_MODE:   Read sensor data from 512 bytes FIFO. Note:Read from FIFO, accelerometer, gyroscope, and temperature must all be enabled, 
     @n and the internal sampling rate must be configured to be consistent.
@@ -71,10 +71,10 @@ if __name__ == "__main__":
   while icg.begin(icg.eREG_MODE) != 0:
     print("Initialization 6-axis sensor failed.")
     time.sleep(1)
-  print("Initialization 6-axis sensor sucess.")
+  print("Initialization 6-axis sensor success.")
   print("ICG20660L Device ID: %#x"%icg.read_id())
   '''
-    @brief Enable sensor, Include Accel of xyz axis, Gyro of xyz, temperature and fifo low power enable bit. 
+    @brief Enable sensor, including Accel of xyz axis, Gyro of xyz, temperature and fifo low power enable bit. 
     @param bit: 8-bit byte data. Each bit represents enabling a function bit, as shown in the following table:
     @n -------------------------------------------------------------------------------------------------------------------
     @n |        bit7      |     bit6     |      bit5   |    bit4     |     bit3    |     bit2   |    bit1    |    bit0    |
@@ -100,13 +100,14 @@ if __name__ == "__main__":
     @n   eACCEL_AXIS_X: The bit5 of the bit, enable Accel's X axis.
     @n   eGYRO_AXIS_XYZ or eGYRO_AXIS_X|eGYRO_AXIS_Y|eGYRO_AXIS_Z: The bit0/bit1/bit2 of the bit, enable gyro's xyz axis and temperature.
     @n   eACCEL_AXIS_XYZ or eACCEL_AXIS_X|eACCEL_AXIS_Y|eACCEL_AXIS_Z: The bit3/bit4/bit5 of the bit, enable Accel's xyz axis.
-    @n   eAXIS_ALL or eGYRO_AXIS_Z|eGYRO_AXIS_Y|eGYRO_AXIS_X|eACCEL_AXIS_Z|eACCEL_AXIS_Y|eACCEL_AXIS_Z: The bit0/bit1/bit2/bit3/bit4/bit5 of the bit, enable temperature, Accel's and gyro's xyz axis. 
+    @n   eAXIS_ALL or eGYRO_AXIS_Z|eGYRO_AXIS_Y|eGYRO_AXIS_X|eACCEL_AXIS_Z|eACCEL_AXIS_Y|eACCEL_AXIS_Z: The bit0/bit1/bit2/bit3/bit4/bit5 of the bit, 
+    @n enable temperature, Accel's and gyro's xyz axis. 
   '''
   icg.enable_sensor(bit = icg.eACCEL_AXIS_XYZ)
   #icg.enable_sensor(bit = icg.eACCEL_AXIS_Z|icg.eACCEL_AXIS_Y|icg.eACCEL_AXIS_Z)
   
   '''
-    @brief Config of accel's full scale 、dlpf bandwidth and internal sample rate. 
+    @brief Config of accel's full scale, dlpf bandwidth and internal sample rate. 
     @param scale  The full scale of accel, unit: g(1g = 9.80665 m/s²).
     @n     eFSR_A_2G:  The full scale range is ±2g.
     @n     eFSR_A_4G:  The full scale range is ±4g.
@@ -123,8 +124,9 @@ if __name__ == "__main__":
     @n     eACCEL_DLPF_1046_4KHZ or 7: When the signal is less than or equal to 1046Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 4KHz. Support low power consumption mode
     @n     eACCEL_DLPF_55_1KHZ or 8: When the signal is less than or equal to 55Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Only support low power consumption mode
     @n     eACCEL_DLPF_110_1KHZ or 9: When the signal is less than or equal to 110Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Only support low power consumption mode
-    @n Note: When the gyroscope and accelerometer are both enabled, if the sensor data is read through the FIFO, the internal sampling rate of the gyroscope and accelerometer must be the same.
-    @param odr:  Sets the frequency of waking up the chip to take a sample of accel data – the low power accel Output Data Rate.
+    @n Note: When the gyroscope and accelerometer are both enabled, if the sensor data is read through the FIFO, 
+    @n the internal sampling rate of the gyroscope and accelerometer must be the same.
+    @param odr:  Set the frequency of waking up the chip to take a sample of accel data – the low power accel Output Data Rate.
     @n     eODR_125Hz or 9:    The low power accel Output Data Rate: 125Hz
     @n     eODR_250Hz or 10:   The low power accel Output Data Rate: 250Hz
     @n     eODR_500Hz or 11:   The low power accel Output Data Rate: 500Hz
@@ -137,7 +139,8 @@ if __name__ == "__main__":
     @brief Set sample rate divider. 
     @param div  Sample rate divider, the range is 0~255.
     @n     Sampling rate = internal sampling rate/(div+1)
-    @n Note: If the accelerometer is configured in low power consumption mode, that is, the formal parameter lowPowerFlag of the configAccel function is true, the sampling rate must match the output rate of the formal parameter odr of configAccel , as shown in the following table:
+    @n Note: If the accelerometer is configured in low power consumption mode, that is, the formal parameter lowPowerFlag of the configAccel function is true,
+    @n the sampling rate must match the output rate of the formal parameter odr of configAccel , as shown in the following table:
  * @n ----------------------------------------------------------------------------
  * @n |                           configAccel                    |  setSampleDiv  |
  * @n ----------------------------------------------------------------------------|
@@ -147,7 +150,7 @@ if __name__ == "__main__":
  * @n ----------------------------------------------------------------------------|
  * @n |                           |  eODR_125Hz   |    true      |        7       |
  * @n |                           |-----------------------------------------------|
- * @n |  bd of supporting low power consumption mode      |  eODR_250Hz   |    true      |        3       |
+ * @n |bd of supporting low power consumption mode|  eODR_250Hz   |    true      |        3       |
  * @n |                           |-----------------------------------------------|
  * @n |                           |  eODR_500Hz   |    true      |        1       |
  * @n |---------------------------------------------------------------------------|
@@ -199,7 +202,7 @@ void loop() {
     y = icg.get_accel_y()
     z = icg.get_accel_z()
     
-    print("Accel:  x: %.3f g   ,  y: %.3f g   ,  z:%.3f g   "%(x, y, z))
+    print("Accel:  x: %.3f g,  y: %.3f g,  z:%.3f g "%(x, y, z))
     print("Accel:  x: %.3f m/s2,  y: %.3f m/s2,  z:%.3f m/s2"%(x*G, y*G, z*G))
     print("")
     
