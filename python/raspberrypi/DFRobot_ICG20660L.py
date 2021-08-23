@@ -745,7 +745,7 @@ class DFRobot_ICG20660L:
       @param div  Sample rate divider, the range is 0~255.
       @n     Sampling rate = internal sampling rate/(div+1)
       @n Note: If the accelerometer configuration is in low power consumption mode, that is, the formal parameter lowPowerFlag of the configAccel function is true, 
-      @n the sampling rate must match the output rate of the formal parameter odr of configAccel , as shown in the following table:
+      @n the sampling rate must match the output rate of the formal parameter odr of configAccel, as shown in the following table:
     @n ----------------------------------------------------------------------------
     @n |                        config_accel                      | set_sample_div |
     @n ----------------------------------------------------------------------------|
@@ -796,7 +796,7 @@ class DFRobot_ICG20660L:
   def get_raw_data(self, length = 0):
     '''
       @brief Get 14 bytes raw data, including accel, gyro, and temperature.
-      @param length: The length of return list.
+      @param length: The length of returning list.
       @return data:  list type, buffer for storing 14 bytes of raw data
       @n     The first byte of data :  Acceleration X-axis high byte data.
       @n     The second byte of data:  Acceleration X-axis low byte data.
@@ -957,7 +957,7 @@ class DFRobot_ICG20660L:
       @brief Set the threshold value for the Wake on Motion Interrupt for accelerometer. 
       @param level: WoM thresholds are expressed in fixed “mg” independent of the selected Range [0g : 1g]; Resolution 1g/256=~3.9mg
       @n     level = 0~255
-      @return Actul WoM thresholds, unit : g   re_value = (level * 3.9)/1000 g
+      @return Actul WoM thresholds, unit: g   re_value = (level * 3.9)/1000 g
     '''
     g = (level *  3.9)/1000.0
     self._write_bytes(REG_ICG20660L_ACCEL_WOM_THR, [level])
@@ -965,7 +965,7 @@ class DFRobot_ICG20660L:
   def get_int_pin_motion_trigger_polarity(self):
     '''
       @brief @brief Get the polarity of the INT pin of sensor when the sensor INT pin triggers an interrupt.
-      @return The level signal when the INT pin triggers an interrupt.
+      @return the level signal when the INT pin triggers an interrupt.
       @n      GPIO.HIGH:  INT pin level held  HIGH LEVEL until interrupt status is cleared.
       @n      GPIO.LOW:   INT pin level held  LOW LEVEL until interrupt status is cleared.
     '''
@@ -985,7 +985,7 @@ class DFRobot_ICG20660L:
       @n  rsv           : reserve
       @n  FIFO_OFLOW_INT: This bit automatically sets to 1 when a FIFO buffer overflow has been generated. The bit clears to 0 after the register has been read.
       @n  WOM_XYZ_INT   : These bits automatically set to a non-zero number when the X-axis,Y-axis or Z-axis of accelerometer which trigger WOM(wake on motion) 
-      @n                  interrupt.Cleared on Read.
+      @n                  interrupt. Cleared on Read.
     '''
     rslt = self._read_bytes(REG_ICG20660L_INT_STATUS, 1)
     return rslt[0]
@@ -1244,7 +1244,7 @@ class DFRobot_ICG20660L:
 class DFRobot_ICG20660L_IIC(DFRobot_ICG20660L):
   def __init__(self,addr):
     '''
-      @brief The constructor of the ICG20660L sensor using IIC communication.
+      @brief The constructor of the ICG20660L sensor, using IIC communication.
       @param addr:  7-bit IIC address, controlled by SDO pin.
       @n     IIC_ADDR_SDO_H or 0x69:  SDO pull high.(default)
       @n     IIC_ADDR_SDO_L or 0x68:  SDO pull down.
@@ -1270,7 +1270,7 @@ class DFRobot_ICG20660L_IIC(DFRobot_ICG20660L):
 class DFRobot_ICG20660L_SPI(DFRobot_ICG20660L):
   def __init__(self, cs):
     '''
-      @brief The constructor of the ICG20660L sensor using SPI communication.
+      @brief The constructor of the ICG20660L sensor, using SPI communication.
       @param cs:  SPI chip select pin, connected to IO pin of raspberry pi.
     '''
     
