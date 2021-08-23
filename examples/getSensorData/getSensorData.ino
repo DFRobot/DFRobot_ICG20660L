@@ -1,6 +1,6 @@
 /*!
  * @file getSensorData.ino
- * @brief Get the sensor's gyroscope, accelerometer, and onboard temperature.
+ * @brief Get the sensor's gyroscope, accelerometer and onboard temperature.
  * @n connection table in SPI
  * -----------------------------------------------------------------------------------------------------
  *  sensor pin  |            MCU                    | ESP32 | ESP8266 |    M0   | micro:bit | Mega2560 |
@@ -68,7 +68,7 @@ void setup() {
  * @n and the internal sampling rate must be configured to be consistent. 
  * @return status:
  * @n      0 :   Initialization success.
- * @n      -1:   Interface Initialization failed(IIC or SPI).
+ * @n      -1:   Interface initialization failed(IIC or SPI).
  * @n      -2:   Failed to read the device ID, the ID is not 0x91
  */
   while(icg.begin(/*mode=*/icg.eRegMode) != 0){
@@ -149,8 +149,9 @@ void setup() {
  * @n     eAccel_DLPF_1046_4KHZ or 7: When the signal is less than or equal to 1046Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 4KHz. Support low power consumption
  * @n     eAccel_DLPF_55_1KHZ or 8: When the signal is less than or equal to 55Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Only support low power consumption
  * @n     eAccel_DLPF_110_1KHZ or 9: When the signal is less than or equal to 110Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Only support low power consumption
- * @n Note: When the gyroscope and accelerometer are both enabled, if the sensor data is read through the FIFO, the internal sampling rate of the gyroscope and accelerometer must be the same.
- * @param odr:  Sets the frequency of waking up the chip to take a sample of accel data – the low power accel Output Data Rate.
+ * @n Note: When the gyroscope and accelerometer are both enabled, if the sensor data is read through the FIFO, 
+ * @n the internal sampling rate of the gyroscope and accelerometer must be the same.
+ * @param odr:  Set the frequency of waking up the chip to take a sample of accel data – the low power accel Output Data Rate.
  * @n     eODR_125Hz or 9:    The low power accel Output Data Rate: 125Hz
  * @n     eODR_250Hz or 10:   The low power accel Output Data Rate: 250Hz
  * @n     eODR_500Hz or 11:   The low power accel Output Data Rate: 500Hz
@@ -198,9 +199,9 @@ void loop() {
   float t;
 /**
  * @brief Get Sensor's accel, gyro and temperature data.
- * @param accel: sIcg20660SensorData_t structure pointer which point to accel or NULL.
- * @param gyro: sIcg20660SensorData_t structure pointer which point to gyro or NULL.
- * @param t:  A float pointer which point to temperature or NULL.
+ * @param accel: sIcg20660SensorData_t structure pointer which points to accel or NULL.
+ * @param gyro: sIcg20660SensorData_t structure pointer which points to gyro or NULL.
+ * @param t:  A float pointer which points to temperature or NULL.
  */
   icg.getSensorData(&accel, &gyro, &t);
   Serial.print("Accel: ");printAxisData(accel, " g");
