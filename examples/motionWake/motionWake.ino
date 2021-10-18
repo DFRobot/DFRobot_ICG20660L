@@ -1,9 +1,9 @@
 /*!
  * @file motionWake.ino
- * @brief Set the accelerometer interrupt wake-up threshold. In the low-power mode, if the accelerometer of any x, y, z axis reaches the threshold,
- * the interrupt output pin INT of the sensor will generate an interrupt signal. Only accelerometer can work normally in low power consumption mode.
+ * @brief 设置加速度中断唤醒阈值，在低功耗模式下，如果加速度的任意一轴x、y、z的加速度达到此阈值，传感器
+ * 的中断输出引脚INT将产生一个中断信号。低功耗模式下只有加速度能正常工作。
  *
- * @n connection table in SPI
+ * @n connected table in SPI
  * ---------------------------------------------------------------------------------------------------------------------
  *  Sensor pin  |                      MCU                          | ESP32 | ESP8266 |    M0   | micro:bit | Mega2560 |
  *    FSY       | not connected, floating                           |   X   |    X    |    X    |     X     |     X    |
@@ -16,7 +16,7 @@
  *    3V3/VCC   | 3V3/VCC                                           |  3V3  |   3V3   |   3V3   |    3V3    |    5V    |
  * ---------------------------------------------------------------------------------------------------------------------
  *
- * @n connection table in IIC
+ * @n connected table in IIC
  * -------------------------------------------------------------------------------------------------------------------
  * sensor pin |                         MCU                       | ESP32 | ESP8266 |    M0   | micro:bit | Mega2560 |
  *    FSY     | not connected, floating                           |   X   |    X    |    X    |     X     |     X    |
@@ -39,23 +39,23 @@
 
 
 #if defined(ARDUINO_BBC_MICROBIT)
-#define CS_PIN      8                      //The CS pin of sensor which is connected to the 8 digital io pin of micro:bit can also be connected to other pin.
-#define INT_PIN     9                      //The INT pin of sensor which is connected to the 8 digital io pin of micro:bit can also be connected to other pin.
+#define CS_PIN      8                      //The CS pin of sensor which is connected to the 8 digital io pin of micro:bit,and also can connected to other pin.
+#define INT_PIN     9                      //The INT pin of sensor which is connected to the 8 digital io pin of micro:bit,and also can connected to other pin.
 #else
-#define CS_PIN      5                      //The CS pin of sensor which is connected to the 5 digital io pin of MCU can also be connected to other pin.
-#define INT_PIN     2                      //The INT pin of sensor which is connected to the 2 digital io pin of MCU can also be connected to other pin.
+#define CS_PIN      5                      //The CS pin of sensor which is connected to the 5 digital io pin of MCU,and also can connected to other pin.
+#define INT_PIN     2                      //The INT pin of sensor which is connected to the 2 digital io pin of MCU,and also can connected to other pin.
 #endif
 /**
- * @brief The constructor of the ICG20660L sensor, using IIC communication.
- * @param addr: 7-bit IIC address, controlled by SDO pin.
+ * @brief The constructor of the ICG20660L sensor using IIC communication.
+ * @param addr:  7-bit IIC address, controlled by SDO pin.
  * @n     IIC_ADDR_SDO_H or 0x69:  SDO pull high.(default)
  * @n     IIC_ADDR_SDO_L or 0x68:  SDO pull down.
  * @param pWire:   TwoWire class pointer.
  */
 DFRobot_ICG20660L_IIC icg(/*addr=*/IIC_ADDR_SDO_H, &Wire);
 /**
- * @brief The constructor of the ICG20660L sensor, using SPI communication.
- * @param csPin: SPI chip select pin, connected to IO pin of MCU.
+ * @brief The constructor of the ICG20660L sensor using SPI communication.
+ * @param csPin:  SPI chip select pin, connected to IO pin of MCU.
  * @param spi: SPIClass class pointer.
  */
 //DFRobot_ICG20660L_SPI icg(/*csPin=*/CS_PIN, &SPI);
@@ -71,18 +71,17 @@ void setup() {
   
   Serial.print("Initialization sensor...");
 /**
- * @brief Initialize the sensor. After initialization, all sensors are turned off, and the corresponding configuration needs to be turned on through enableSensor. 
- * @param mode: Enum variable,from eDataReadMode_t, configure to read sensor data from FIFO or register?
- * @n     eRegMode: Read sensor data from registers.
- * @n     eFIFOMode: Read data from 512-byte FIFO. Note: Read from FIFO, accelerometer, gyroscope and temperature must all be enabled, 
-* @n and the internal sampling rate must be configured to be consistent. (This demo doesn’t support)
+ * @brief 初始化传感器，初始化后，所有传感器都被关闭，需通过enableSensor打开相应的配置. 
+ * @param mode: Enum variable,from eDataReadMode_t,配置读取传感器数据是从FIFO还是从寄存器。
+ * @n     eRegMode:  配置为从寄存器读取传感器数据
+ * @n     eFIFOMode: 从512字节FIFO读取数据,注意：从FIFO读取，加速度，陀螺仪、温度必须全部使能，且将其内部采样率必须配置成一致。（此demo不支持）
  * @return status:
- * @n      0 :   Initialization success.
- * @n      -1:   Interface initialization failed(IIC or SPI).
- * @n      -2:   Failed to read the device ID, the ID is not 0x91
+ * @n      0 :   Initialization sucess.
+ * @n      -1:   Interface Initialization failed(IIC or SPI).
+ * @n      -2:   读取设备ID失败，ID不是0x91
  */
   while(icg.begin(/*mode=*/icg.eRegMode) != 0){
-      Serial.println("failed. Please check the hardware connection.");
+      Serial.println("failed. Please check whether the hardware connection is wrong.");
       delay(1000);
       Serial.print("Initialization sensor...");
   }
@@ -92,8 +91,8 @@ void setup() {
   Serial.println(icg.readID(), HEX);
   
 /**
- * @brief Enable sensor, including Accel of xyz axis, Gyro of xyz, temperature. 
- * @param bit: 8-bit byte data. Each bit represents enabling a function bit, as shown in the following table:
+ * @brief Enable sensor, Include Accel of xyz axis, Gyro of xyz, temperature. 
+ * @param bit: 8位字节数据，每一位都代表使能一个功能位，如下表所示：
  * @n -------------------------------------------------------------------------------------------------------------------
  * @n |       bit7      |     bit6     |      bit5   |    bit4     |     bit3    |     bit2   |    bit1    |    bit0    |
  * @n -------------------------------------------------------------------------------------------------------------------
@@ -109,7 +108,7 @@ void setup() {
  * @n   bit5:  Z-axis of acceleration.
  * @n   bit6:  reserve.
  * @n   bit7:  reserve.
- * @n Note: Enabling any axis of the gyroscope will automatically enable the on-board temperature sensor.
+ * @n Note: 使能陀螺仪的任意轴，都会自动使能传感器板载温度传感器。
  * @n   eGyroAxisZ: The bit0 of the bit, enable gyro's z axis and temperature.
  * @n   eGyroAxisY: The bit1 of the bit, enable gyro's y axis and temperature.
  * @n   eGyroAxisX: The bit2 of the bit, enable gyro's X axis and temperature.
@@ -123,26 +122,25 @@ void setup() {
   icg.enableSensor(icg.eAccelAxisXYZ);
   //icg.enableSensor(icg.eAccelAxisX|icg.eAccelAxisY|icg.eAccelAxisZ);
 /**
- * @brief Config of accel's full scale, dlpf bandwidth and internal sample rate. 
+ * @brief Config of accel's full scale 、dlpf bandwidth and internal sample rate. 
  * @param scale  The full scale of accel, unit: g(1g = 9.80665 m/s²).
  * @n     eFSR_A_2G:  The full scale range is ±2g.
  * @n     eFSR_A_4G:  The full scale range is ±4g.
  * @n     eFSR_A_8G:  The full scale range is ±8g.
  * @n     eFSR_A_16G:  The full scale range is ±16g.
  * @param bd  Set 3-db bandwidth.
- * @n     eAccel_DLPF_5_1KHZ or 0: When the signal is less than or equal to 5Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
- * @n     eAccel_DLPF_10_1KHZ or 1: When the signal is less than or equal to 10Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
- * @n     eAccel_DLPF_21_1KHZ or 2: When the signal is less than or equal to 21Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
- * @n     eAccel_DLPF_44_1KHZ or 3: When the signal is less than or equal to 44Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
- * @n     eAccel_DLPF_99_1KHZ or 4: When the signal is less than or equal to 99Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
- * @n     eAccel_DLPF_218_1KHZ or 5: When the signal is less than or equal to 218Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Support low power consumption mode
- * @n     eAccel_DLPF_420_1KHZ or 6: When the signal is less than or equal to 420Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Support low power consumption mode
- * @n     eAccel_DLPF_1046_4KHZ or 7: When the signal is less than or equal to 1046Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 4KHz. Support low power consumption mode
- * @n     eAccel_DLPF_55_1KHZ or 8: When the signal is less than or equal to 55Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Only support low power consumption mode.
- * @n     eAccel_DLPF_110_1KHZ or 9: When the signal is less than or equal to 110Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Only support low power consumption mode
- * @n Note: When the gyroscope and accelerometer are both enabled, if the sensor data is read through the FIFO, 
- * @n the internal sampling rate of the gyroscope and accelerometer must be the same.
- * @param odr: Set the frequency of waking up the chip to take a sample of accel data – the low power accel Output Data Rate.
+ * @n     eAccel_DLPF_5_1KHZ or 0:    当信号小于或等于5Hz时，会出现明显衰减，衰减3-db，内部采样率为1KHz
+ * @n     eAccel_DLPF_10_1KHZ or 1:   当信号小于或等于10Hz时，会出现明显衰减，衰减3-db，内部采样率为1KHz
+ * @n     eAccel_DLPF_21_1KHZ or 2:   当信号小于或等于21Hz时，会出现明显衰减，衰减3-db，内部采样率为1KHz
+ * @n     eAccel_DLPF_44_1KHZ or 3:   当信号小于或等于44Hz时，会出现明显衰减，衰减3-db，内部采样率为1KHz
+ * @n     eAccel_DLPF_99_1KHZ or 4:   当信号小于或等于99Hz时，会出现明显衰减，衰减3-db，内部采样率为1KHz
+ * @n     eAccel_DLPF_218_1KHZ or 5:  当信号小于或等于218Hz时，会出现明显衰减，衰减3-db，内部采样率为1KHz，支持低功耗模式
+ * @n     eAccel_DLPF_420_1KHZ or 6:  当信号小于或等于420Hz时，会出现明显衰减，衰减3-db，内部采样率为1KHz，支持低功耗模式
+ * @n     eAccel_DLPF_1046_4KHZ or 7: 当信号小于或等于1046Hz时，会出现明显衰减，衰减3-db，内部采样率为4KHz，支持低功耗模式
+ * @n     eAccel_DLPF_55_1KHZ or 8:   当信号小于或等于55Hz时，会出现明显衰减，衰减3-db，内部采样率为1KHz，仅支持低功耗模式
+ * @n     eAccel_DLPF_110_1KHZ or 9:  当信号小于或等于110Hz时，会出现明显衰减，衰减3-db，内部采样率为1KHz，仅支持低功耗模式
+ * @n 注意：当陀螺仪和加速度都使能的时候，如果通过FIFO读取传感器数据，必须保证陀螺仪和加速度的内部采样率一致
+ * @param odr:  Sets the frequency of waking up the chip to take a sample of accel data – the low power accel Output Data Rate.
  * @n     eODR_125Hz or 9:    The low power accel Output Data Rate: 125Hz
  * @n     eODR_250Hz or 10:   The low power accel Output Data Rate: 250Hz
  * @n     eODR_500Hz or 11:   The low power accel Output Data Rate: 500Hz
@@ -154,9 +152,8 @@ void setup() {
 /**
  * @brief Set sample rate divider. 
  * @param div  Sample rate divider, the range is 0~255.
- * @n     Sampling rate = internal sampling rate/(div+1)
- * @n Note: If the accelerometer configuration is in low power consumption mode, that is, the formal parameter lowPowerFlag of the configAccel function is true, 
- * @n the sampling rate must match the output rate of the formal parameter odr of configAccel, as shown in the following table:
+ * @n     采样率 = 内部采样率/(div+1)
+ * @n Note: 如果加速度配置为低功耗模式，即configAccel函数的形参lowPowerFlag为true，则采样率必须和configAccel的形参odr输出率相匹配，如下表所示：
  * @n ----------------------------------------------------------------------------
  * @n |                           configAccel                    |  setSampleDiv  |
  * @n ----------------------------------------------------------------------------|
@@ -166,21 +163,18 @@ void setup() {
  * @n ----------------------------------------------------------------------------|
  * @n |                           |  eODR_125Hz   |    true      |        7       |
  * @n |                           |-----------------------------------------------|
- * @n |bd of supporting low power consumption mode|  eODR_250Hz   |    true      |        3       |
+ * @n |  支持低功耗模式的bd       |  eODR_250Hz   |    true      |        3       |
  * @n |                           |-----------------------------------------------|
  * @n |                           |  eODR_500Hz   |    true      |        1       |
  * @n |---------------------------------------------------------------------------|
  */
   icg.setSampleDiv(1);
 /**
- * @brief Set the level polarity of the INT pin when the accelerometer sensor is triggered to wake up the motion interrupt.
- * @param polarity: the level signal of the sensor INT pin when the wake-up motion is triggered
- * @n     HIGH:  The initial signal of the INT pin is LOW. When an accelerometer wake-up motion occurs, the level signal of the INT pin will change to HIGH. 
- * @n Then the readINTStatus function needs to be called to clear the signal and restore the initial signal.
- * @n     LOW:   The initial signal of the INT pin is HIGH. When an accelerometer wake-up motion occurs, the level signal of the INT pin will change to LOW. 
- * @n Then the readINTStatus function needs to be called to clear the signal and restore the initial signal.
- * @n Note: After triggering the accelerometer wake-up motion, if the readINTStatus function is not called to clear the sign, 
- * @n the INT pin will always maintain the level polarity when the motion is triggered.
+ * @brief 设置触发加速度传感器唤醒运动中断时，INT引脚的电平极性。
+ * @param polarity: 触发唤醒运动时，传感器INT引脚的电平信号。
+ * @n     HIGH:  INT引脚初始信号为LOW，当产生加速度唤醒运动时，INT引脚电平信号将变为HIGH，需要调用readINTStatus函数，才能清除该信号，重新恢复初始信号。
+ * @n     LOW:   INT引脚初始信号为HIGH，当产生加速度唤醒运动时，INT引脚电平信号将变为LOW，需要调用readINTStatus函数，才能清除该信号，重新恢复初始信号。
+ * @n Note: 触发加速度唤醒运动后，如果不调用readINTStatus函数清除该标志，INT引脚将一直保持触发运动时的电平极性。
  */
   icg.setINTPinMotionTriggerPolarity(/*polarity =*/LOW);
 /**
@@ -195,9 +189,9 @@ void setup() {
 /**
  * @brief Enable the external interrupt pin of MCU. 
  * @param pin:   The external pin of MCU.
- * @n     Mega2560:  The external pin is 2, 3, 21, 20, 19, 18.
+ * @n     Mega2560:  The external pin is 2、3、21、20、19、18.
  * @n     microbit:  The external pin is 0~20(P0-P20)
- * @n     ESP32, ESP8266, M0:    The external pin is all digital pin and analog pin.
+ * @n     ESP32, ESP8266, M0:    The external pin is all digital Pin and analog pin.
  * @param fun: Pointer to guide interrupt service function.
  * @param mode:  Interrupt trigger mode.
  * @n     LOW:     Low level trigger.
@@ -225,8 +219,8 @@ void loop() {
          * @n  DATA_RDY_INT  : This bit automatically sets to 1 when a Data Ready interrupt is generated. The bit clears to 0 after the register has been read.
          * @n  rsv           : reserve
          * @n  FIFO_OFLOW_INT: This bit automatically sets to 1 when a FIFO buffer overflow has been generated. The bit clears to 0 after the register has been read.
-         * @n  WOM_XYZ_INT   : These bits automatically set to a non-zero number when the X-axis, Y-axis or Z-axis of accelerometer which trigger WOM(wake on motion) 
-         * @n                  interrupt. Cleared on Read.
+         * @n  WOM_XYZ_INT   : These bits automatically set to a non-zero number when the X-axis,Y-axis or Z-axis of accelerometer which trigger WOM(wake on motion) 
+         * @n                  interrupt.Cleared on Read.
        */
       status = icg.readINTStatus();
       if(status & ICG20660L_WOM_XYZ_INT){

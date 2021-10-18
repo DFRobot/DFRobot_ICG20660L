@@ -1,8 +1,8 @@
 /*!
  * @file getGyroData.ino
- * @brief Obtain the x, y, and z data of the sensor's gyroscope (This demo does not support FIFO reading mode). The unit is dps, and convert it to angular velocity rad/s.
+ * @brief 获取传感器的陀螺仪的x，y，z轴的数据(此demo不支持FIFO读取模式)，单位dps，并将其转换为角速度rad/s。
  *
- * @n connection table in SPI
+ * @n connected table in SPI
  * -----------------------------------------------------------------------------------------------------
  *  sensor pin  |            MCU                    | ESP32 | ESP8266 |    M0   | micro:bit | Mega2560 |
  *    FSY       | not connected, floating           |   X   |    X    |    X    |     X     |     X    |
@@ -15,7 +15,7 @@
  *    3V3/VCC   | 3V3/VCC                           |  3V3  |   3V3   |   3V3   |    3V3    |    5V    |
  * -----------------------------------------------------------------------------------------------------
  *
- * @n connection table in IIC
+ * @n connected table in IIC
  * ---------------------------------------------------------------------------------------------------
  * sensor pin |            MCU                    | ESP32 | ESP8266 |    M0   | micro:bit | Mega2560 |
  *    FSY     | not connected, floating           |   X   |    X    |    X    |     X     |     X    |
@@ -37,12 +37,12 @@
 #include "DFRobot_ICG20660L.h"
 
 #ifdef ARDUINO_BBC_MICROBIT
-#define CS_PIN      8                      //The CS pin of sensor which is connected to the 8 digital io pin of micro:bit can also be connected to other pin.
+#define CS_PIN      8                      //The CS pin of sensor which is connected to the 8 digital io pin of micro:bit,and also can connected to other pin.
 #else
-#define CS_PIN      5                      //The CS pin of sensor which is connected to the 5 digital io pin of MCU can also be connected to other pin.
+#define CS_PIN      5                      //The CS pin of sensor which is connected to the 5 digital io pin of MCU,and also can connected to other pin.
 #endif
 /**
- * @brief The constructor of the ICG20660L sensor, using IIC communication.
+ * @brief The constructor of the ICG20660L sensor using IIC communication.
  * @param addr:  7-bit IIC address, controlled by SDO pin.
  * @n     IIC_ADDR_SDO_H or 0x69:  SDO pull high.(default)
  * @n     IIC_ADDR_SDO_L or 0x68:  SDO pull down.
@@ -50,7 +50,7 @@
  */
 DFRobot_ICG20660L_IIC icg(/*addr=*/IIC_ADDR_SDO_H, &Wire);
 /**
- * @brief The constructor of the ICG20660L sensor, using SPI communication.
+ * @brief The constructor of the ICG20660L sensor using SPI communication.
  * @param csPin:  SPI chip select pin, connected to IO pin of MCU.
  * @param spi: SPIClass class pointer.
  */
@@ -64,18 +64,17 @@ void setup() {
   
   Serial.print("Initialization sensor...");
 /**
- * @brief Initialize the sensor. After initialization, all sensors are turned off, and the corresponding configuration needs to be turned on through enableSensor.
- * @param mode: Enum variable,from eDataReadMode_t, configure to read sensor data from FIFO or register?
- * @n     eRegMode: Read sensor data from registers.
- * @n     eFIFOMode: Read data from 512-byte FIFO. Note: Read from FIFO, accelerometer, gyroscope and temperature must all be enabled, 
- * @n and the internal sampling rate must be configured to be consistent. (This demo doesn’t support)
+ * @brief 初始化传感器，初始化后，所有传感器都被关闭，需通过enableSensor打开相应的配置. 
+ * @param mode: Enum variable,from eDataReadMode_t,配置读取传感器数据是从FIFO还是从寄存器。
+ * @n     eRegMode:  配置为从寄存器读取传感器数据
+ * @n     eFIFOMode: 从512字节FIFO读取数据,注意：从FIFO读取，加速度，陀螺仪、温度必须全部使能，且将其内部采样率必须配置成一致。（此demo不支持）
  * @return status:
- * @n      0 :   Initialization success.
- * @n      -1:   Interface initialization failed(IIC or SPI).
- * @n      -2:   Failed to read the device ID, the ID is not 0x91
+ * @n      0 :   Initialization sucess.
+ * @n      -1:   Interface Initialization failed(IIC or SPI).
+ * @n      -2:   读取设备ID失败，ID不是0x91
  */
   while(icg.begin(/*mode=*/icg.eRegMode) != 0){
-      Serial.println("failed. Please check the hardware connection.");
+      Serial.println("failed. Please check whether the hardware connection is wrong.");
       delay(1000);
       Serial.print("Initialization sensor...");
   }
@@ -85,8 +84,8 @@ void setup() {
   Serial.println(icg.readID(), HEX);
   
 /**
- * @brief Enable sensor, including Accel of xyz axis, Gyro of xyz, temperature. 
- * @param bit: 8-bit byte data. Each bit represents enabling a function bit, as shown in the following table:
+ * @brief Enable sensor, Include Accel of xyz axis, Gyro of xyz, temperature. 
+ * @param bit: 8位字节数据，每一位都代表使能一个功能位，如下表所示：
  * @n -------------------------------------------------------------------------------------------------------------------
  * @n |       bit7      |     bit6     |      bit5   |    bit4     |     bit3    |     bit2   |    bit1    |    bit0    |
  * @n -------------------------------------------------------------------------------------------------------------------
@@ -102,7 +101,7 @@ void setup() {
  * @n   bit5:  Z-axis of acceleration.
  * @n   bit6:  reserve.
  * @n   bit7:  reserve.
- * @n Note: Enabling any axis of the gyroscope will automatically enable the on-board temperature sensor.
+ * @n Note: 使能陀螺仪的任意轴，都会自动使能传感器板载温度传感器。
  * @n   eGyroAxisZ: The bit0 of the bit, enable gyro's z axis and temperature.
  * @n   eGyroAxisY: The bit1 of the bit, enable gyro's y axis and temperature.
  * @n   eGyroAxisX: The bit2 of the bit, enable gyro's X axis and temperature.
@@ -111,34 +110,31 @@ void setup() {
  * @n   eAccelAxisX: The bit5 of the bit, enable Accel's X axis.
  * @n   eGyroAxisXYZ or eGyroAxisX|eGyroAxisY|eGyroAxisZ: The bit0/bit1/bit2 of the bit, enable gyro's xyz axis and temperature.
  * @n   eAccelAxisXYZ or eAccelAxisX|eAccelAxisY|eAccelAxisZ: The bit3/bit4/bit5 of the bit, enable Accel's xyz axis.
- * @n   eAxisAll or eGyroAxisX|eGyroAxisY|eGyroAxisZ|eAccelAxisX|eAccelAxisY|eAccelAxisZ: The bit0/bit1/bit2/bit3/bit4/bit5 of the bit, 
- * @n enable temperature, Accel's and gyro's xyz axis. 
+ * @n   eAxisAll or eGyroAxisX|eGyroAxisY|eGyroAxisZ|eAccelAxisX|eAccelAxisY|eAccelAxisZ: The bit0/bit1/bit2/bit3/bit4/bit5 of the bit, enable temperature, Accel's and gyro's xyz axis. 
  */
   icg.enableSensor(icg.eGyroAxisXYZ);
   //icg.enableSensor(icg.eGyroAxisX|icg.eGyroAxisY|icg.eGyroAxisZ);
 /**
- * @brief Config of gyro's full scale, dlpf bandwidth and internal sample rate. 
+ * @brief Config of gyro's full scale 、dlpf bandwidth and internal sample rate. 
  * @param scale  The full scale of gyro, unit: dps(Degrees per second).
  * @n     eFSR_G_125DPS:  The full scale range is ±125 dps.
  * @n     eFSR_G_250DPS:  The full scale range is ±250 dps.
  * @n     eFSR_G_500DPS:  The full scale range is ±500 dps.
  * @param bd  Set 3-db bandwidth.
- * @n     eGyro_DLPF_8173_32KHZ: When the signal is equal to or greater than 8173Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 32KHz.
- * @n     eGyro_DLPF_3281_32KHZ: When the signal is equal to or greater than 3281Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 32KHz.
- * @n     eGyro_DLPF_250_8KHZ: When the signal is equal to or greater than 250Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 8KHz.
- * @n     eGyro_DLPF_176_1KHZ: When the signal is equal to or greater than 176Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
- * @n     eGyro_DLPF_92_1KHZ:  When the signal is equal to or greater than 92Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
- * @n     eGyro_DLPF_3281_8KHZ: When the signal is equal to or greater than 3281Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 8KHz.
- * @n  Note: When the gyroscope and accelerometer are both enabled, if the sensor data is read through the FIFO, 
- * @n the internal sampling rate of the gyroscope and accelerometer must be the same.
+ * @n     eGyro_DLPF_8173_32KHZ:    当信号等于或大于8173Hz时，会出现明显衰减，衰减3-db，内部采样率为32KHz
+ * @n     eGyro_DLPF_3281_32KHZ: 当信号等于或大于3281Hz时，会出现明显衰减，衰减3-db，内部采样率为32KHz
+ * @n     eGyro_DLPF_250_8KHZ:     当信号等于或大于250Hz时，会出现明显衰减，衰减3-db，内部采样率为8KHz
+ * @n     eGyro_DLPF_176_1KHZ:     当信号等于或大于176Hz时，会出现明显衰减，衰减3-db，内部采样率为1KHz
+ * @n     eGyro_DLPF_92_1KHZ:      当信号等于或大于92Hz时，会出现明显衰减，衰减3-db，内部采样率为1KHz
+ * @n     eGyro_DLPF_3281_8KHZ:  当信号等于或大于3281Hz时，会出现明显衰减，衰减3-db，内部采样率为8KHz
+ * @n 注意：当陀螺仪和加速度都使能的时候，如果通过FIFO读取传感器数据，必须保证陀螺仪和加速度的内部采样率一致
  */
   icg.configGyro(icg.eFSR_G_250DPS, icg.eGyro_DLPF_8173_32KHZ);
 /**
  * @brief Set sample rate divider. 
  * @param div  Sample rate divider, the range is 0~255.
- * @n    Sampling rate = internal sampling rate/(div+1)
- * @n Note: If the accelerometer configuration is in low power consumption mode, that is, the formal parameter lowPowerFlag of the configAccel function is true, 
- * @n the sampling rate must match the output rate of the formal parameter odr of configAccel, as shown in the following table:
+ * @n     采样率 = 内部采样率/(div+1)
+ * @n Note: 如果陀螺仪配置为低功耗模式，即configAccel函数的形参lowPowerFlag为true，则采样率必须和configAccel的形参odr输出率相匹配，如下表所示：
  * @n ----------------------------------------------------------------------------
  * @n |                           configAccel                    |  setSampleDiv  |
  * @n ----------------------------------------------------------------------------|
@@ -148,7 +144,7 @@ void setup() {
  * @n ----------------------------------------------------------------------------|
  * @n |                           |  eODR_125Hz   |    true      |        7       |
  * @n |                           |-----------------------------------------------|
- * @n |bd of supporting low power consumption mode|  eODR_250Hz   |    true      |        3       |
+ * @n |  支持低功耗模式的bd       |  eODR_250Hz   |    true      |        3       |
  * @n |                           |-----------------------------------------------|
  * @n |                           |  eODR_500Hz   |    true      |        1       |
  * @n |---------------------------------------------------------------------------|

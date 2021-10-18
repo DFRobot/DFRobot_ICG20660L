@@ -1,20 +1,20 @@
 /*!
  * @file DFRobot_ICG20660L.h
- * @brief The ICG-20660 is a 6-axis motiontracking device that combines a 3-axis gyroscope and 3-axis accelerometer.
- * @n It supports two communication interfaces:
+ * @brief The ICG-20660 is a 6-axis MotionTracking device that combines a 3-axis gyroscope, 3-axis accelerometer.
+ * @n It support two communication interface:
  * @n (1) IIC-->freq: 100~400Khz
  * @n (2) SPI-->freq: 100kHz~7MHz, only support mode0 or mode3
  * @n Two communication methods are switched by cs pin, 0:SPI, 1:IIC
  * @n 3-axis accelerometer feature:
- * @n (1) Support max ranging: ±2g, ±4g, ±8g, ±16g, g = 9.80665 m/s²
+ * @n (1) Support max ranging: ±2g、±4g、±8g、±16g, g = 9.80665 m/s²
  * @n (2) 1g = 9.80665 m/s²
  * @n 3-axis gyroscope feature:
- * @n (1) Support max ranging: ±125dps, ±250dps, ±500dps
+ * @n (1) Support max ranging: ±125dps、±250dps、±500dps
  * @n (2) 1dps = Π/180° rad/s, Π = 3.1415926
- * @n Motion threshold wake-up detection：
- * @n The motion threshold is the acceleration thresholds difference between the previous and next. If it is greater than or equal to the set threshold, an interrupt will be generated.
- * @n Support to read from register and FIFO
- * @n Read from FIFO. Accelerometer, gyroscope and temperature must all be enabled, and its internal sampling rate must be configured to be consistent.
+ * @n 运动阈值唤醒检测：
+ * @n 是前一次和后一次加速度的阈值差，如果大于或等于设定的阈值，将产生中断。
+ * @n 支持从寄存器读取和从FIFO读取：
+ * @n FIFO读取，加速度，陀螺仪、温度必须全部使能，且将其内部采样率必须配置成一致
  *
  * @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
  * @licence     The MIT License (MIT)
@@ -34,7 +34,7 @@
 #include <Wire.h>
 #include <SPI.h>
 
-//Define DBG, change 0 to 1 to open the DBG, 1 to 0 to close.  
+//Define DBG, change 0 to 1 open the DBG, 1 to 0 to close.  
 #if 0
 #define DBG(...) {Serial.print("["); Serial.print(__FUNCTION__); Serial.print("(): "); Serial.print(__LINE__); Serial.print(" ] "); Serial.println(__VA_ARGS__);}
 #else
@@ -189,25 +189,25 @@ public:
   }eSensorEnable_t;
   
   typedef enum{
-    eGyro_DLPF_8173_32KHZ = 0,/**<When the signal is equal to or greater than 8173Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 32KHz.*/
-    eGyro_DLPF_3281_32KHZ,/**<When the signal is equal to or greater than 3281Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 32KHz.*/
-    eGyro_DLPF_250_8KHZ,/**<When the signal is equal to or greater than 250Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 8KHz.*/
-    eGyro_DLPF_176_1KHZ,/**<When the signal is equal to or greater than 176Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz*/
-    eGyro_DLPF_92_1KHZ,/**<When the signal is equal to or greater than 92Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.*/
-    eGyro_DLPF_3281_8KHZ,/**<When the signal is equal to or greater than 3281Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 8KHz.*/
+    eGyro_DLPF_8173_32KHZ = 0,/**<当信号等于或大于8173Hz时，会出现明显衰减，衰减3-db，内部采样率为32KHz*/
+    eGyro_DLPF_3281_32KHZ,/**<当信号等于或大于3218Hz时，会出现明显衰减，衰减3-db，内部采样率为32KHz*/
+    eGyro_DLPF_250_8KHZ,/**<当信号等于或大于250Hz时，会出现明显衰减，衰减3-db，内部采样率为8KHz*/
+    eGyro_DLPF_176_1KHZ,/**<当信号等于或大于176Hz时，会出现明显衰减，衰减3-db，内部采样率为1KHz*/
+    eGyro_DLPF_92_1KHZ,/**<当信号等于或大于92Hz时，会出现明显衰减，衰减3-db，内部采样率为1KHz*/
+    eGyro_DLPF_3281_8KHZ,/**<当信号等于或大于3218Hz时，会出现明显衰减，衰减3-db，内部采样率为8KHz*/
   }eGyroBandwidth_t;
   
   typedef enum{
-    eAccel_DLPF_5_1KHZ = 0,/**<When the signal is less than or equal to 5Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.*/
-    eAccel_DLPF_10_1KHZ,/**<When the signal is less than or equal to 10Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.*/
-    eAccel_DLPF_21_1KHZ,/**<When the signal is less than or equal to 21Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.*/
-    eAccel_DLPF_44_1KHZ,/**<When the signal is less than or equal to 44Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.*/
-    eAccel_DLPF_99_1KHZ,/**<When the signal is less than or equal to 99Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.*/
-    eAccel_DLPF_218_1KHZ,/**<This configuration also supports low power consumption. When the signal is less than or equal to 218Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.*/
-    eAccel_DLPF_420_1KHZ,/**<This configuration also supports low power consumption. When the signal is less than or equal to 420Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.*/
-    eAccel_DLPF_1046_4KHZ,/**<This configuration also supports low power consumption. When the signal is less than or equal to 1046Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.*/
-    eAccel_DLPF_55_1KHZ,/**<This configuration only supports low power consumption. When the signal is less than or equal to 55Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.*/
-    eAccel_DLPF_110_1KHZ,/**<This configuration only supports low power consumption. When the signal is less than or equal to 110Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.*/
+    eAccel_DLPF_5_1KHZ = 0,/**<当信号小于或等于5Hz时，会出现明显衰减，衰减3-db，内部采样率为1KHz*/
+    eAccel_DLPF_10_1KHZ,/**<当信号小于或等于10Hz时，会出现明显衰减，衰减3-db，内部采样率为1KHz*/
+    eAccel_DLPF_21_1KHZ,/**<当信号小于或等于21Hz时，会出现明显衰减，衰减3-db，内部采样率为1KHz*/
+    eAccel_DLPF_44_1KHZ,/**<当信号小于或等于44Hz时，会出现明显衰减，衰减3-db，内部采样率为1KHz*/
+    eAccel_DLPF_99_1KHZ,/**<当信号小于或等于99Hz时，会出现明显衰减，衰减3-db，内部采样率为1KHz*/
+    eAccel_DLPF_218_1KHZ,/**<该配置也支持低功耗，当信号小于或等于218Hz时，会出现明显衰减，衰减3-db，内部采样率为1KHz*/
+    eAccel_DLPF_420_1KHZ,/**<该配置也支持低功耗，当信号小于或等于420Hz时，会出现明显衰减，衰减3-db，内部采样率为1KHz*/
+    eAccel_DLPF_1046_4KHZ,/**<该配置也支持低功耗，当信号小于或等于1046Hz时，会出现明显衰减，衰减3-db，内部采样率为4KHz*/
+    eAccel_DLPF_55_1KHZ,/**<该配置只支持低功耗，当信号小于或等于55Hz时，会出现明显衰减，衰减3-db，内部采样率为1KHz*/
+    eAccel_DLPF_110_1KHZ,/**<该配置只支持低功耗，当信号小于或等于110Hz时，会出现明显衰减，衰减3-db，内部采样率为1KHz*/
   }eAccelBandwidth_t;
   
   typedef enum{
@@ -228,14 +228,14 @@ public:
   DFRobot_ICG20660L();
   ~DFRobot_ICG20660L();
 /**
- * @brief Initialize the sensor. After initialization, all sensors are turned off, and the corresponding configuration needs to be turned on through enable_sensor.
- * @param mode: Enum variable,from eDataReadMode_t, configure to read sensor data from FIFO or register?
- * @n     eRegMode:  Read sensor data from registers
- * @n     eFIFOMode: Read data from 512-byte FIFO. Note: Read from FIFO, accelerometer, gyroscope and temperature must all be enabled, and the internal sampling rate must be configured to be consistent.
+ * @brief 初始化传感器，初始化后，所有传感器都被关闭，需通过enableSensor打开相应的配置. 
+ * @param mode: Enum variable,from eDataReadMode_t,配置读取传感器数据是从FIFO还是从寄存器。
+ * @n     eRegMode:  配置为从寄存器读取传感器数据
+ * @n     eFIFOMode: 从512字节FIFO读取数据,注意：从FIFO读取，加速度，陀螺仪、温度必须全部使能，且将其内部采样率必须配置成一致
  * @return status:
- * @n      0 :   Initialization success.
+ * @n      0 :   Initialization sucess.
  * @n      -1:   Interface Initialization failed(IIC or SPI).
- * @n      -2:    Failed to read the device ID, the ID is not 0x91
+ * @n      -2:   读取设备ID失败，ID不是0x91
  */
   int begin(eDataReadMode_t  mode = eRegMode);
 /**
@@ -244,8 +244,8 @@ public:
  */
   uint8_t readID();
 /**
- * @brief Enable sensor, including Accel of xyz axis, Gyro of xyz, temperature. 
- * @param bit: 8-bit byte data. Each bit represents enabling a function bit, as shown in the following table:
+ * @brief Enable sensor, Include Accel of xyz axis, Gyro of xyz, temperature. 
+ * @param bit: 8位字节数据，每一位都代表使能一个功能位，如下表所示：
  * @n -------------------------------------------------------------------------------------------------------------------
  * @n |       bit7      |     bit6     |      bit5   |    bit4     |     bit3    |     bit2   |    bit1    |    bit0    |
  * @n -------------------------------------------------------------------------------------------------------------------
@@ -261,7 +261,7 @@ public:
  * @n   bit5:  Z-axis of acceleration.
  * @n   bit6:  reserve.
  * @n   bit7:  reserve.
- * @n Note: Enabling any axis of the gyroscope will automatically enable the on-board temperature sensor.
+ * @n Note: 使能陀螺仪的任意轴，都会自动使能传感器板载温度传感器。
  * @n   eGyroAxisZ: The bit0 of the bit, enable gyro's z axis and temperature.
  * @n   eGyroAxisY: The bit1 of the bit, enable gyro's y axis and temperature.
  * @n   eGyroAxisX: The bit2 of the bit, enable gyro's X axis and temperature.
@@ -274,8 +274,8 @@ public:
  */
   void enableSensor(uint8_t bit);
 /**
- * @brief Disable sensor, including Accel of xyz axis, Gyro of xyz, temperature. 
- * @param bit: 8-bit byte data. Each bit represents enabling a function bit, as shown in the following table:
+ * @brief Disable sensor, Include Accel of xyz axis, Gyro of xyz, temperature. 
+ * @param bit: 8位字节数据，每一位都代表使能一个功能位，如下表所示：
  * @n -------------------------------------------------------------------------------------------------------------------
  * @n |       bit7      |     bit6     |      bit5   |    bit4     |     bit3    |     bit2   |    bit1    |    bit0    |
  * @n -------------------------------------------------------------------------------------------------------------------
@@ -291,8 +291,7 @@ public:
  * @n   bit5:  Z-axis of acceleration.
  * @n   bit6:  reserve.
  * @n   bit7:  reserve.
- * @n Note: Only when the X, Y, and Z axes of the gyroscope are all closed, the temperature sensor will be turned off. 
- * @n Any axis’s turning on will make the temperature sensor not be turned off.
+ * @n Note: 只有当陀螺仪的X,Y,Z轴全部关闭的时候，才会关闭温度传感器，任意一轴开启，都不会关闭温度传感器
  * @n   eGyroAxisZ: The bit0 of the bit, disable gyro's z axis.
  * @n   eGyroAxisY: The bit1 of the bit, disable gyro's y axis.
  * @n   eGyroAxisX: The bit2 of the bit, disable gyro's X axis.
@@ -305,44 +304,42 @@ public:
  */
   void disableSensor(uint8_t bit);
 /**
- * @brief Config of gyro's full scale, dlpf bandwidth and internal sample rate. 
+ * @brief Config of gyro's full scale 、dlpf bandwidth and internal sample rate. 
  * @param scale  The full scale of gyro, unit: dps(Degrees per second).
  * @n     eFSR_G_125DPS:  The full scale range is ±125 dps.
  * @n     eFSR_G_250DPS:  The full scale range is ±250 dps.
  * @n     eFSR_G_500DPS:  The full scale range is ±500 dps.
  * @param bd  Set 3-db bandwidth.
- * @n     eGyro_DLPF_8173_32KHZ:    When the signal is equal to or greater than 8173Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 32KHz.
- * @n     eGyro_DLPF_3281_32KHZ:  When the signal is equal to or greater than 3281Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 32KHz.
- * @n     eGyro_DLPF_250_8KHZ:    When the signal is equal to or greater than 250Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 8KHz.
- * @n     eGyro_DLPF_176_1KHZ:   When the signal is equal to or greater than 176Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz
- * @n     eGyro_DLPF_92_1KHZ:    When the signal is equal to or greater than 92Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
- * @n     eGyro_DLPF_3281_8KHZ:  When the signal is equal to or greater than 3281Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 8KHz.
- * @n Note: When the gyroscope and accelerometer are both enabled, if the sensor data is read through the FIFO, 
- * @n the internal sampling rate of the gyroscope and accelerometer must be the same.
+ * @n     eGyro_DLPF_8173_32KHZ:    当信号等于或大于8173Hz时，会出现明显衰减，衰减3-db，内部采样率为32KHz
+ * @n     eGyro_DLPF_3281_32KHZ: 当信号等于或大于3281Hz时，会出现明显衰减，衰减3-db，内部采样率为32KHz
+ * @n     eGyro_DLPF_250_8KHZ:     当信号等于或大于250Hz时，会出现明显衰减，衰减3-db，内部采样率为8KHz
+ * @n     eGyro_DLPF_176_1KHZ:     当信号等于或大于176Hz时，会出现明显衰减，衰减3-db，内部采样率为1KHz
+ * @n     eGyro_DLPF_92_1KHZ:      当信号等于或大于92Hz时，会出现明显衰减，衰减3-db，内部采样率为1KHz
+ * @n     eGyro_DLPF_3281_8KHZ:  当信号等于或大于3281Hz时，会出现明显衰减，衰减3-db，内部采样率为8KHz
+ * @n 注意：当陀螺仪和加速度都使能的时候，如果通过FIFO读取传感器数据，必须保证陀螺仪和加速度的内部采样率一致
  */
   void configGyro(eGyroFSR_t scale, eGyroBandwidth_t  bd);
   void configGyro(uint8_t scale, uint8_t  bd);
 /**
- * @brief Config of accel's full scale, dlpf bandwidth and internal sample rate. 
+ * @brief Config of accel's full scale 、dlpf bandwidth and internal sample rate. 
  * @param scale  The full scale of accel, unit: g(1g = 9.80665 m/s²).
  * @n     eFSR_A_2G:  The full scale range is ±2g.
  * @n     eFSR_A_4G:  The full scale range is ±4g.
  * @n     eFSR_A_8G:  The full scale range is ±8g.
  * @n     eFSR_A_16G:  The full scale range is ±16g.
  * @param bd  Set 3-db bandwidth.
- * @n     eAccel_DLPF_5_1KHZ or 0:    When the signal is less than or equal to 5Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
- * @n     eAccel_DLPF_10_1KHZ or 1:   When the signal is less than or equal to 10Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
- * @n     eAccel_DLPF_21_1KHZ or 2:   When the signal is less than or equal to 21Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
- * @n     eAccel_DLPF_44_1KHZ or 3:   When the signal is less than or equal to 44Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
- * @n     eAccel_DLPF_99_1KHZ or 4:   When the signal is less than or equal to 99Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz.
- * @n     eAccel_DLPF_218_1KHZ or 5:  When the signal is less than or equal to 218Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Support low power consumption
- * @n     eAccel_DLPF_420_1KHZ or 6:  When the signal is less than or equal to 420Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Support low power consumption
- * @n     eAccel_DLPF_1046_4KHZ or 7: When the signal is less than or equal to 1046Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 4KHz. Support low power consumption
- * @n     eAccel_DLPF_55_1KHZ or 8:   When the signal is less than or equal to 55Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Only support low power consumption
- * @n     eAccel_DLPF_110_1KHZ or 9:  When the signal is less than or equal to 110Hz, there will be obvious attenuation, 3-db attenuation, and the internal sampling rate is 1KHz. Only support low power consumption
- * @n Note: When the gyroscope and accelerometer are both enabled, if the sensor data is read through the FIFO, 
- * @n the internal sampling rate of the gyroscope and accelerometer must be the same.
- * @param odr:  Set the frequency of waking up the chip to take a sample of accel data – the low power accel Output Data Rate.
+ * @n     eAccel_DLPF_5_1KHZ or 0:    当信号小于或等于5Hz时，会出现明显衰减，衰减3-db，内部采样率为1KHz
+ * @n     eAccel_DLPF_10_1KHZ or 1:   当信号小于或等于10Hz时，会出现明显衰减，衰减3-db，内部采样率为1KHz
+ * @n     eAccel_DLPF_21_1KHZ or 2:   当信号小于或等于21Hz时，会出现明显衰减，衰减3-db，内部采样率为1KHz
+ * @n     eAccel_DLPF_44_1KHZ or 3:   当信号小于或等于44Hz时，会出现明显衰减，衰减3-db，内部采样率为1KHz
+ * @n     eAccel_DLPF_99_1KHZ or 4:   当信号小于或等于99Hz时，会出现明显衰减，衰减3-db，内部采样率为1KHz
+ * @n     eAccel_DLPF_218_1KHZ or 5:  当信号小于或等于218Hz时，会出现明显衰减，衰减3-db，内部采样率为1KHz，支持低功耗模式
+ * @n     eAccel_DLPF_420_1KHZ or 6:  当信号小于或等于420Hz时，会出现明显衰减，衰减3-db，内部采样率为1KHz，支持低功耗模式
+ * @n     eAccel_DLPF_1046_4KHZ or 7: 当信号小于或等于1046Hz时，会出现明显衰减，衰减3-db，内部采样率为4KHz，支持低功耗模式
+ * @n     eAccel_DLPF_55_1KHZ or 8:   当信号小于或等于55Hz时，会出现明显衰减，衰减3-db，内部采样率为1KHz，仅支持低功耗模式
+ * @n     eAccel_DLPF_110_1KHZ or 9:  当信号小于或等于110Hz时，会出现明显衰减，衰减3-db，内部采样率为1KHz，仅支持低功耗模式
+ * @n 注意：当陀螺仪和加速度都使能的时候，如果通过FIFO读取传感器数据，必须保证陀螺仪和加速度的内部采样率一致
+ * @param odr:  Sets the frequency of waking up the chip to take a sample of accel data – the low power accel Output Data Rate.
  * @n     eODR_125Hz or 9:    The low power accel Output Data Rate: 125Hz
  * @n     eODR_250Hz or 10:   The low power accel Output Data Rate: 250Hz
  * @n     eODR_500Hz or 11:   The low power accel Output Data Rate: 500Hz
@@ -355,9 +352,8 @@ public:
 /**
  * @brief Set sample rate divider. 
  * @param div  Sample rate divider, the range is 0~255.
- * @n    Sampling rate = internal sampling rate/(div+1)
- * @n Note: If the accelerometer configuration is in low power consumption mode, that is, the formal parameter lowPowerFlag of the configAccel function is true,
- * @n the sampling rate must match the output rate of the formal parameter odr of configAccel , as shown in the following table:
+ * @n     采样率 = 内部采样率/(div+1)
+ * @n Note: 如果加速度配置为低功耗模式，即configAccel函数的形参lowPowerFlag为true，则采样率必须和configAccel的形参odr输出率相匹配，如下表所示：
  * @n ----------------------------------------------------------------------------
  * @n |                           configAccel                    |  setSampleDiv  |
  * @n ----------------------------------------------------------------------------|
@@ -367,36 +363,32 @@ public:
  * @n ----------------------------------------------------------------------------|
  * @n |                           |  eODR_125Hz   |    true      |        7       |
  * @n |                           |-----------------------------------------------|
- * @n |bd of supporting low power consumption mode|  eODR_250Hz   |    true      |        3       |
+ * @n |  支持低功耗模式的bd       |  eODR_250Hz   |    true      |        3       |
  * @n |                           |-----------------------------------------------|
  * @n |                           |  eODR_500Hz   |    true      |        1       |
  * @n |---------------------------------------------------------------------------|
  */
   void setSampleDiv(uint8_t div);
 /**
- * @brief Reset, the register will restore the initial value, and you need to call begin to configuration.
+ * @brief Reset, the register will restore the initial value, you need to call begin to configuration.
  */
   void reset();
 /**
- * @brief Entering sleep mode, it will reduce power consumption, and The gyroscope and acceleration will stop working.
+ * @brief Enter sleep mode, it will reduce power consumption, and The gyroscope and acceleration will stop working.
  * @n You need to call wakeup function to wake up sensor.
  */
   void sleep();
 /**
- * @brief Wake up sensor from sleep, and you will restore the configuration before sleep.
+ * @brief Waking up sensor from sleep, and you will restore the configuration before sleep.
  */
   void wakeup();
   
 /**
- * @brief Set the level polarity of the INT pin when the accelerometer sensor is triggered to wake up the motion interrupt.
- * @param polarity: the level signal of the sensor INT pin when the wake-up motion is triggered.
- * @n     HIGH:  The initial signal of the pin is LOW. When an accelerometer wake-up motion occurs, the level signal of the INT pin will change to HIGH. 
- * @n Then the readINTStatus function needs to be called to clear the signal and restore the initial signal.
- * @n     LOW:   The initial signal of the pin is HIGH. When an accelerometer wake-up motion occurs, the level signal of the INT pin will change to LOW. 
- * @n Then the readINTStatus function needs to be called to clear the signal and restore the initial signal.
- * @n Note: After triggering the accelerometer wake-up motion, if the read_int_status function is not called to clear the sign,
- * @n the INT pin will always maintain the level polarity when the motion is triggered.
-    '''
+ * @brief 设置触发加速度传感器唤醒运动中断时，INT引脚的电平极性。
+ * @param polarity: 触发唤醒运动时，传感器INT引脚的电平信号。
+ * @n     HIGH:  INT引脚初始信号为LOW，当产生加速度唤醒运动时，INT引脚电平信号将变为HIGH，需要调用readINTStatus函数，才能清除该信号，重新恢复初始信号。
+ * @n     LOW:   INT引脚初始信号为HIGH，当产生加速度唤醒运动时，INT引脚电平信号将变为LOW，需要调用readINTStatus函数，才能清除该信号，重新恢复初始信号。
+ * @n Note: 触发加速度唤醒运动后，如果不调用readINTStatus函数清除该标志，INT引脚将一直保持触发运动时的电平极性。
  */
   void setINTPinMotionTriggerPolarity(int polarity);
   
@@ -434,9 +426,9 @@ public:
 
 /**
  * @brief Get Sensor's accel, gyro and temperature data.
- * @param accel: sIcg20660SensorData_t structure pointer which points to accel or NULL.
- * @param gyro: sIcg20660SensorData_t structure pointer which points to gyro or NULL.
- * @param t:  A float pointer which points to temperature or NULL.
+ * @param accel: sIcg20660SensorData_t structure pointer which point to accel or NULL.
+ * @param gyro: sIcg20660SensorData_t structure pointer which point to gyro or NULL.
+ * @param t:  A float pointer which point to temperature or NULL.
  */
   void getSensorData(sIcg20660SensorData_t *accel, sIcg20660SensorData_t *gyro, float *t);
 /**
@@ -476,8 +468,8 @@ public:
  */
   float getGyroDataZ();
 /**
- * @brief Get 14 bytes raw data, including accel, gyro, and temperature.
- * @param data:  Buffer for storing 14 bytes of raw data
+ * @brief Get 14 bytes raw data, include accel, gyro, and temperature.
+ * @param data:  存放14字节原始数据的buffer。
  * @n     The first byte of data :  Acceleration X-axis high byte data.
  * @n     The second byte of data:  Acceleration X-axis low byte data.
  * @n     The third byte of data :  Acceleration Y-axis high byte data.
@@ -516,15 +508,15 @@ protected:
   void enableFifo(bool temp, bool gx, bool gy, bool gz, bool accel);
 /**
  * @brief Take out of sleep mode. 
- * @param en  The IO pin of MCU which is connected to the EN pin of non-contact liquid level sensor.
- * @param cmd  calibration command in UART mode which is used to distinguish between upper water level calibration and lower water level calibration.
+ * @param en  The IO pin of MCU which is connected to the EN pin of Non-contact liquid level sensor.
+ * @param cmd  calibration command in UART Mode which is Used to distinguish between upper water level calibration and lower water level calibration.
  * @n     CALIB_UART_CMD_LWL: Lower water Level calibration command.
  * @n     CALIB_UART_CMD_UWL: Upper water Level calibration command.
  * @return Calibration state:
- * @n      true:  Calibration success.
+ * @n      true:  Calibration sucess.
  * @n      false:  Calibration failed.
  */
-  void outSleepMode();//1．Exit from sleep mode and reach 3.09mA. Set gyroStandby to 1, reach 1.61mA
+  void outSleepMode();//从睡眠模式退出，达到了3.09mA，将gyroStandby置1，达到1.61mA
   void readDataFromREG();
   void readDataFromFIFO();
 private:
@@ -675,15 +667,15 @@ private:
   typedef union{
     struct{
         uint8_t rsv:2;/**<Reserved.*/
-        uint8_t FSYNC_INT_MODE_EN:1;/**<When this bit is equal to 1, the FSYNC pin will trigger an interrupt when it transits to the level specified by FSYNC_INT_LEVEL. When this bit is equal to 0, the FSYNC pin is disabled from causing an interrupt.*/
+        uint8_t FSYNC_INT_MODE_EN:1;/**<When this bit is equal to 1, the FSYNC pin will trigger an interrupt when it transitions to the level specified by FSYNC_INT_LEVEL. When this bit is equal to 0, the FSYNC pin is disabled from causing an interrupt.*/
         uint8_t FSYNC_INT_LEVEL:1;/**< 1 – The logic level for the FSYNC pin as an interrupt is active low.0 – The logic level for the FSYNC pin as an interrupt is active high.*/
         uint8_t INT_RD_CLEAR:1;/**<1 – Interrupt status is cleared if any read operation is performed.0 – Interrupt status is cleared only by reading INT_STATUS register*/
-        uint8_t LATCH_INT_EN:1;/**<1 – INT pin level held until interrupt status is cleared.0 – I nterrupt pulse’s width indicated by INT pin is 50us.*/
+        uint8_t LATCH_INT_EN:1;/**<1 – INT pin level held until interrupt status is cleared.0 – INT pin indicates interrupt pulse’s width is 50us.*/
         uint8_t INT_OPEN:1;/**<1 – INT pin is configured as open drain.0 – INT pin is configured as push-pull.*/
         uint8_t INT_LEVEL:1;/**<1 – The logic level for INT pin is active low.0 – The logic level for INT pin is active high.*/
     };
     uint8_t value;
-  }uIntPinCfgReg_t;//Open-drain output is not supported. if it needs to be supported, an external pull-up resistor needs adding to get a high level.
+  }uIntPinCfgReg_t;//不支持开漏输出，如果要支持需要添加外部上拉电阻才能得到高电平
   
   /*
    INT_ENABLE register：addr:0x38,acess:rw
@@ -696,7 +688,7 @@ private:
   typedef union{
     struct{
         uint8_t DATA_RDY_INT_EN:1;/**<Data ready interrupt enable..*/
-        uint8_t rsv:3;/**<When this bit is equal to 1, the FSYNC pin will trigger an interrupt when it transits to the level specified by FSYNC_INT_LEVEL. When this bit is equal to 0, the FSYNC pin is disabled from causing an interrupt.*/
+        uint8_t rsv:3;/**<When this bit is equal to 1, the FSYNC pin will trigger an interrupt when it transitions to the level specified by FSYNC_INT_LEVEL. When this bit is equal to 0, the FSYNC pin is disabled from causing an interrupt.*/
         uint8_t FIFO_OFLOW_EN:1;/**< 1 – Enables a FIFO buffer overflow to generate an interrupt.0 – Function is disabled.*/
         uint8_t WOM_EN:3;/**<‘111’ – Enable WoM interrupt.‘000’ – Disable WoM interrupt – This is the default setting.*/
     };
@@ -755,7 +747,7 @@ private:
         uint8_t rsv1:1;/**<Reserved.*/
         uint8_t FIFO_RST:1;/**<1 – Reset FIFO module. Reset is asynchronous. This bit auto clears after one clock cycle of the internal 20 MHz clock.*/
         uint8_t rsv2:1;/**<Reserved.*/
-        uint8_t I2C_IF_DIS:1;/**<1 – Reset I2C Slave module and put the serial interface in SPI mode only. This bit auto clears after one clock cycle of the internal 20 MHz clock.*/
+        uint8_t I2C_IF_DIS:1;/**<1 – Reset I2C Slave module and put the serial interface in SPI mode only. This bit auto clears afte one clock cycle of the internal 20 MHz clock.*/
         uint8_t rsv3:1;/**<Reserved.*/
         uint8_t FIFO_EN:1;/**<1 – Enable FIFO operation mode.*/
         uint8_t rsv4:1;/**<Reserved.*/
@@ -778,7 +770,7 @@ private:
         uint8_t gyroStandby:1;/**<When set, the gyro drive and pll circuitry are enabled, but the sense paths are disabled. This is a low power mode that allows quick enabling of the gyros.*/
         uint8_t cycle:1;/**<This bit depends on other registers and bits*/
         uint8_t sleep:1; /**<When set to 1, the chip is set to sleep mode.*/
-        uint8_t deviceReset:1;/**<1:Reset the internal registers and restore the default settings,automatically clear after completion*/
+        uint8_t deviceReset:1;/**<1:Reset the internal registers and restores the default settings,automatically clear after completion*/
     };
     uint8_t value;
   }uPowerManagement1Reg_t;
@@ -819,7 +811,7 @@ private:
 class DFRobot_ICG20660L_IIC: public DFRobot_ICG20660L{
 public:
 /**
- * @brief The constructor of the ICG20660L sensor, using IIC communication.
+ * @brief The constructor of the ICG20660L sensor using IIC communication.
  * @param addr:  7-bit IIC address, controlled by SDO pin.
  * @n     IIC_ADDR_SDO_H or 0x69:  SDO pull high.(default)
  * @n     IIC_ADDR_SDO_L or 0x68:  SDO pull down.
@@ -841,7 +833,7 @@ private:
 class DFRobot_ICG20660L_SPI:public DFRobot_ICG20660L{
 public:
 /**
- * @brief The constructor of the ICG20660L sensor, using SPI communication.
+ * @brief The constructor of the ICG20660L sensor using SPI communication.
  * @param csPin:  SPI chip select pin, connected to IO pin of MCU.
  * @param spi: SPIClass class pointer.
  */
@@ -850,19 +842,19 @@ public:
 protected:
   int init();
   /**
-   * @brief  Write register value via SPI bus
-   * @param reg   Register address 8bits 
-   * @param pBuf The storage cache of the data to be written
-   * @param size The length of the data to be written
-   * @return Return to the actual read length. Returning to 0 indicates that the read failed.
+   * @brief 通过SPI总线写入寄存器值
+   * @param reg  寄存器地址 8bits
+   * @param pBuf 要写入数据的存放缓存
+   * @param size 要写入数据的长度
+   * @return 返回实际读取的长度，返回0表示读取失败
    */
   void writeReg(uint8_t reg, void *pBuf, size_t len);
   /**
-   * @brief Read register value via SPI bus
-   * @param reg   Register address 8bits 
-   * @param pBuf The storage cache of the data to be written
-   * @param size The length of the data to be written
-   * @return Return to the actual read length. Returning to 0 indicates that the read failed.
+   * @brief 通过SPI总线读取寄存器值
+   * @param reg  寄存器地址 8bits
+   * @param pBuf 要写入数据的存放缓存
+   * @param size 要写入数据的长度
+   * @return 返回实际读取的长度，返回0表示读取失败
    */
   size_t readReg(uint8_t reg, void *pBuf, size_t len);
 private:
