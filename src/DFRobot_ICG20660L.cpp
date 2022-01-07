@@ -1,30 +1,93 @@
 /*!
- * @file DFRobot_ICG20660L.cpp
- * @brief The ICG-20660 is a 6-axis MotionTracking device that combines a 3-axis gyroscope, 3-axis accelerometer.
- * @n It support two communication interface:
+ * @file DFRobot_ICG20660L.h
+ * @brief The ICG-20660 is a 6-axis motiontracking device that combines a 3-axis gyroscope and 3-axis accelerometer.
+ * @n It supports two communication interfaces:
  * @n (1) IIC-->freq: 100~400Khz
  * @n (2) SPI-->freq: 100kHz~7MHz, only support mode0 or mode3
  * @n Two communication methods are switched by cs pin, 0:SPI, 1:IIC
  * @n 3-axis accelerometer feature:
- * @n (1) Support max ranging: ±2g、±4g、±8g、±16g, g = 9.80665 m/s²
+ * @n (1) Support max ranging: ±2g, ±4g, ±8g, ±16g, g = 9.80665 m/s²
  * @n (2) 1g = 9.80665 m/s²
  * @n 3-axis gyroscope feature:
- * @n (1) Support max ranging: ±125dps、±250dps、±500dps
+ * @n (1) Support max ranging: ±125dps, ±250dps, ±500dps
  * @n (2) 1dps = Π/180° rad/s, Π = 3.1415926
- * @n 运动阈值唤醒检测：
- * @n 是前一次和后一次加速度的阈值差，如果大于或等于设定的阈值，将产生中断。
- * @n 支持从寄存器读取和从FIFO读取：
- * @n FIFO读取，加速度，陀螺仪、温度必须全部使能，且将其内部采样率必须配置成一致
+ * @n Motion threshold wake-up detection：
+ * @n The motion threshold is the acceleration thresholds difference between the previous and next. If it is greater than or equal to the set threshold, an interrupt will be generated.
+ * @n Support to read from register and FIFO
+ * @n Read from FIFO. Accelerometer, gyroscope and temperature must all be enabled, and its internal sampling rate must be configured to be consistent.
  *
  * @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
- * @licence     The MIT License (MIT)
+ * @license     The MIT License (MIT)
  * @author [Arya](xue.peng@dfrobot.com)
  * @version  V1.0
  * @date  2021-05-25
- * @https://github.com/DFRobot/DFRobot_ICG20660L
+ * @url https://github.com/DFRobot/DFRobot_ICG20660L
  */
 #include <Arduino.h>
 #include "DFRobot_ICG20660L.h"
+
+#define REG_ICG20660L_SMPLRT_DIV     0x19  ///< SAMPLE RATE DIVIDER
+#define REG_ICG20660L_ACCEL_CONFIG2  0x1D  ///< ACCELEROMETER CONFIGURATION 2
+#define REG_ICG20660L_INT_PIN_CFG    0x37  ///< INT PIN / BYPASS ENABLE CONFIGURATION
+#define REG_ICG20660L_INT_ENABLE     0x38  ///< INTERRUPT ENABLE
+#define REG_ICG20660L_PWR_MGMT_1     0x6B  ///< POWER MANAGEMENT 1
+#define REG_ICG20660L_PWR_MGMT_2     0x6C  ///< POWER MANAGEMENT 2
+#define REG_ICG20660L_FIFO_COUNTH    0x72  ///< FIFO COUNT REGISTERS
+#define REG_ICG20660L_FIFO_COUNTL    0x73  ///< FIFO COUNT REGISTERS
+#define REG_ICG20660L_FIFO_R_W       0x74  ///< FIFO READ WRITE
+ 
+#define REG_ICG20660L_SELF_TEST_X_GYRO              0x00  ///< GYROSCOPE SELF-TEST REGISTERS
+#define REG_ICG20660L_SELF_TEST_Y_GYRO              0x01  ///< GYROSCOPE SELF-TEST REGISTERS
+#define REG_ICG20660L_SELF_TEST_Z_GYRO              0x02  ///< GYROSCOPE SELF-TEST REGISTERS
+#define REG_ICG20660L_XG_OFFS_TC_H                  0x04  ///< GYROSCOPE OFFSET TEMPERATURE COMPENSATION (TC) REGISTER
+#define REG_ICG20660L_XG_OFFS_TC_L                  0x05  ///< GYROSCOPE OFFSET TEMPERATURE COMPENSATION (TC) REGISTER
+#define REG_ICG20660L_YG_OFFS_TC_H                  0x07  ///< GYROSCOPE OFFSET TEMPERATURE COMPENSATION (TC) REGISTER
+#define REG_ICG20660L_YG_OFFS_TC_L                  0x08  ///< GYROSCOPE OFFSET TEMPERATURE COMPENSATION (TC) REGISTER
+#define REG_ICG20660L_ZG_OFFS_TC_H                  0x0A  ///< GYROSCOPE OFFSET TEMPERATURE COMPENSATION (TC) REGISTER
+#define REG_ICG20660L_ZG_OFFS_TC_L                  0x0B  ///< IGYROSCOPE OFFSET TEMPERATURE COMPENSATION (TC) REGISTER
+#define REG_ICG20660L_SELF_TEST_X_ACCEL             0x0D  ///< ACCELEROMETER SELF-TEST REGISTERS
+#define REG_ICG20660L_SELF_TEST_Y_ACCEL             0x0E  ///< ACCELEROMETER SELF-TEST REGISTERS
+#define REG_ICG20660L_SELF_TEST_Z_ACCEL             0x0F  ///< ACCELEROMETER SELF-TEST REGISTERS
+#define REG_ICG20660L_XG_OFFS_USRH                  0x13  ///< GYRO OFFSET ADJUSTMENT REGISTER
+#define REG_ICG20660L_XG_OFFS_USRL                  0x14  ///< GYRO OFFSET ADJUSTMENT REGISTER
+#define REG_ICG20660L_YG_OFFS_USRH                  0x15  ///< GYRO OFFSET ADJUSTMENT REGISTER
+#define REG_ICG20660L_YG_OFFS_USRL                  0x16  ///< GYRO OFFSET ADJUSTMENT REGISTER
+#define REG_ICG20660L_ZG_OFFS_USRH                  0x17  ///< GYRO OFFSET ADJUSTMENT REGISTER
+#define REG_ICG20660L_ZG_OFFS_USRL                  0x18  ///< GYRO OFFSET ADJUSTMENT REGISTER
+#define REG_ICG20660L_CONFIG                        0x1A  ///< CONFIGURATION
+#define REG_ICG20660L_GYRO_CONFIG                   0x1B  ///< GYROSCOPE CONFIGURATION
+#define REG_ICG20660L_ACCEL_CONFIG                  0x1C  ///< ACCELEROMETER CONFIGURATION
+#define REG_ICG20660L_ACCEL_CONFIG2                 0x1D  ///< ACCELEROMETER CONFIGURATION 2
+#define REG_ICG20660L_LP_MODE_CFG                   0x1E  ///< LOW POWER MODE CONFIGURATION
+#define REG_ICG20660L_ACCEL_WOM_THR                 0x1F  ///< WAKE-ON MOTION THRESHOLD (ACCELEROMETER)
+#define REG_ICG20660L_FIFO_EN                       0x23  ///< FIFO ENABLE
+#define REG_ICG20660L_FSYNC_INT                     0x36  ///< FSYNC INTERRUPT STATUS
+#define REG_ICG20660L_INT_PIN_CFG                   0x37  ///< INT PIN / BYPASS ENABLE CONFIGURATION
+#define REG_ICG20660L_INT_STATUS                    0x3A  ///< INTERRUPT STATUS
+#define REG_ICG20660L_ACCEL_XOUT_H                  0x3B  ///< ACCELEROMETER MEASUREMENTS
+#define REG_ICG20660L_ACCEL_XOUT_L                  0x3C  ///< ACCELEROMETER MEASUREMENTS
+#define REG_ICG20660L_ACCEL_YOUT_H                  0x3D  ///< ACCELEROMETER MEASUREMENTS
+#define REG_ICG20660L_ACCEL_YOUT_L                  0x3E  ///< ACCELEROMETER MEASUREMENTS
+#define REG_ICG20660L_ACCEL_ZOUT_H                  0x3F  ///< ACCELEROMETER MEASUREMENTS
+#define REG_ICG20660L_ACCEL_ZOUT_L                  0x40  ///< ACCELEROMETER MEASUREMENTS
+#define REG_ICG20660L_TEMP_OUT_H                    0x41  ///< TEMPERATURE MEASUREMENT
+#define REG_ICG20660L_TEMP_OUT_L                    0x42  ///< TEMPERATURE MEASUREMENT
+#define REG_ICG20660L_GYRO_XOUT_H                   0x43  ///< GYROSCOPE MEASUREMENTS
+#define REG_ICG20660L_GYRO_XOUT_L                   0x44  ///< GYROSCOPE MEASUREMENTS
+#define REG_ICG20660L_GYRO_YOUT_H                   0x45  ///< GYROSCOPE MEASUREMENTS
+#define REG_ICG20660L_GYRO_YOUT_L                   0x46  ///< GYROSCOPE MEASUREMENTS
+#define REG_ICG20660L_GYRO_ZOUT_H                   0x47  ///< GYROSCOPE MEASUREMENTS
+#define REG_ICG20660L_GYRO_ZOUT_L                   0x48  ///< GYROSCOPE MEASUREMENTS
+#define REG_ICG20660L_SIGNAL_PATH_RESET             0x68  ///< SIGNAL PATH RESET
+#define REG_ICG20660L_ACCEL_INTEL_CTRL              0x69  ///< ACCELEROMETER INTELLIGENCE CONTROL
+#define REG_ICG20660L_USER_CTRL                     0x6A  ///< USER CONTROL
+#define REG_ICG20660L_WHO_AM_I                      0x75  ///< WHO AM I
+#define REG_ICG20660L_XA_OFFSET_H                   0x77  ///< ACCELEROMETER OFFSET REGISTERS
+#define REG_ICG20660L_XA_OFFSET_L                   0x78  ///< ACCELEROMETER OFFSET REGISTERS
+#define REG_ICG20660L_YA_OFFSET_H                   0x7A  ///< ACCELEROMETER OFFSET REGISTERS 
+#define REG_ICG20660L_YA_OFFSET_L                   0x7B  ///< ACCELEROMETER OFFSET REGISTERS 
+#define REG_ICG20660L_ZA_OFFSET_H                   0x7D  ///< ACCELEROMETER OFFSET REGISTERS 
+#define REG_ICG20660L_ZA_OFFSET_L                   0x7E  ///< ACCELEROMETER OFFSET REGISTERS 
 
 DFRobot_ICG20660L::DFRobot_ICG20660L(){
   _gyroScale = ADC_MAX_RANGE/GYRO_FULL_SCALE_500DPS;
@@ -42,7 +105,7 @@ DFRobot_ICG20660L::~DFRobot_ICG20660L(){
   
 }
 
-/*begin的时候，复位， 退出睡眠模式，禁用所有xyz轴和温度，初始化各种默认量程*/
+
 int DFRobot_ICG20660L::begin(eDataReadMode_t mode){
   if (init() != 0){
       return -1;
@@ -286,6 +349,7 @@ uint8_t DFRobot_ICG20660L::readINTStatus(){
 int DFRobot_ICG20660L::getINTPinMotionTriggerPolarity(){
   return _level;
 }
+
 
 void DFRobot_ICG20660L::getSensorData(sIcg20660SensorData_t *accel, sIcg20660SensorData_t *gyro, float *t){
   getRawData(NULL);
@@ -760,6 +824,11 @@ size_t DFRobot_ICG20660L_IIC::readReg(uint8_t reg, void* pBuf, size_t size){
   return size;
 }
 /*
+typedef struct{
+  String reg;     
+  uint8_t value;
+}sRegDecrisption_t;
+
 void DFRobot_ICG20660L::test(){
   uint8_t val = 0;
   readReg(REG_ICG20660L_PWR_MGMT_1, &val, 1);
@@ -782,6 +851,8 @@ void DFRobot_ICG20660L::test(){
   readReg(REG_ICG20660L_SMPLRT_DIV, &val, 1);
   DBGREG("REG_ICG20660L_SMPLRT_DIV", REG_ICG20660L_SMPLRT_DIV, val);
 }
+
+
 
 static sRegDecrisption_t REGMap[] = {
 {"REG_ICG20660L_SELF_TEST_X_GYRO ",             0x00},
